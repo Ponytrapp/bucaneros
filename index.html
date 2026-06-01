@@ -21,13 +21,19 @@
             background-color: #8B0000;
             color: #FFFFFF;
             min-height: 100vh;
-            min-height: 100dvh; /* динамическая высота для мобильных */
+            min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow-x: hidden;
             cursor: default;
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        body.page-exit {
+            opacity: 0;
+            transform: scale(0.96);
         }
 
         /* курсор-прицел */
@@ -47,7 +53,6 @@
             opacity: 0;
         }
 
-        /* показываем курсор только на десктопе */
         @media (hover: hover) and (pointer: fine) {
             body:hover::after {
                 opacity: 1;
@@ -85,12 +90,8 @@
             transition: width 0.6s ease;
         }
 
-        .wrapper::before {
-            top: 0;
-        }
-        .wrapper::after {
-            bottom: 0;
-        }
+        .wrapper::before { top: 0; }
+        .wrapper::after { bottom: 0; }
 
         @media (hover: hover) and (pointer: fine) {
             .wrapper:hover::before,
@@ -194,9 +195,10 @@
             }
         }
 
-        /* белая кнопка */
         .cta-button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: #ffffff;
             color: #8B0000;
             text-decoration: none;
@@ -212,10 +214,8 @@
             overflow: hidden;
             touch-action: manipulation;
             -webkit-tap-highlight-color: rgba(139, 0, 0, 0.2);
-            min-height: 44px; /* минимальная область касания Apple */
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            min-height: 44px;
+            z-index: 10;
         }
 
         .cta-button::before {
@@ -246,7 +246,6 @@
             background: #f0f0f0;
         }
 
-        /* для тач-устройств — эффект при касании */
         @media (hover: none) and (pointer: coarse) {
             .cta-button:active {
                 letter-spacing: 5px;
@@ -269,142 +268,60 @@
             }
         }
 
-        /* параллакс-эффект */
         .parallax-layer {
             transition: transform 0.2s ease-out;
             will-change: transform;
         }
 
-        /* ========== АДАПТИВНЫЕ БРЕЙКПОИНТЫ ========== */
-
-        /* планшеты */
+        /* брейкпоинты */
         @media (max-width: 768px) {
-            .container {
-                padding: 1.2rem;
-            }
-            .wrapper {
-                padding: 2rem 1.2rem;
-            }
-            .description {
-                max-width: 90%;
-            }
+            .container { padding: 1.2rem; }
+            .wrapper { padding: 2rem 1.2rem; }
+            .description { max-width: 90%; }
         }
 
-        /* телефоны */
         @media (max-width: 480px) {
-            .container {
-                padding: 1rem;
-            }
-            .wrapper {
-                padding: 1.8rem 0.8rem;
-            }
-            .wrapper::before,
-            .wrapper::after {
-                width: 30px;
-            }
-            .brand-name {
-                letter-spacing: 0.5px;
-            }
-            .brand-name .small-top {
-                letter-spacing: 4px;
-            }
-            .tagline {
-                letter-spacing: 3px;
-                margin-bottom: 2rem;
-            }
-            .description {
-                max-width: 100%;
-                padding: 0;
-                line-height: 1.6;
-                margin-bottom: 2rem;
-            }
-            .cta-button {
-                padding: 0.75rem 1.8rem;
-                letter-spacing: 2px;
-                width: auto;
-                min-width: 200px;
-            }
-            .divider {
-                width: 50px;
-                margin: 1.2rem auto;
-            }
-            .footer-note {
-                margin-top: 2.5rem;
-                letter-spacing: 1px;
-            }
-            .logo-mark {
-                letter-spacing: 3px;
-                margin-bottom: 1.5rem;
-            }
+            .container { padding: 1rem; }
+            .wrapper { padding: 1.8rem 0.8rem; }
+            .wrapper::before, .wrapper::after { width: 30px; }
+            .brand-name { letter-spacing: 0.5px; }
+            .brand-name .small-top { letter-spacing: 4px; }
+            .tagline { letter-spacing: 3px; margin-bottom: 2rem; }
+            .description { max-width: 100%; padding: 0; line-height: 1.6; margin-bottom: 2rem; }
+            .cta-button { padding: 0.75rem 1.8rem; letter-spacing: 2px; width: auto; min-width: 200px; }
+            .divider { width: 50px; margin: 1.2rem auto; }
+            .footer-note { margin-top: 2.5rem; letter-spacing: 1px; }
+            .logo-mark { letter-spacing: 3px; margin-bottom: 1.5rem; }
         }
 
-        /* очень маленькие экраны */
         @media (max-width: 360px) {
-            .wrapper {
-                padding: 1.5rem 0.5rem;
-            }
-            .brand-name {
-                font-size: 1.8rem;
-            }
-            .cta-button {
-                padding: 0.7rem 1.5rem;
-                min-width: 180px;
-                font-size: 0.7rem;
-            }
-            .footer-note {
-                font-size: 0.55rem;
-            }
+            .wrapper { padding: 1.5rem 0.5rem; }
+            .brand-name { font-size: 1.8rem; }
+            .cta-button { padding: 0.7rem 1.5rem; min-width: 180px; font-size: 0.7rem; }
+            .footer-note { font-size: 0.55rem; }
         }
 
-        /* ландшафтная ориентация на телефонах */
         @media (max-height: 500px) and (orientation: landscape) {
-            body {
-                align-items: flex-start;
-                padding-top: 1rem;
-            }
-            .wrapper {
-                padding: 1rem;
-            }
-            .brand-name {
-                font-size: 2rem;
-            }
-            .logo-mark {
-                margin-bottom: 0.8rem;
-            }
-            .tagline {
-                margin-bottom: 1rem;
-            }
-            .description {
-                margin-bottom: 1rem;
-                font-size: 0.75rem;
-                line-height: 1.4;
-            }
-            .divider {
-                margin: 0.8rem auto;
-            }
-            .footer-note {
-                margin-top: 1.5rem;
-            }
+            body { align-items: flex-start; padding-top: 1rem; }
+            .wrapper { padding: 1rem; }
+            .brand-name { font-size: 2rem; }
+            .logo-mark { margin-bottom: 0.8rem; }
+            .tagline { margin-bottom: 1rem; }
+            .description { margin-bottom: 1rem; font-size: 0.75rem; line-height: 1.4; }
+            .divider { margin: 0.8rem auto; }
+            .footer-note { margin-top: 1.5rem; }
         }
 
-        /* тёмная тема — адаптация */
         @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #6B0000;
-            }
+            body { background-color: #6B0000; }
         }
 
-        /* уменьшенная анимация для пользователей с ограничениями */
         @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
+            *, *::before, *::after {
                 transition-duration: 0.01ms !important;
                 animation-duration: 0.01ms !important;
             }
-            .parallax-layer {
-                transition: none;
-            }
+            .parallax-layer { transition: none; }
         }
     </style>
 </head>
@@ -429,7 +346,7 @@
                 Jolly sou'wester, boys, steady she goes
             </p>
 
-            <a href="#" class="cta-button" id="ctaBtn">Скоро сделаем грязь</a>
+            <a href="sea.html" class="cta-button" id="ctaBtn">Скоро сделаем грязь</a>
 
             <div class="footer-note">
                 © Bucaneros del Mar de Sangre · Все моря принадлежат нам
@@ -438,10 +355,8 @@
     </div>
 
     <script>
-        // определяем, тач-устройство или десктоп
         const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-        // кастомный курсор — только для десктопа
         if (!isTouchDevice) {
             document.addEventListener('mousemove', function(e) {
                 document.body.style.setProperty('--mouse-x', e.clientX + 'px');
@@ -449,7 +364,6 @@
             });
         }
 
-        // лёгкий параллакс — только для десктопа (на мобильных не нужен)
         const container = document.getElementById('parallaxContainer');
         if (!isTouchDevice) {
             document.addEventListener('mousemove', function(e) {
@@ -459,20 +373,20 @@
             });
         }
 
-        // клик/тап по кнопке — эффект ряби
+        // плавный переход при клике на кнопку
         const ctaBtn = document.getElementById('ctaBtn');
         ctaBtn.addEventListener('click', function(e) {
             e.preventDefault();
-
+            const href = this.getAttribute('href');
+            
+            // эффект ряби
             const ripple = document.createElement('span');
             const rect = ctaBtn.getBoundingClientRect();
             const clientX = e.clientX || (e.touches && e.touches[0].clientX) || rect.left + rect.width / 2;
             const clientY = e.clientY || (e.touches && e.touches[0].clientY) || rect.top + rect.height / 2;
-
             ripple.style.cssText = `
                 position: absolute;
-                width: 10px;
-                height: 10px;
+                width: 10px; height: 10px;
                 background: rgba(255,255,255,0.6);
                 border-radius: 50%;
                 pointer-events: none;
@@ -483,9 +397,16 @@
             `;
             ctaBtn.appendChild(ripple);
             setTimeout(() => ripple.remove(), 600);
+
+            // плавный уход страницы
+            setTimeout(() => {
+                document.body.classList.add('page-exit');
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 500);
+            }, 200);
         });
 
-        // стиль анимации ряби
         const styleSheet = document.createElement('style');
         styleSheet.textContent = `
             @keyframes rippleEffect {
@@ -495,7 +416,6 @@
         `;
         document.head.appendChild(styleSheet);
 
-        // двойной тап/клик по названию — смена фона
         const brandName = document.querySelector('.brand-name');
         const colors = ['#8B0000', '#A00000', '#6B0000', '#4B0000', '#800000'];
         let colorIndex = 0;
@@ -508,12 +428,9 @@
             ctaBtn.style.color = colors[colorIndex];
         });
 
-        // предотвращаем двойной зум на двойном тапе для мобильных
         if (isTouchDevice) {
             brandName.addEventListener('touchstart', function(e) {
-                if (e.touches.length > 1) {
-                    e.preventDefault();
-                }
+                if (e.touches.length > 1) e.preventDefault();
             }, { passive: false });
 
             let lastTap = 0;
@@ -522,14 +439,12 @@
                 const tapLength = currentTime - lastTap;
                 if (tapLength < 300 && tapLength > 0) {
                     e.preventDefault();
-                    // эмулируем двойной клик
                     brandName.dispatchEvent(new Event('dblclick'));
                 }
                 lastTap = currentTime;
             });
         }
 
-        // убираем активное состояние при скролле на iOS
         document.addEventListener('touchmove', function() {}, { passive: true });
     </script>
 </body>
