@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bucaneros del Mar de Sangre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #8B0000;
+            color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* курсор-прицел в стиле пиратской карты */
+        body::after {
+            content: '';
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+            z-index: 9999;
+            left: var(--mouse-x, 0px);
+            top: var(--mouse-y, 0px);
+            opacity: 0;
+        }
+
+        body:hover::after {
+            opacity: 1;
+        }
+
+        body:active::after {
+            width: 15px;
+            height: 15px;
+            border-color: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        /* вместо рамки — тонкая горизонтальная линия сверху и снизу */
+        .wrapper {
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        .wrapper::before,
+        .wrapper::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.5);
+            transition: width 0.6s ease;
+        }
+
+        .wrapper::before {
+            top: 0;
+        }
+        .wrapper::after {
+            bottom: 0;
+        }
+
+        /* при наведении на весь блок линии расширяются */
+        .wrapper:hover::before,
+        .wrapper:hover::after {
+            width: 120px;
+        }
+
+        .logo-mark {
+            font-size: 0.9rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            font-weight: normal;
+            word-spacing: 4px;
+            transition: letter-spacing 0.4s ease;
+        }
+
+        .wrapper:hover .logo-mark {
+            letter-spacing: 10px;
+        }
+
+        .brand-name {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: bold;
+            line-height: 1.1;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: text-shadow 0.4s ease;
+            user-select: none;
+        }
+
+        .brand-name:hover {
+            text-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .brand-name .small-top {
+            display: block;
+            font-size: 0.35em;
+            letter-spacing: 8px;
+            font-weight: normal;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: #ffffff;
+            margin: 2rem auto;
+            opacity: 0.7;
+            transition: width 0.4s ease, opacity 0.4s ease;
+        }
+
+        .wrapper:hover .divider {
+            width: 140px;
+            opacity: 1;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            font-weight: normal;
+            opacity: 0.85;
+            transition: letter-spacing 0.4s ease;
+        }
+
+        .wrapper:hover .tagline {
+            letter-spacing: 8px;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            opacity: 0.8;
+            font-style: italic;
+            transition: opacity 0.4s ease;
+        }
+
+        .wrapper:hover .description {
+            opacity: 1;
+        }
+
+        /* белая кнопка */
+        .cta-button {
+            display: inline-block;
+            background: #ffffff;
+            color: #8B0000;
+            text-decoration: none;
+            padding: 0.9rem 2.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(139, 0, 0, 0.1);
+            transition: left 0.4s ease;
+        }
+
+        .cta-button:hover {
+            letter-spacing: 8px;
+            padding: 0.9rem 3rem;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+
+        .footer-note {
+            margin-top: 4rem;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            opacity: 0.5;
+            text-transform: uppercase;
+            transition: opacity 0.4s ease;
+        }
+
+        .wrapper:hover .footer-note {
+            opacity: 0.7;
+        }
+
+        /* параллакс-эффект при движении мыши */
+        .parallax-layer {
+            transition: transform 0.2s ease-out;
+        }
+
+        @media (max-width: 600px) {
+            .wrapper {
+                padding: 2rem 1rem;
+            }
+            .description {
+                font-size: 0.9rem;
+            }
+            .cta-button {
+                padding: 0.8rem 1.8rem;
+                letter-spacing: 3px;
+            }
+            .cta-button:hover {
+                letter-spacing: 5px;
+                padding: 0.8rem 2.2rem;
+            }
+            body::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container parallax-layer" id="parallaxContainer">
+        <div class="wrapper" id="mainWrapper">
+            <div class="logo-mark">Est. 2026</div>
+
+            <h1 class="brand-name">
+              Bucaneros
+                <span class="small-top"> del Mar de Sangre</span>
+            </h1>
+
+            <div class="divider"></div>
+
+            <p class="tagline">Viento favorable</p>
+
+            <p class="description">
+                Windy weather, boys, stormy weather, boys
+When the wind blows, we’re all together, boys.
+Blow ye winds westerly, blow ye winds, blow
+Jolly sou’wester, boys, steady she goes
+            </p>
+
+            <a href="#" class="cta-button" id="ctaBtn">Скоро сделаем грязь</a>
+
+            <div class="footer-note">
+                © Bucaneros del Mar de Sangre · Все моря принадлежат нам
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // кастомный курсор следует за мышью
+        document.addEventListener('mousemove', function(e) {
+            document.body.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.body.style.setProperty('--mouse-y', e.clientY + 'px');
+        });
+
+        // лёгкий параллакс при движении мыши
+        const container = document.getElementById('parallaxContainer');
+        document.addEventListener('mousemove', function(e) {
+            const x = (window.innerWidth / 2 - e.clientX) / 80;
+            const y = (window.innerHeight / 2 - e.clientY) / 80;
+            container.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        // клик по кнопке — небольшой эффект ряби
+        const ctaBtn = document.getElementById('ctaBtn');
+        ctaBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // создаём временную рябь
+            const ripple = document.createElement('span');
+            ripple.style.cssText = `
+                        position: absolute;
+                        width: 10px;
+                        height: 10px;
+                        background: rgba(255,255,255,0.6);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        transform: translate(-50%, -50%);
+                        animation: rippleEffect 0.6s ease-out forwards;
+                        left: ${e.clientX - ctaBtn.getBoundingClientRect().left}px;
+                        top: ${e.clientY - ctaBtn.getBoundingClientRect().top}px;
+                    `;
+            ctaBtn.appendChild(ripple);
+
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // добавляем стиль анимации ряби динамически
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+                    @keyframes rippleEffect {
+                        0% { width: 10px; height: 10px; opacity: 1; }
+                        100% { width: 200px; height: 200px; opacity: 0; }
+                    }
+                `;
+        document.head.appendChild(styleSheet);
+
+        // двойной клик по названию — меняет цвет фона (пасхалка)
+        const brandName = document.querySelector('.brand-name');
+        const colors = ['#8B0000', '#A00000', '#6B0000', '#4B0000', '#800000'];
+        let colorIndex = 0;
+
+        brandName.addEventListener('dblclick', function() {
+            colorIndex = (colorIndex + 1) % colors.length;
+            document.body.style.transition = 'background-color 0.8s ease';
+            document.body.style.backgroundColor = colors[colorIndex];
+            // обновляем цвет текста на кнопке
+            ctaBtn.style.transition = 'color 0.8s ease, background-color 0.8s ease';
+            ctaBtn.style.color = colors[colorIndex];
+        });
+    </script>
+</body>
+</html>
