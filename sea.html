@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Море зовёт — Bucaneros del Mar de Sangre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            background: #0a1a2a;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+            animation: fadeInBody 1.2s ease-out;
+        }
+
+        @keyframes fadeInBody {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* слой неба */
+        .sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            background: linear-gradient(180deg, 
+                #1a2a3a 0%, 
+                #2a3a4a 30%, 
+                #3a4a5a 60%, 
+                #4a5a6a 100%);
+            z-index: 1;
+        }
+
+        /* луна */
+        .moon {
+            position: absolute;
+            top: 15%;
+            right: 20%;
+            width: clamp(60px, 10vw, 100px);
+            height: clamp(60px, 10vw, 100px);
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, #fffde8, #e8e4c8 60%, #c8c4a8 100%);
+            box-shadow: 0 0 60px rgba(255, 253, 232, 0.4), 0 0 120px rgba(255, 253, 232, 0.2);
+            z-index: 2;
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 60px rgba(255, 253, 232, 0.4), 0 0 120px rgba(255, 253, 232, 0.2); }
+            50% { box-shadow: 0 0 80px rgba(255, 253, 232, 0.6), 0 0 160px rgba(255, 253, 232, 0.3); }
+        }
+
+        /* звёзды */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            z-index: 2;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.8); }
+        }
+
+        /* контейнер моря */
+        .ocean {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        /* слой волны */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: -5%;
+            width: 200%;
+            height: 100%;
+            background: transparent;
+        }
+
+        .wave-inner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* волна 1 — задняя, тёмная */
+        .wave-1 .wave-inner {
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                rgba(10, 40, 70, 0.6) 40%, 
+                rgba(15, 50, 80, 0.8) 70%, 
+                rgba(20, 60, 90, 0.95) 100%);
+            animation: waveMove1 8s ease-in-out infinite;
+        }
+
+        .wave-1::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(30, 60, 90, 0.7) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 40%, rgba(25, 55, 85, 0.7) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(30, 60, 90, 0.7) 0%, transparent 50%);
+            animation: foamMove1 8s ease-in-out infinite;
+        }
+
+        @keyframes waveMove1 {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(1%) translateY(-5px); }
+            50% { transform: translateX(0) translateY(-3px); }
+            75% { transform: translateX(-1%) translateY(-6px); }
+        }
+
+        @keyframes foamMove1 {
+            0%, 100% { transform: translateX(0); opacity: 0.6; }
+            50% { transform: translateX(-2%); opacity: 0.9; }
+        }
+
+        /* волна 2 — средняя */
+        .wave-2 {
+            bottom: 5%;
+        }
+        .wave-2 .wave-inner {
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                rgba(20, 50, 80, 0.5) 30%, 
+                rgba(30, 60, 90, 0.7) 60%, 
+                rgba(40, 70, 100, 0.9) 100%);
+            animation: waveMove2 6s ease-in-out infinite;
+        }
+
+        .wave-2::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 10%;
+            width: 100%;
+            height: 60px;
+            background: 
+                radial-gradient(ellipse at 15% 60%, rgba(40, 80, 110, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 55% 45%, rgba(35, 70, 100, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 55%, rgba(40, 80, 110, 0.6) 0%, transparent 50%);
+            animation: foamMove2 6s ease-in-out infinite;
+        }
+
+        @keyframes waveMove2 {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(-1.5%) translateY(-8px); }
+        }
+
+        @keyframes foamMove2 {
+            0%, 100% { transform: translateX(0); opacity: 0.5; }
+            50% { transform: translateX(1.5%); opacity: 0.8; }
+        }
+
+        /* волна 3 — передняя, светлая */
+        .wave-3 {
+            bottom: 10%;
+        }
+        .wave-3 .wave-inner {
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                rgba(30, 60, 90, 0.4) 20%, 
+                rgba(50, 80, 110, 0.6) 50%, 
+                rgba(60, 90, 120, 0.85) 100%);
+            animation: waveMove3 5s ease-in-out infinite;
+        }
+
+        .wave-3::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -5%;
+            width: 100%;
+            height: 50px;
+            background: 
+                radial-gradient(ellipse at 25% 50%, rgba(60, 100, 130, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 40%, rgba(55, 90, 120, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 50%, rgba(60, 100, 130, 0.5) 0%, transparent 50%);
+            animation: foamMove3 5s ease-in-out infinite;
+        }
+
+        @keyframes waveMove3 {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(1%) translateY(-4px); }
+        }
+
+        @keyframes foamMove3 {
+            0%, 100% { transform: translateX(0); opacity: 0.7; }
+            50% { transform: translateX(-1%); opacity: 1; }
+        }
+
+        /* брызги пены */
+        .spray {
+            position: absolute;
+            bottom: 20%;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .spray-dot {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: sprayFloat var(--spray-duration) ease-in infinite;
+            animation-delay: var(--spray-delay);
+            bottom: 0;
+            left: var(--spray-pos);
+        }
+
+        @keyframes sprayFloat {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-80px) translateX(var(--spray-drift)); opacity: 0; }
+        }
+
+        /* блики на воде */
+        .glitter {
+            position: absolute;
+            bottom: 15%;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .glitter-line {
+            position: absolute;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+            animation: glitterShine var(--glitter-duration) ease-in-out infinite;
+            animation-delay: var(--glitter-delay);
+            bottom: var(--glitter-y);
+            left: var(--glitter-x);
+            width: var(--glitter-w);
+            transform: rotate(var(--glitter-r));
+        }
+
+        @keyframes glitterShine {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.6; }
+        }
+
+        /* контент поверх */
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .sea-message {
+            text-align: center;
+            animation: messageAppear 1.5s ease-out 0.5s both;
+        }
+
+        @keyframes messageAppear {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .sea-message h2 {
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: #ffffff;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.5), 0 4px 20px rgba(0, 0, 0, 0.5);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            animation: textFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .sea-message p {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        /* кнопка возврата */
+        .back-btn {
+            position: absolute;
+            bottom: clamp(30px, 8vh, 60px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #ffffff;
+            padding: 0.7rem 2rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            pointer-events: auto;
+            text-decoration: none;
+            animation: messageAppear 1.5s ease-out 1s both;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+            touch-action: manipulation;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+            letter-spacing: 6px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        @media (max-width: 480px) {
+            .back-btn {
+                padding: 0.6rem 1.5rem;
+                letter-spacing: 2px;
+            }
+            .back-btn:hover {
+                letter-spacing: 4px;
+            }
+            .moon {
+                top: 10%;
+                right: 15%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .wave-1 .wave-inner,
+            .wave-2 .wave-inner,
+            .wave-3 .wave-inner,
+            .wave-1::before,
+            .wave-2::before,
+            .wave-3::before,
+            .spray-dot,
+            .glitter-line,
+            .moon,
+            .sea-message h2 {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Небо -->
+    <div class="sky"></div>
+    
+    <!-- Луна -->
+    <div class="moon"></div>
+    
+    <!-- Звёзды -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Море -->
+    <div class="ocean">
+        <div class="wave wave-1">
+            <div class="wave-inner"></div>
+        </div>
+        <div class="wave wave-2">
+            <div class="wave-inner"></div>
+        </div>
+        <div class="wave wave-3">
+            <div class="wave-inner"></div>
+        </div>
+    </div>
+    
+    <!-- Брызги -->
+    <div class="spray" id="spray"></div>
+    
+    <!-- Блики -->
+    <div class="glitter" id="glitter"></div>
+    
+    <!-- Текст -->
+    <div class="content">
+        <div class="sea-message">
+            <h2>Море ждёт</h2>
+            <p>Bucaneros del Mar de Sangre</p>
+        </div>
+    </div>
+    
+    <!-- Кнопка назад -->
+    <a href="index.html" class="back-btn">← Вернуться в порт</a>
+
+    <script>
+        // генерируем звёзды
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+            star.style.setProperty('--delay', Math.random() * 5 + 's');
+            star.style.width = (1 + Math.random() * 2) + 'px';
+            star.style.height = star.style.width;
+            starsContainer.appendChild(star);
+        }
+
+        // генерируем брызги
+        const sprayContainer = document.getElementById('spray');
+        for (let i = 0; i < 40; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('spray-dot');
+            dot.style.setProperty('--spray-pos', (5 + Math.random() * 90) + '%');
+            dot.style.setProperty('--spray-duration', (1.5 + Math.random() * 3) + 's');
+            dot.style.setProperty('--spray-delay', Math.random() * 4 + 's');
+            dot.style.setProperty('--spray-drift', (-15 + Math.random() * 30) + 'px');
+            dot.style.width = (2 + Math.random() * 4) + 'px';
+            dot.style.height = dot.style.width;
+            sprayContainer.appendChild(dot);
+        }
+
+        // генерируем блики на воде
+        const glitterContainer = document.getElementById('glitter');
+        for (let i = 0; i < 25; i++) {
+            const line = document.createElement('div');
+            line.classList.add('glitter-line');
+            line.style.setProperty('--glitter-x', Math.random() * 100 + '%');
+            line.style.setProperty('--glitter-y', (5 + Math.random() * 90) + '%');
+            line.style.setProperty('--glitter-w', (20 + Math.random() * 60) + 'px');
+            line.style.setProperty('--glitter-r', (-20 + Math.random() * 40) + 'deg');
+            line.style.setProperty('--glitter-duration', (2 + Math.random() * 4) + 's');
+            line.style.setProperty('--glitter-delay', Math.random() * 5 + 's');
+            glitterContainer.appendChild(line);
+        }
+
+        // лёгкое движение луны за мышкой (только десктоп)
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        const moon = document.querySelector('.moon');
+        
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', function(e) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                moon.style.transform = `translate(${x}px, ${y}px)`;
+                moon.style.transition = 'transform 1s ease-out';
+            });
+        }
+    </script>
+</body>
+</html>
