@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Сброс кеша -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Море зовёт — Bucaneros del Mar de Sangre</title>
     <style>
         * {
@@ -34,19 +38,10 @@
         }
 
         /* ===== ЦВЕТОВЫЕ ТЕМЫ ===== */
-        body.theme-white {
-            background: #f5f0e8;
-        }
-        body.theme-black {
-            background: #0a0a0a;
-        }
-        body.theme-red {
-            background: #8B0000;
-        }
-        body.theme-invert {
-            background: #0a0a0a;
-            filter: invert(1);
-        }
+        body.theme-white { background: #f5f0e8; }
+        body.theme-black { background: #0a0a0a; }
+        body.theme-red { background: #8B0000; }
+        body.theme-invert { background: #0a0a0a; filter: invert(1); }
 
         /* слой неба */
         .sky {
@@ -58,7 +53,6 @@
             z-index: 1;
             transition: background 0.8s ease;
         }
-
         body.theme-white .sky {
             background: linear-gradient(180deg, #fffef9 0%, #faf7f0 50%, #f0ebe0 100%);
         }
@@ -69,7 +63,7 @@
             background: linear-gradient(180deg, #6B0000 0%, #5a0000 50%, #4a0000 100%);
         }
 
-        /* солнце / луна */
+        /* небесное тело */
         .celestial-body {
             position: absolute;
             top: 18%;
@@ -80,7 +74,6 @@
             z-index: 2;
             transition: all 0.8s ease;
         }
-
         body.theme-white .celestial-body {
             background: radial-gradient(circle at 45% 45%, #ffffff, #e8e0d0 70%, #d0c8b8 100%);
             box-shadow: 0 0 40px rgba(200, 190, 170, 0.5), 0 0 80px rgba(200, 190, 170, 0.2);
@@ -94,7 +87,7 @@
             box-shadow: 0 0 40px rgba(255, 150, 150, 0.5), 0 0 80px rgba(255, 150, 150, 0.2);
         }
 
-        /* звёзды / облака */
+        /* атмосфера */
         .atmosphere {
             position: absolute;
             top: 0;
@@ -105,13 +98,11 @@
             pointer-events: none;
             transition: opacity 0.8s ease;
         }
-
         .atmosphere-dot {
             position: absolute;
             border-radius: 50%;
             transition: all 0.8s ease;
         }
-
         body.theme-white .atmosphere-dot {
             background: #c8c0b0;
             opacity: 0.4;
@@ -123,7 +114,6 @@
             opacity: 0.7;
             animation: starTwinkle var(--duration) ease-in-out infinite;
         }
-
         @keyframes cloudDrift {
             0%, 100% { transform: translateX(0); }
             50% { transform: translateX(15px); }
@@ -133,7 +123,7 @@
             50% { opacity: 1; transform: scale(1.5); }
         }
 
-        /* контейнер моря */
+        /* море */
         .ocean {
             position: absolute;
             bottom: 0;
@@ -144,8 +134,6 @@
             overflow: hidden;
             transition: background 0.8s ease;
         }
-
-        /* слой волны */
         .wave {
             position: absolute;
             bottom: 0;
@@ -155,7 +143,6 @@
             background: transparent;
             transition: opacity 0.8s ease;
         }
-
         .wave-inner {
             position: absolute;
             bottom: 0;
@@ -165,7 +152,7 @@
             transition: background 0.8s ease;
         }
 
-        /* волна 1 — задняя */
+        /* волна 1 */
         body.theme-white .wave-1 .wave-inner {
             background: linear-gradient(180deg, transparent 0%, rgba(240, 235, 225, 0.7) 40%, rgba(235, 228, 215, 0.85) 70%, rgba(225, 218, 205, 0.95) 100%);
         }
@@ -175,11 +162,7 @@
         body.theme-red .wave-1 .wave-inner {
             background: linear-gradient(180deg, transparent 0%, rgba(100, 0, 0, 0.7) 40%, rgba(80, 0, 0, 0.85) 70%, rgba(60, 0, 0, 0.95) 100%);
         }
-
-        .wave-1 .wave-inner {
-            animation: waveMove1 8s ease-in-out infinite;
-        }
-
+        .wave-1 .wave-inner { animation: waveMove1 8s ease-in-out infinite; }
         .wave-1::before {
             content: '';
             position: absolute;
@@ -190,26 +173,24 @@
             transition: all 0.8s ease;
             animation: foamMove1 8s ease-in-out infinite;
         }
-
         body.theme-white .wave-1::before {
             background: 
-                radial-gradient(ellipse at 20% 50%, rgba(0, 0, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(0, 0, 0, 0.08) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, rgba(0,0,0,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(0,0,0,0.08) 0%, transparent 50%);
         }
         body.theme-black .wave-1::before {
             background: 
-                radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
         }
         body.theme-red .wave-1::before {
             background: 
-                radial-gradient(ellipse at 20% 50%, rgba(0, 0, 0, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 40%, rgba(0, 0, 0, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(0, 0, 0, 0.3) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, rgba(0,0,0,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(0,0,0,0.3) 0%, transparent 50%);
         }
-
         @keyframes waveMove1 {
             0%, 100% { transform: translateX(0) translateY(0); }
             25% { transform: translateX(1%) translateY(-4px); }
@@ -221,23 +202,18 @@
             50% { transform: translateX(-2%); opacity: 1; }
         }
 
-        /* волна 2 — средняя */
+        /* волна 2 */
         .wave-2 { bottom: 5%; }
-
         body.theme-white .wave-2 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(245, 240, 232, 0.6) 30%, rgba(240, 233, 222, 0.75) 60%, rgba(230, 223, 212, 0.9) 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(245,240,232,0.6) 30%, rgba(240,233,222,0.75) 60%, rgba(230,223,212,0.9) 100%);
         }
         body.theme-black .wave-2 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(30, 30, 30, 0.6) 30%, rgba(20, 20, 20, 0.75) 60%, rgba(10, 10, 10, 0.9) 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(30,30,30,0.6) 30%, rgba(20,20,20,0.75) 60%, rgba(10,10,10,0.9) 100%);
         }
         body.theme-red .wave-2 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(120, 0, 0, 0.6) 30%, rgba(100, 0, 0, 0.75) 60%, rgba(80, 0, 0, 0.9) 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(120,0,0,0.6) 30%, rgba(100,0,0,0.75) 60%, rgba(80,0,0,0.9) 100%);
         }
-
-        .wave-2 .wave-inner {
-            animation: waveMove2 6s ease-in-out infinite;
-        }
-
+        .wave-2 .wave-inner { animation: waveMove2 6s ease-in-out infinite; }
         .wave-2::before {
             content: '';
             position: absolute;
@@ -248,26 +224,24 @@
             transition: all 0.8s ease;
             animation: foamMove2 6s ease-in-out infinite;
         }
-
         body.theme-white .wave-2::before {
             background: 
-                radial-gradient(ellipse at 15% 60%, rgba(0, 0, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 55% 45%, rgba(0, 0, 0, 0.07) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 55%, rgba(0, 0, 0, 0.1) 0%, transparent 50%);
+                radial-gradient(ellipse at 15% 60%, rgba(0,0,0,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 55% 45%, rgba(0,0,0,0.07) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 55%, rgba(0,0,0,0.1) 0%, transparent 50%);
         }
         body.theme-black .wave-2::before {
             background: 
-                radial-gradient(ellipse at 15% 60%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 55% 45%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 55%, rgba(255, 255, 255, 0.12) 0%, transparent 50%);
+                radial-gradient(ellipse at 15% 60%, rgba(255,255,255,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 55% 45%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 55%, rgba(255,255,255,0.12) 0%, transparent 50%);
         }
         body.theme-red .wave-2::before {
             background: 
-                radial-gradient(ellipse at 15% 60%, rgba(0, 0, 0, 0.35) 0%, transparent 50%),
-                radial-gradient(ellipse at 55% 45%, rgba(0, 0, 0, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 55%, rgba(0, 0, 0, 0.35) 0%, transparent 50%);
+                radial-gradient(ellipse at 15% 60%, rgba(0,0,0,0.35) 0%, transparent 50%),
+                radial-gradient(ellipse at 55% 45%, rgba(0,0,0,0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 55%, rgba(0,0,0,0.35) 0%, transparent 50%);
         }
-
         @keyframes waveMove2 {
             0%, 100% { transform: translateX(0) translateY(0); }
             50% { transform: translateX(-1.5%) translateY(-7px); }
@@ -277,23 +251,18 @@
             50% { transform: translateX(1.5%); opacity: 0.9; }
         }
 
-        /* волна 3 — передняя */
+        /* волна 3 */
         .wave-3 { bottom: 10%; }
-
         body.theme-white .wave-3 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(248, 244, 238, 0.5) 20%, rgba(243, 237, 228, 0.65) 50%, rgba(235, 228, 218, 0.85) 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(248,244,238,0.5) 20%, rgba(243,237,228,0.65) 50%, rgba(235,228,218,0.85) 100%);
         }
         body.theme-black .wave-3 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(40, 40, 40, 0.5) 20%, rgba(25, 25, 25, 0.65) 50%, rgba(15, 15, 15, 0.85) 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(40,40,40,0.5) 20%, rgba(25,25,25,0.65) 50%, rgba(15,15,15,0.85) 100%);
         }
         body.theme-red .wave-3 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(140, 0, 0, 0.5) 20%, rgba(120, 0, 0, 0.65) 50%, rgba(100, 0, 0, 0.85) 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(140,0,0,0.5) 20%, rgba(120,0,0,0.65) 50%, rgba(100,0,0,0.85) 100%);
         }
-
-        .wave-3 .wave-inner {
-            animation: waveMove3 5s ease-in-out infinite;
-        }
-
+        .wave-3 .wave-inner { animation: waveMove3 5s ease-in-out infinite; }
         .wave-3::before {
             content: '';
             position: absolute;
@@ -304,26 +273,24 @@
             transition: all 0.8s ease;
             animation: foamMove3 5s ease-in-out infinite;
         }
-
         body.theme-white .wave-3::before {
             background: 
-                radial-gradient(ellipse at 25% 50%, rgba(0, 0, 0, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 40%, rgba(0, 0, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 50%, rgba(0, 0, 0, 0.12) 0%, transparent 50%);
+                radial-gradient(ellipse at 25% 50%, rgba(0,0,0,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 40%, rgba(0,0,0,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 50%, rgba(0,0,0,0.12) 0%, transparent 50%);
         }
         body.theme-black .wave-3::before {
             background: 
-                radial-gradient(ellipse at 25% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+                radial-gradient(ellipse at 25% 50%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 50%, rgba(255,255,255,0.15) 0%, transparent 50%);
         }
         body.theme-red .wave-3::before {
             background: 
-                radial-gradient(ellipse at 25% 50%, rgba(0, 0, 0, 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 40%, rgba(0, 0, 0, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 50%, rgba(0, 0, 0, 0.4) 0%, transparent 50%);
+                radial-gradient(ellipse at 25% 50%, rgba(0,0,0,0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 40%, rgba(0,0,0,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 50%, rgba(0,0,0,0.4) 0%, transparent 50%);
         }
-
         @keyframes waveMove3 {
             0%, 100% { transform: translateX(0) translateY(0); }
             50% { transform: translateX(1%) translateY(-3px); }
@@ -343,7 +310,6 @@
             z-index: 4;
             pointer-events: none;
         }
-
         .spray-dot {
             position: absolute;
             border-radius: 50%;
@@ -353,15 +319,9 @@
             left: var(--spray-pos);
             transition: background 0.8s ease;
         }
-
-        body.theme-white .spray-dot {
-            background: rgba(0, 0, 0, 0.3);
-        }
+        body.theme-white .spray-dot { background: rgba(0,0,0,0.3); }
         body.theme-black .spray-dot,
-        body.theme-red .spray-dot {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
+        body.theme-red .spray-dot { background: rgba(255,255,255,0.5); }
         @keyframes sprayFloat {
             0% { transform: translateY(0) translateX(0); opacity: 0; }
             20% { opacity: 0.9; }
@@ -378,7 +338,6 @@
             z-index: 5;
             pointer-events: none;
         }
-
         .glitter-line {
             position: absolute;
             height: 1px;
@@ -390,15 +349,9 @@
             width: var(--glitter-w);
             transform: rotate(var(--glitter-r));
         }
-
-        body.theme-white .glitter-line {
-            background: rgba(0, 0, 0, 0.25);
-        }
+        body.theme-white .glitter-line { background: rgba(0,0,0,0.25); }
         body.theme-black .glitter-line,
-        body.theme-red .glitter-line {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
+        body.theme-red .glitter-line { background: rgba(255,255,255,0.4); }
         @keyframes glitterShine {
             0%, 100% { opacity: 0; }
             50% { opacity: 0.7; }
@@ -418,17 +371,14 @@
             justify-content: center;
             pointer-events: none;
         }
-
         .sea-message {
             text-align: center;
             animation: messageAppear 1.5s ease-out 0.5s both;
         }
-
         @keyframes messageAppear {
             0% { opacity: 0; transform: translateY(30px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-
         .sea-message h2 {
             font-size: clamp(1.8rem, 5vw, 3.5rem);
             letter-spacing: 4px;
@@ -438,22 +388,19 @@
             animation: textFloat 4s ease-in-out infinite;
             transition: color 0.8s ease;
         }
-
         body.theme-white .sea-message h2 {
             color: #1a1a1a;
-            text-shadow: 0 0 20px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 0 20px rgba(0,0,0,0.15), 0 4px 15px rgba(0,0,0,0.1);
         }
         body.theme-black .sea-message h2,
         body.theme-red .sea-message h2 {
             color: #ffffff;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.4), 0 4px 20px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 30px rgba(255,255,255,0.4), 0 4px 20px rgba(0,0,0,0.5);
         }
-
         @keyframes textFloat {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-6px); }
         }
-
         .sea-message p {
             font-size: clamp(0.8rem, 1.8vw, 1.1rem);
             letter-spacing: 5px;
@@ -461,14 +408,9 @@
             font-style: italic;
             transition: color 0.8s ease;
         }
-
-        body.theme-white .sea-message p {
-            color: rgba(0, 0, 0, 0.6);
-        }
+        body.theme-white .sea-message p { color: rgba(0,0,0,0.6); }
         body.theme-black .sea-message p,
-        body.theme-red .sea-message p {
-            color: rgba(255, 255, 255, 0.7);
-        }
+        body.theme-red .sea-message p { color: rgba(255,255,255,0.7); }
 
         /* индикатор темы */
         .theme-indicator {
@@ -484,16 +426,11 @@
             transition: all 0.8s ease;
             animation: messageAppear 1.5s ease-out 1.2s both;
         }
-
-        body.theme-white .theme-indicator {
-            color: rgba(0, 0, 0, 0.5);
-        }
+        body.theme-white .theme-indicator { color: rgba(0,0,0,0.5); }
         body.theme-black .theme-indicator,
-        body.theme-red .theme-indicator {
-            color: rgba(255, 255, 255, 0.5);
-        }
+        body.theme-red .theme-indicator { color: rgba(255,255,255,0.5); }
 
-        /* стрелка-подсказка свайпа */
+        /* стрелка свайпа */
         .swipe-hint {
             position: absolute;
             top: clamp(45px, 8vh, 70px);
@@ -504,33 +441,36 @@
             animation: swipeHintBounce 2s ease-in-out infinite, messageAppear 1.5s ease-out 1.8s both;
             transition: color 0.8s ease;
         }
-
         .swipe-hint svg {
             width: clamp(20px, 4vw, 28px);
             height: clamp(20px, 4vw, 28px);
             transition: stroke 0.8s ease;
         }
-
-        body.theme-white .swipe-hint svg {
-            stroke: rgba(0, 0, 0, 0.4);
-        }
+        body.theme-white .swipe-hint svg { stroke: rgba(0,0,0,0.4); }
         body.theme-black .swipe-hint svg,
-        body.theme-red .swipe-hint svg {
-            stroke: rgba(255, 255, 255, 0.5);
-        }
-
+        body.theme-red .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
         @keyframes swipeHintBounce {
             0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
             50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
         }
 
-        /* кнопка возврата — строго по центру */
-        .back-btn {
+        /* ===== КНОПКА — ЖЁСТКИЙ ЦЕНТР ===== */
+        .back-btn-wrapper {
             position: absolute;
-            bottom: clamp(25px, 6vh, 50px);
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: clamp(30px, 7vh, 50px);
+            left: 0;
+            width: 100%;
             z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             border: 1px solid;
             padding: 0.7rem 2rem;
             font-family: 'Georgia', 'Times New Roman', serif;
@@ -542,53 +482,50 @@
             pointer-events: auto;
             text-decoration: none;
             animation: messageAppear 1.5s ease-out 1s both;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
             touch-action: manipulation;
             min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             white-space: nowrap;
+            /* гарантированный центр */
+            margin: 0 auto;
         }
 
         body.theme-white .back-btn {
             background: transparent;
-            border-color: rgba(0, 0, 0, 0.4);
+            border-color: rgba(0,0,0,0.4);
             color: #1a1a1a;
         }
         body.theme-white .back-btn:hover,
         body.theme-white .back-btn:active {
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(0,0,0,0.05);
             border-color: #1a1a1a;
             letter-spacing: 6px;
         }
-
         body.theme-black .back-btn,
         body.theme-red .back-btn {
             background: transparent;
-            border-color: rgba(255, 255, 255, 0.4);
+            border-color: rgba(255,255,255,0.4);
             color: #ffffff;
         }
         body.theme-black .back-btn:hover,
         body.theme-black .back-btn:active,
         body.theme-red .back-btn:hover,
         body.theme-red .back-btn:active {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             border-color: #ffffff;
             letter-spacing: 6px;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px rgba(255,255,255,0.15);
         }
-
         .back-btn:active {
-            transform: translateX(-50%) scale(0.95);
+            transform: scale(0.95);
         }
 
         /* адаптив */
         @media (max-width: 480px) {
             .back-btn {
-                padding: 0.6rem 1.6rem;
+                padding: 0.65rem 1.8rem;
                 letter-spacing: 2px;
-                bottom: clamp(30px, 7vh, 45px);
+                font-size: 0.75rem;
             }
             .back-btn:hover,
             .back-btn:active {
@@ -604,21 +541,20 @@
             .theme-indicator {
                 top: clamp(12px, 2.5vh, 20px);
             }
+            .back-btn-wrapper {
+                bottom: clamp(35px, 8vh, 45px);
+            }
         }
 
         @media (max-width: 360px) {
             .back-btn {
-                padding: 0.55rem 1.3rem;
-                font-size: 0.65rem;
+                padding: 0.6rem 1.5rem;
+                font-size: 0.7rem;
                 letter-spacing: 1.5px;
             }
-            .sea-message h2 {
-                font-size: 1.5rem;
-            }
-            .sea-message p {
-                font-size: 0.7rem;
-                letter-spacing: 3px;
-            }
+            .sea-message h2 { font-size: 1.5rem; }
+            .sea-message p { font-size: 0.7rem; letter-spacing: 3px; }
+            .back-btn-wrapper { bottom: 30px; }
         }
 
         @media (max-height: 500px) and (orientation: landscape) {
@@ -639,11 +575,11 @@
                 letter-spacing: 3px;
             }
             .back-btn {
-                bottom: 12px;
-                padding: 0.4rem 1.2rem;
-                font-size: 0.6rem;
+                padding: 0.45rem 1.3rem;
+                font-size: 0.65rem;
                 min-height: 36px;
             }
+            .back-btn-wrapper { bottom: 10px; }
             .swipe-hint { display: none; }
             .theme-indicator { top: 6px; font-size: 0.5rem; }
         }
@@ -661,23 +597,17 @@
     <!-- Небо -->
     <div class="sky"></div>
 
-    <!-- Солнце / луна -->
+    <!-- Небесное тело -->
     <div class="celestial-body"></div>
 
-    <!-- Атмосфера (облака / звёзды) -->
+    <!-- Атмосфера -->
     <div class="atmosphere" id="atmosphere"></div>
 
     <!-- Море -->
     <div class="ocean">
-        <div class="wave wave-1">
-            <div class="wave-inner"></div>
-        </div>
-        <div class="wave wave-2">
-            <div class="wave-inner"></div>
-        </div>
-        <div class="wave wave-3">
-            <div class="wave-inner"></div>
-        </div>
+        <div class="wave wave-1"><div class="wave-inner"></div></div>
+        <div class="wave wave-2"><div class="wave-inner"></div></div>
+        <div class="wave wave-3"><div class="wave-inner"></div></div>
     </div>
 
     <!-- Брызги -->
@@ -704,8 +634,10 @@
         </div>
     </div>
 
-    <!-- Кнопка назад -->
-    <a href="index.html" class="back-btn">← Вернуться в порт</a>
+    <!-- Кнопка — обёртка для жёсткого центрирования -->
+    <div class="back-btn-wrapper">
+        <a href="index.html" class="back-btn">← Вернуться в порт</a>
+    </div>
 
     <script>
         // ===== ГЕНЕРАЦИЯ АТМОСФЕРЫ =====
@@ -761,7 +693,7 @@
         let touchStartY = 0;
         let touchEndY = 0;
         let isSwiping = false;
-        const swipeThreshold = 60; // минимальная длина свайпа
+        const swipeThreshold = 60;
 
         document.addEventListener('touchstart', function(e) {
             touchStartY = e.touches[0].clientY;
@@ -776,29 +708,22 @@
         document.addEventListener('touchend', function() {
             if (!isSwiping) return;
             isSwiping = false;
-
             const swipeDistance = touchEndY - touchStartY;
-
-            // свайп вниз (положительное значение) — следующая тема
             if (swipeDistance > swipeThreshold) {
                 currentThemeIndex = (currentThemeIndex + 1) % themes.length;
                 applyTheme();
-            }
-            // свайп вверх (отрицательное значение) — предыдущая тема
-            else if (swipeDistance < -swipeThreshold) {
+            } else if (swipeDistance < -swipeThreshold) {
                 currentThemeIndex = (currentThemeIndex - 1 + themes.length) % themes.length;
                 applyTheme();
             }
-
             touchStartY = 0;
             touchEndY = 0;
         });
 
-        // колёсико мыши для десктопа
+        // колёсико мыши
         let wheelAccumulator = 0;
         document.addEventListener('wheel', function(e) {
             wheelAccumulator += e.deltaY;
-
             if (wheelAccumulator > 80) {
                 currentThemeIndex = (currentThemeIndex + 1) % themes.length;
                 applyTheme();
@@ -811,50 +736,32 @@
         }, { passive: true });
 
         function applyTheme() {
-            // убираем все темы
             themes.forEach(t => body.classList.remove('theme-' + t));
-            // применяем новую
             body.classList.add('theme-' + themes[currentThemeIndex]);
-
-            // обновляем индикатор
             themeIndicator.textContent = themeNames[currentThemeIndex];
-
-            // анимация индикатора
             themeIndicator.style.transform = 'translateX(-50%) scale(1.3)';
             setTimeout(() => {
                 themeIndicator.style.transform = 'translateX(-50%) scale(1)';
             }, 200);
-
-            // прячем подсказку после первого свайпа
             if (swipeHint.style.opacity !== '0') {
                 swipeHint.style.transition = 'opacity 0.6s ease';
                 swipeHint.style.opacity = '0';
-                setTimeout(() => {
-                    swipeHint.style.display = 'none';
-                }, 600);
+                setTimeout(() => { swipeHint.style.display = 'none'; }, 600);
             }
-
-            // вибрация на мобильных (если поддерживается)
-            if (navigator.vibrate) {
-                navigator.vibrate(15);
-            }
+            if (navigator.vibrate) { navigator.vibrate(15); }
         }
 
-        // скрываем подсказку через 8 секунд бездействия
         setTimeout(() => {
             if (currentThemeIndex === 0) {
                 swipeHint.style.transition = 'opacity 0.6s ease';
                 swipeHint.style.opacity = '0';
-                setTimeout(() => {
-                    swipeHint.style.display = 'none';
-                }, 600);
+                setTimeout(() => { swipeHint.style.display = 'none'; }, 600);
             }
         }, 8000);
 
-        // ===== ДВИЖЕНИЕ НЕБЕСНОГО ТЕЛА ЗА МЫШКОЙ =====
+        // ===== ДВИЖЕНИЕ НЕБЕСНОГО ТЕЛА =====
         const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
         const celestialBody = document.querySelector('.celestial-body');
-
         if (!isTouchDevice) {
             document.addEventListener('mousemove', function(e) {
                 const x = (e.clientX / window.innerWidth - 0.5) * 25;
