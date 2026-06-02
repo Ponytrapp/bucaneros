@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0d1b1e" id="themeColorMeta">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -651,6 +652,75 @@ body.theme-3 .carousel-wrapper {
                 <div class="carousel-slide">
                     <img src="IMG_3.webp" alt="Tres" onerror="this.style.display='none'">
                 </div>
+                <div class="carousel-slide">
+                    <img src="IMG_4.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_5.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_6.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_7.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_8.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_9.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_10.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_11.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_12.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_13.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_14.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_15.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_16.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_17.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_18.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_19.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_20.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_21.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_22.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_23.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_24.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_25.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="IMG_26.webp" alt="Tres" onerror="this.style.display='none'">
+                </div>
             </div>
             <!-- Точки-индикаторы -->
             <div class="carousel-dots" id="carouselDots"></div>
@@ -842,28 +912,38 @@ body.theme-3 .carousel-wrapper {
 
         // ===== ПРИМЕНЕНИЕ ТЕМЫ =====
         function applyTheme(idx) {
-            currentTheme = idx;
-            document.body.className = 'theme-' + idx;
-            document.getElementById('themeIndicator').textContent = themeData[idx].name;
-            document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1.35)';
-            setTimeout(() => {
-                document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1)';
-            }, 250);
+    currentTheme = idx;
+    document.body.className = 'theme-' + idx;
+    document.getElementById('themeIndicator').textContent = themeData[idx].name;
+    document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1.35)';
+    setTimeout(() => {
+        document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1)';
+    }, 250);
 
-            buildWaves();
-            buildAtmosphere();
-            buildFoam();
-            updateWaveColors();
+    // Обновляем цвет системной строки под цвет моря
+    const themeColorMeta = document.getElementById('themeColorMeta');
+    const oceanColors = [
+        '#0a1517', // Тема 0: Чёрное море → тёмно-синий
+        '#ede6da', // Тема 1: Белое море → светло-бежевый
+        '#6b0f05', // Тема 2: Красное море → тёмно-красный
+        '#ede6da'  // Тема 3: Белое море → светло-бежевый
+    ];
+    themeColorMeta.setAttribute('content', oceanColors[idx]);
 
-            // скрываем подсказку
-            const hint = document.getElementById('swipeHint');
-            if (hint.style.opacity !== '0') {
-                hint.style.transition = 'opacity 0.5s ease';
-                hint.style.opacity = '0';
-                setTimeout(() => hint.style.display = 'none', 500);
-            }
-            if (navigator.vibrate) navigator.vibrate(12);
-        }
+    buildWaves();
+    buildAtmosphere();
+    buildFoam();
+    updateWaveColors();
+
+    // скрываем подсказку
+    const hint = document.getElementById('swipeHint');
+    if (hint.style.opacity !== '0') {
+        hint.style.transition = 'opacity 0.5s ease';
+        hint.style.opacity = '0';
+        setTimeout(() => hint.style.display = 'none', 500);
+    }
+    if (navigator.vibrate) navigator.vibrate(12);
+}
 
         // ===== СВАЙП ДЛЯ СМЕНЫ ТЕМЫ =====
 let touchStartY = 0, touchEndY = 0, isSwiping = false;
