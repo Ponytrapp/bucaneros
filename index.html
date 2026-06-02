@@ -7,7 +7,20 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Bucaneros del Mar de Sangre</title>
     <style>
-        * {
+        *
+        {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    /* Фиксы для iOS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Предотвращаем выход контента */
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+      }
+        {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -29,6 +42,12 @@
             cursor: default;
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
             transition: opacity 0.6s ease, transform 0.6s ease;
+            /* Фиксы для iOS */
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            /* Предотвращаем "резиновый" скролл */
+            overscroll-behavior: none;
+            -webkit-overscroll-behavior: none;
         }
 
         body.page-exit {
@@ -323,6 +342,51 @@
             }
             .parallax-layer { transition: none; }
         }
+
+        /* ===== СПЕЦИАЛЬНЫЕ ФИКСЫ ДЛЯ iOS ===== */
+@supports (-webkit-touch-callout: none) {
+    /* Только для iOS Safari */
+    
+    .carousel-slide img {
+        /* Аппаратное ускорение */
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+    }
+    
+    .carousel-wrapper {
+        /* Дополнительная изоляция */
+        -webkit-mask-image: -webkit-radial-gradient(white, black);
+        mask-image: radial-gradient(white, black);
+        /* Фикс скругления углов */
+        -webkit-border-radius: 6px;
+    }
+    
+    /* Фикс высоты экрана (учитывает нижнюю панель) */
+    body {
+        min-height: -webkit-fill-available;
+    }
+    
+    /* Убираем мерцание при скролле/свайпе */
+    .wave-row,
+    .carousel-track {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        perspective: 1000;
+    }
+}
+
+/* Фикс для iOS 15+ с "динамическим островом" */
+@supports (padding-top: env(safe-area-inset-top)) {
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    .back-btn-wrapper {
+        bottom: calc(clamp(30px, 7vh, 50px) + env(safe-area-inset-bottom));
+    }
+}
     </style>
 </head>
 <body>
@@ -356,96 +420,205 @@
 
     <script>
         const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+const container = document.getElementById('parallaxContainer');
+const wrapper = document.getElementById('mainWrapper');
+const brandName = document.querySelector('.brand-name');
+const logoMark = document.querySelector('.logo-mark');
+const divider = document.querySelector('.divider');
+const tagline = document.querySelector('.tagline');
+const description = document.querySelector('.description');
+const footerNote = document.querySelector('.footer-note');
 
-        if (!isTouchDevice) {
-            document.addEventListener('mousemove', function(e) {
-                document.body.style.setProperty('--mouse-x', e.clientX + 'px');
-                document.body.style.setProperty('--mouse-y', e.clientY + 'px');
-            });
+// ===== ГИРОСКОП ДЛЯ МОБИЛЬНЫХ =====
+let gyroActive = false;
+let gyroX = 0;
+let gyroY = 0;
+let targetGyroX = 0;
+let targetGyroY = 0;
+
+if (isTouchDevice && window.DeviceOrientationEvent) {
+    // Запрашиваем разрешение для iOS 13+
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        // Показываем подсказку — нужно нажать на экран для активации
+        document.addEventListener('click', function requestGyro() {
+            DeviceOrientationEvent.requestPermission()
+                .then(state => {
+                    if (state === 'granted') {
+                        enableGyro();
+                    }
+                })
+                .catch(console.error);
+            document.removeEventListener('click', requestGyro);
+        }, { once: false });
+    } else {
+        // Android — сразу включаем
+        enableGyro();
+    }
+}
+
+function enableGyro() {
+    gyroActive = true;
+    window.addEventListener('deviceorientation', function(e) {
+        // Бета: наклон вперёд-назад (-180 до 180)
+        // Гамма: наклон влево-вправо (-90 до 90)
+        if (e.beta !== null && e.gamma !== null) {
+            // Нормализуем значения и ограничиваем диапазон
+            targetGyroX = Math.max(-25, Math.min(25, e.gamma)); // -25..25
+            targetGyroY = Math.max(-25, Math.min(25, e.beta - 45)); // компенсация типичного угла просмотра
         }
+    });
+}
 
-        const container = document.getElementById('parallaxContainer');
-        if (!isTouchDevice) {
-            document.addEventListener('mousemove', function(e) {
-                const x = (window.innerWidth / 2 - e.clientX) / 80;
-                const y = (window.innerHeight / 2 - e.clientY) / 80;
-                container.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        }
+// Плавное сглаживание гироскопа
+function smoothGyro() {
+    if (!gyroActive) return;
+    gyroX += (targetGyroX - gyroX) * 0.08;
+    gyroY += (targetGyroY - gyroY) * 0.08;
+    requestAnimationFrame(smoothGyro);
+}
+if (gyroActive || isTouchDevice) {
+    smoothGyro();
+}
 
-        // плавный переход при клике на кнопку
-        const ctaBtn = document.getElementById('ctaBtn');
-        ctaBtn.addEventListener('click', function(e) {
+// ===== КАСТОМНЫЙ КУРСОР (ДЕСКТОП) =====
+if (!isTouchDevice) {
+    document.addEventListener('mousemove', function(e) {
+        document.body.style.setProperty('--mouse-x', e.clientX + 'px');
+        document.body.style.setProperty('--mouse-y', e.clientY + 'px');
+    });
+}
+
+// ===== ОСНОВНОЙ ЦИКЛ АНИМАЦИИ =====
+function animate() {
+    let offsetX = 0;
+    let offsetY = 0;
+    
+    if (gyroActive && isTouchDevice) {
+        // Используем гироскоп на мобильных
+        offsetX = gyroX * 0.4;
+        offsetY = gyroY * 0.4;
+    }
+    
+    // Применяем смещение к элементам (с разной глубиной)
+    if (container) {
+        container.style.transform = `translate(${offsetX * 0.2}px, ${offsetY * 0.2}px)`;
+    }
+    if (logoMark) {
+        logoMark.style.transform = `translate(${offsetX * 0.15}px, ${offsetY * 0.15}px)`;
+    }
+    if (brandName) {
+        brandName.style.transform = `translate(${offsetX * 0.3}px, ${offsetY * 0.3}px)`;
+    }
+    if (divider) {
+        divider.style.transform = `translate(${offsetX * 0.1}px, ${offsetY * 0.1}px) scaleX(${1 + Math.abs(offsetY) * 0.003})`;
+    }
+    if (tagline) {
+        tagline.style.transform = `translate(${offsetX * 0.25}px, ${offsetY * 0.25}px)`;
+    }
+    if (description) {
+        description.style.transform = `translate(${offsetX * 0.18}px, ${offsetY * 0.18}px)`;
+    }
+    if (footerNote) {
+        footerNote.style.transform = `translate(${offsetX * 0.1}px, ${offsetY * 0.1}px)`;
+    }
+    
+    requestAnimationFrame(animate);
+}
+
+// ===== ДЕСКТОП: ПАРАЛЛАКС ОТ МЫШИ =====
+if (!isTouchDevice) {
+    document.addEventListener('mousemove', function(e) {
+        const x = (window.innerWidth / 2 - e.clientX) / 40;
+        const y = (window.innerHeight / 2 - e.clientY) / 40;
+        
+        if (container) container.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        if (logoMark) logoMark.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        if (brandName) brandName.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+        if (divider) divider.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) scaleX(${1 + Math.abs(y) * 0.005})`;
+        if (tagline) tagline.style.transform = `translate(${x * 0.4}px, ${y * 0.4}px)`;
+        if (description) description.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        if (footerNote) footerNote.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+}
+
+// Запускаем цикл анимации
+animate();
+
+// ===== КЛИК ПО КНОПКЕ — ЭФФЕКТ РЯБИ =====
+const ctaBtn = document.getElementById('ctaBtn');
+ctaBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const href = this.getAttribute('href');
+
+    // эффект ряби
+    const ripple = document.createElement('span');
+    const rect = ctaBtn.getBoundingClientRect();
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX) || rect.left + rect.width / 2;
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY) || rect.top + rect.height / 2;
+    ripple.style.cssText = `
+        position: absolute;
+        width: 10px; height: 10px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        animation: rippleEffect 0.6s ease-out forwards;
+        left: ${clientX - rect.left}px;
+        top: ${clientY - rect.top}px;
+    `;
+    ctaBtn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+
+    // плавный уход страницы
+    setTimeout(() => {
+        document.body.classList.add('page-exit');
+        setTimeout(() => {
+            window.location.href = href;
+        }, 500);
+    }, 200);
+});
+
+// ===== СТИЛЬ ДЛЯ РЯБИ =====
+const styleSheet = document.createElement('style');
+styleSheet.textContent = `
+    @keyframes rippleEffect {
+        0% { width: 10px; height: 10px; opacity: 1; }
+        100% { width: 200px; height: 200px; opacity: 0; }
+    }
+`;
+document.head.appendChild(styleSheet);
+
+// ===== ДВОЙНОЙ КЛИК ПО НАЗВАНИЮ — СМЕНА ФОНА =====
+const colors = ['#8B0000', '#A00000', '#6B0000', '#4B0000', '#800000'];
+let colorIndex = 0;
+
+brandName.addEventListener('dblclick', function() {
+    colorIndex = (colorIndex + 1) % colors.length;
+    document.body.style.transition = 'background-color 0.8s ease';
+    document.body.style.backgroundColor = colors[colorIndex];
+    ctaBtn.style.transition = 'color 0.8s ease, background-color 0.8s ease';
+    ctaBtn.style.color = colors[colorIndex];
+});
+
+// ===== ДВОЙНОЙ ТАП ДЛЯ МОБИЛЬНЫХ =====
+if (isTouchDevice) {
+    brandName.addEventListener('touchstart', function(e) {
+        if (e.touches.length > 1) e.preventDefault();
+    }, { passive: false });
+
+    let lastTap = 0;
+    brandName.addEventListener('touchend', function(e) {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 300 && tapLength > 0) {
             e.preventDefault();
-            const href = this.getAttribute('href');
-            
-            // эффект ряби
-            const ripple = document.createElement('span');
-            const rect = ctaBtn.getBoundingClientRect();
-            const clientX = e.clientX || (e.touches && e.touches[0].clientX) || rect.left + rect.width / 2;
-            const clientY = e.clientY || (e.touches && e.touches[0].clientY) || rect.top + rect.height / 2;
-            ripple.style.cssText = `
-                position: absolute;
-                width: 10px; height: 10px;
-                background: rgba(255,255,255,0.6);
-                border-radius: 50%;
-                pointer-events: none;
-                transform: translate(-50%, -50%);
-                animation: rippleEffect 0.6s ease-out forwards;
-                left: ${clientX - rect.left}px;
-                top: ${clientY - rect.top}px;
-            `;
-            ctaBtn.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
-
-            // плавный уход страницы
-            setTimeout(() => {
-                document.body.classList.add('page-exit');
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 500);
-            }, 200);
-        });
-
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = `
-            @keyframes rippleEffect {
-                0% { width: 10px; height: 10px; opacity: 1; }
-                100% { width: 200px; height: 200px; opacity: 0; }
-            }
-        `;
-        document.head.appendChild(styleSheet);
-
-        const brandName = document.querySelector('.brand-name');
-        const colors = ['#8B0000', '#A00000', '#6B0000', '#4B0000', '#800000'];
-        let colorIndex = 0;
-
-        brandName.addEventListener('dblclick', function() {
-            colorIndex = (colorIndex + 1) % colors.length;
-            document.body.style.transition = 'background-color 0.8s ease';
-            document.body.style.backgroundColor = colors[colorIndex];
-            ctaBtn.style.transition = 'color 0.8s ease, background-color 0.8s ease';
-            ctaBtn.style.color = colors[colorIndex];
-        });
-
-        if (isTouchDevice) {
-            brandName.addEventListener('touchstart', function(e) {
-                if (e.touches.length > 1) e.preventDefault();
-            }, { passive: false });
-
-            let lastTap = 0;
-            brandName.addEventListener('touchend', function(e) {
-                const currentTime = new Date().getTime();
-                const tapLength = currentTime - lastTap;
-                if (tapLength < 300 && tapLength > 0) {
-                    e.preventDefault();
-                    brandName.dispatchEvent(new Event('dblclick'));
-                }
-                lastTap = currentTime;
-            });
+            brandName.dispatchEvent(new Event('dblclick'));
         }
+        lastTap = currentTime;
+    });
+}
 
-        document.addEventListener('touchmove', function() {}, { passive: true });
+document.addEventListener('touchmove', function() {}, { passive: true });
     </script>
 </body>
 </html>
