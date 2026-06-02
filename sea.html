@@ -5,10 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0a1517" id="themeColorMeta">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <meta name="theme-color" content="#0a0a0a" id="themeColorMeta">
+    <title>Море зовёт — Bucaneros del Mar de Sangre</title>
+    
+    <!-- МГНОВЕННЫЙ ФИКС НАВБАРА -->
+    <script>
+        // Сразу делаем навбар тёмным, ещё до загрузки CSS
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0a0a0a');
+        
+        // Слушаем момент, когда DOM готов — применяем тему
+        document.addEventListener('DOMContentLoaded', function() {
+            // Принудительно обновляем через 50ms после загрузки
+            setTimeout(function() {
+                var meta = document.getElementById('themeColorMeta');
+                if (meta && document.body.classList.contains('theme-0')) {
+                    meta.setAttribute('content', '#0a1517');
+                }
+            }, 50);
+        });
+    </script>
+    
+    <style>
+    /* ... остальные стили ... */
     <title>fish — Bucaneros del Mar de Sangre</title>
     <style>
         * 
@@ -404,6 +425,213 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
     0% { opacity: 0; transform: translateY(40px); }
     100% { opacity: 1; transform: translateY(0); }
 }
+        /* ===== ОВЕРЛЕЙ (РАЗВОРОТ ИЗОБРАЖЕНИЯ) ===== */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.overlay.active {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.overlay-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 0;
+}
+
+.overlay-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90vw;
+    max-height: 85vh;
+    max-height: 85dvh;
+    animation: overlayIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes overlayIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.overlay-image {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 55vh;
+    max-height: 55dvh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.overlay-info {
+    text-align: center;
+    margin-top: 1.5rem;
+    animation: overlayInfoIn 0.6s ease 0.2s both;
+}
+
+@keyframes overlayInfoIn {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.overlay-title {
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: #ffffff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.overlay-desc {
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    max-width: 450px;
+    margin: 0 auto 1.5rem;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+.overlay-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+    padding: 0.7rem 2rem;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 44px;
+}
+
+.overlay-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+    letter-spacing: 5px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+.overlay-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+/* Кнопка закрытия (крестик) */
+.overlay-close {
+    position: absolute;
+    top: clamp(15px, 3vh, 25px);
+    right: clamp(15px, 3vw, 25px);
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    width: clamp(36px, 8vw, 44px);
+    height: clamp(36px, 8vw, 44px);
+    border-radius: 50%;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    animation: overlayInfoIn 0.6s ease 0.4s both;
+}
+
+.overlay-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
+}
+
+.overlay-close:active {
+    transform: scale(0.9);
+}
+
+/* Адаптив оверлея */
+@media (max-width: 480px) {
+    .overlay-content {
+        max-width: 95vw;
+    }
+    .overlay-image {
+        max-height: 45vh;
+        border-radius: 6px;
+    }
+    .overlay-info {
+        margin-top: 1rem;
+    }
+    .overlay-desc {
+        max-width: 90%;
+    }
+    .overlay-btn {
+        padding: 0.6rem 1.5rem;
+    }
+}
+
+@media (orientation: landscape) {
+    .overlay-content {
+        flex-direction: row;
+        gap: 2rem;
+        max-width: 85vw;
+    }
+    .overlay-image {
+        max-height: 60vh;
+        max-width: 55%;
+    }
+    .overlay-info {
+        text-align: left;
+        margin-top: 0;
+        max-width: 40%;
+    }
+    .overlay-desc {
+        margin: 0 0 1.5rem 0;
+        font-size: 0.8rem;
+    }
+}
 
 /* ===== КАРУСЕЛЬ ===== */
 .carousel-wrapper {
@@ -733,104 +961,45 @@ body.theme-3 .carousel-wrapper {
         </svg>
     </div>
     <!-- КОНТЕНТ -->
-<div class="content-layer">
+div class="content-layer">
     <div class="message-block">
         <!-- Карусель -->
-        <div class="carousel-wrapper">
+        <div class="carousel-wrapper" id="carouselWrapper">
             <div class="carousel-track" id="carouselTrack">
-                <!-- Слайды -->
-                <div class="carousel-slide">
-                    <img src="IMG_1.webp" alt="Uno" onerror="this.style.display='none'">
+                <div class="carousel-slide" data-title="logo.v1" data-desc="Настоящий буканьер не пукают по ветру">
+                    <img src="IMG_1.webp" alt="v1" onerror="this.src='error.png'">
                 </div>
-                <div class="carousel-slide">
-                    <img src="IMG_2.webp" alt="Dos" onerror="this.style.display='none'">
+                <div class="carousel-slide" data-title="logo.v2" data-desc="Под этим флагом нет места трусости. Его место занимает паника">
+                    <img src="IMG_1.webp" alt="v2" onerror="this.src='error.png'">
                 </div>
-                <div class="carousel-slide">
-                    <img src="IMG_3.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_4.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_5.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_6.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_7.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_8.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_9.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_10.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_11.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_12.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_13.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_14.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_15.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_16.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_17.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_18.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_19.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_20.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_21.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_22.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_23.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_24.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_25.webp" alt="Tres" onerror="this.style.display='none'">
-                </div>
-                <div class="carousel-slide">
-                    <img src="IMG_26.webp" alt="Tres" onerror="this.style.display='none'">
+                <div class="carousel-slide" data-title="logo.v3" data-desc="X отмечает место, но настоящее сокровище — не золото. Золото - это металл, а мы работаем с деревом">
+                    <img src="IMG_1.webp" alt="v3" onerror="this.src='error.png'">
                 </div>
             </div>
-            <!-- Точки-индикаторы -->
             <div class="carousel-dots" id="carouselDots"></div>
-            <!-- Стрелки -->
             <button class="carousel-arrow carousel-prev" id="carouselPrev">‹</button>
             <button class="carousel-arrow carousel-next" id="carouselNext">›</button>
         </div>
-        <!-- Подпись под каруселью -->
-        <p class="sub-text">Bucaneros del Mar de Sangre</p>
+        <p class="sub-text">Bucaneros</p>
     </div>
+</div>
+
+<!-- ОВЕРЛЕЙ (разворот изображения) -->
+<div class="overlay" id="overlay">
+    <div class="overlay-bg" id="overlayBg"></div>
+    <div class="overlay-content" id="overlayContent">
+        <img src="" alt="" class="overlay-image" id="overlayImage">
+        <div class="overlay-info">
+            <h3 class="overlay-title" id="overlayTitle"></h3>
+            <p class="overlay-desc" id="overlayDesc"></p>
+            <button class="overlay-btn" id="overlayBtn">А что дальше</button>
+        </div>
+    </div>
+    <button class="overlay-close" id="overlayClose">✕</button>
 </div>
     <!-- КНОПКА -->
     <div class="back-btn-wrapper">
-        <a href="index.html" class="back-btn">← Вернуться в порт</a>
+        <a href="index.html" class="back-btn">← Да чёт нет</a>
     </div>
 
     <script>
@@ -1008,21 +1177,47 @@ body.theme-3 .carousel-wrapper {
 
         // ===== ПРИМЕНЕНИЕ ТЕМЫ =====
         function applyTheme(idx) {
-        currentTheme = idx;
-        document.body.className = 'theme-' + idx;
-        document.getElementById('themeIndicator').textContent = themeData[idx].name;
-        document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1.35)';
-        setTimeout(() => {
-           document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1)';
-       }, 250);
+    currentTheme = idx;
+    document.body.className = 'theme-' + idx;
+    document.getElementById('themeIndicator').textContent = themeData[idx].name;
+    document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1.35)';
+    setTimeout(() => {
+        document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1)';
+    }, 250);
 
-    // Массив цветов моря для каждой темы (основной тон)
-    const oceanColors = [
-        '#0a1517', // Тема 0: Чёрное море
-        '#ede6da', // Тема 1: Белое море
-        '#6b0f05', // Тема 2: Красное море
-        '#ede6da'  // Тема 3: Белое море
-    ];
+    // Определяем цвет навбара
+    const themeColorMeta = document.getElementById('themeColorMeta');
+    const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+    let navbarColor;
+
+    if (isLandscape) {
+        navbarColor = '#0a0a0a'; // Всегда тёмный в ландшафте
+    } else {
+        const oceanColors = ['#0a1517', '#ede6da', '#6b0f05', '#ede6da'];
+        navbarColor = oceanColors[idx];
+    }
+
+    themeColorMeta.setAttribute('content', navbarColor);
+    document.documentElement.style.setProperty('--ocean-color', navbarColor);
+
+    buildWaves();
+    buildAtmosphere();
+    buildFoam();
+    updateWaveColors();
+
+    const hint = document.getElementById('swipeHint');
+    if (hint.style.opacity !== '0') {
+        hint.style.transition = 'opacity 0.5s ease';
+        hint.style.opacity = '0';
+        setTimeout(() => hint.style.display = 'none', 500);
+    }
+    if (navigator.vibrate) navigator.vibrate(12);
+}
+
+// Слушаем смену ориентации — обновляем навбар
+window.matchMedia('(orientation: landscape)').addEventListener('change', () => {
+    applyTheme(currentTheme);
+});
     
     // Плавно меняем CSS-переменную (влияет на body background)
     document.documentElement.style.setProperty('--ocean-color', oceanColors[idx]);
@@ -1132,56 +1327,156 @@ document.addEventListener('touchend', () => {
         `;
         document.head.appendChild(styleAdd);
         // ===== КАРУСЕЛЬ =====
+// ===== БЕСКОНЕЧНАЯ КАРУСЕЛЬ =====
 const track = document.getElementById('carouselTrack');
 const dotsContainer = document.getElementById('carouselDots');
 const prevBtn = document.getElementById('carouselPrev');
 const nextBtn = document.getElementById('carouselNext');
 const slides = track.querySelectorAll('.carousel-slide');
-let currentSlide = 0;
+const totalSlides = slides.length;
+
+// Клонируем первый и последний слайды для эффекта бесконечности
+const firstClone = slides[0].cloneNode(true);
+const lastClone = slides[totalSlides - 1].cloneNode(true);
+
+firstClone.classList.add('clone');
+lastClone.classList.add('clone');
+
+track.appendChild(firstClone);  // Добавляем клон первого в конец
+track.insertBefore(lastClone, slides[0]); // Добавляем клон последнего в начало
+
+// Обновлённое количество слайдов (с клонами)
+const allSlides = track.querySelectorAll('.carousel-slide');
+const extendedTotal = allSlides.length; // = totalSlides + 2
+
+// Начинаем с первого реального слайда (индекс 1, т.к. 0 — клон)
+let currentIndex = 1;
+let isTransitioning = false;
 let autoplayInterval;
 let touchStartX = 0;
 let touchEndX = 0;
 
-// Создаём точки
-slides.forEach((_, i) => {
+// Устанавливаем начальную позицию без анимации
+track.style.transition = 'none';
+track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+// Создаём точки только для реальных слайдов
+dotsContainer.innerHTML = '';
+for (let i = 0; i < totalSlides; i++) {
     const dot = document.createElement('button');
     dot.classList.add('carousel-dot');
     if (i === 0) dot.classList.add('active');
     dot.setAttribute('aria-label', `Слайд ${i + 1}`);
-    dot.addEventListener('click', () => goToSlide(i));
+    dot.addEventListener('click', () => {
+        if (isTransitioning) return;
+        goToRealSlide(i);
+        resetAutoplay();
+    });
     dotsContainer.appendChild(dot);
-});
+}
 const dots = dotsContainer.querySelectorAll('.carousel-dot');
 
-function goToSlide(index) {
-    currentSlide = index;
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+function getRealIndex() {
+    // Преобразуем extended-индекс в реальный (0..totalSlides-1)
+    if (currentIndex === 0) return totalSlides - 1;
+    if (currentIndex === extendedTotal - 1) return 0;
+    return currentIndex - 1;
 }
+
+function updateDots(realIndex) {
+    dots.forEach((d, i) => d.classList.toggle('active', i === realIndex));
+}
+
+function goToSlide(index, animate = true) {
+    if (isTransitioning && animate) return;
+    
+    isTransitioning = true;
+    currentIndex = index;
+    
+    if (animate) {
+        track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+    } else {
+        track.style.transition = 'none';
+    }
+    
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateDots(getRealIndex());
+    
+    if (!animate) {
+        // Форсируем перерисовку
+        track.offsetHeight;
+        isTransitioning = false;
+    }
+}
+
+function goToRealSlide(realIndex) {
+    // realIndex: 0..totalSlides-1 → extendedIndex: realIndex + 1
+    goToSlide(realIndex + 1);
+}
+
+track.addEventListener('transitionend', () => {
+    isTransitioning = false;
+    
+    // Если мы на клоне — телепортируемся на реальный слайд без анимации
+    if (currentIndex === 0) {
+        // На клоне последнего — прыгаем на реальный последний
+        goToSlide(extendedTotal - 2, false);
+    } else if (currentIndex === extendedTotal - 1) {
+        // На клоне первого — прыгаем на реальный первый
+        goToSlide(1, false);
+    }
+});
 
 function nextSlide() {
-    goToSlide((currentSlide + 1) % slides.length);
-}
-function prevSlide() {
-    goToSlide((currentSlide - 1 + slides.length) % slides.length);
+    if (isTransitioning) return;
+    goToSlide(currentIndex + 1);
 }
 
+function prevSlide() {
+    if (isTransitioning) return;
+    goToSlide(currentIndex - 1);
+}
+
+// Кнопки
 nextBtn.addEventListener('click', () => { nextSlide(); resetAutoplay(); });
 prevBtn.addEventListener('click', () => { prevSlide(); resetAutoplay(); });
 
-// Свайп для карусели (только внутри карусели)
+// Свайп внутри карусели
 const carouselWrapper = document.querySelector('.carousel-wrapper');
+
 carouselWrapper.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
+    clearInterval(autoplayInterval);
 }, { passive: true });
-carouselWrapper.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 40) {
-        if (diff > 0) nextSlide();
-        else prevSlide();
-        resetAutoplay();
+
+carouselWrapper.addEventListener('touchmove', e => {
+    if (!isTransitioning) {
+        touchEndX = e.touches[0].clientX;
+        const diff = touchStartX - touchEndX;
+        // Лёгкий визуальный отклик при свайпе
+        const offset = -currentIndex * 100 - (diff / carouselWrapper.offsetWidth) * 100;
+        track.style.transition = 'none';
+        track.style.transform = `translateX(${offset}%)`;
     }
+}, { passive: true });
+
+carouselWrapper.addEventListener('touchend', () => {
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > 30) {
+        track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+        if (diff > 0) {
+            nextSlide();
+        } else {
+            prevSlide();
+        }
+    } else {
+        // Возвращаем на текущий слайд
+        track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+    
+    resetAutoplay();
 });
 
 // Автопрокрутка
@@ -1197,6 +1492,100 @@ startAutoplay();
 // Пауза при наведении (десктоп)
 carouselWrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
 carouselWrapper.addEventListener('mouseleave', startAutoplay);
+
+// Пауза при касании (мобильные)
+carouselWrapper.addEventListener('touchstart', () => clearInterval(autoplayInterval), { passive: true });
+carouselWrapper.addEventListener('touchend', () => startAutoplay);
+        
+        window.addEventListener('beforeunload', function() {
+    const meta = document.getElementById('themeColorMeta');
+    if (meta) {
+        meta.setAttribute('content', '#0a0a0a');
+    }
+});
+
+    // ===== ОВЕРЛЕЙ (РАЗВОРОТ ПО ТАПУ) =====
+const overlay = document.getElementById('overlay');
+const overlayBg = document.getElementById('overlayBg');
+const overlayImage = document.getElementById('overlayImage');
+const overlayTitle = document.getElementById('overlayTitle');
+const overlayDesc = document.getElementById('overlayDesc');
+const overlayBtn = document.getElementById('overlayBtn');
+const overlayClose = document.getElementById('overlayClose');
+const overlayContent = document.getElementById('overlayContent');
+
+function openOverlay(slideElement) {
+    const img = slideElement.querySelector('img');
+    const title = slideElement.getAttribute('data-title') || 'Без названия';
+    const desc = slideElement.getAttribute('data-desc') || '';
+    
+    overlayImage.src = img.src;
+    overlayImage.alt = img.alt;
+    overlayTitle.textContent = title;
+    overlayDesc.textContent = desc;
+    
+    // Останавливаем автопрокрутку карусели
+    clearInterval(autoplayInterval);
+    
+    // Блокируем скролл body
+    document.body.style.overflow = 'hidden';
+    
+    overlay.classList.add('active');
+}
+
+function closeOverlay() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Возобновляем автопрокрутку
+    startAutoplay();
+}
+
+// Тап по слайду в карусели
+carouselWrapper.addEventListener('click', function(e) {
+    // Игнорируем клики по стрелкам и точкам
+    if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
+    
+    const slide = e.target.closest('.carousel-slide');
+    if (!slide) return;
+    
+    // Игнорируем клонов (у них нет data-атрибутов)
+    if (slide.classList.contains('clone')) return;
+    
+    // Не открываем оверлей во время перелистывания
+    if (isTransitioning) return;
+    
+    openOverlay(slide);
+});
+
+// Кнопка закрытия
+overlayClose.addEventListener('click', closeOverlay);
+
+// Кнопка "Плывём дальше"
+overlayBtn.addEventListener('click', closeOverlay);
+
+// Клик по фону оверлея — закрыть
+overlayBg.addEventListener('click', closeOverlay);
+
+// Свайп вниз на оверлее — закрыть
+let overlayTouchStartY = 0;
+overlay.addEventListener('touchstart', function(e) {
+    overlayTouchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+overlay.addEventListener('touchend', function(e) {
+    const diff = e.changedTouches[0].clientY - overlayTouchStartY;
+    if (diff > 60) {
+        closeOverlay();
+    }
+});
+
+// Escape на клавиатуре — закрыть
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closeOverlay();
+    }
+});
     </script>
 </body>
 </html>
