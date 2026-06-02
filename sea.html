@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Сброс кеша -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -23,13 +22,12 @@
             height: 100vh;
             height: 100dvh;
             overflow: hidden;
-            background: #f5f0e8;
             font-family: 'Georgia', 'Times New Roman', serif;
             cursor: default;
             user-select: none;
             -webkit-user-select: none;
-            animation: fadeInBody 1.2s ease-out;
-            transition: background 0.8s ease;
+            animation: fadeInBody 1.8s ease-out;
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes fadeInBody {
@@ -37,331 +35,326 @@
             100% { opacity: 1; }
         }
 
-        /* ===== ЦВЕТОВЫЕ ТЕМЫ ===== */
-        body.theme-white { background: #f5f0e8; }
-        body.theme-black { background: #0a0a0a; }
-        body.theme-red { background: #8B0000; }
-        body.theme-invert { background: #0a0a0a; filter: invert(1); }
+        /* ===== ТЕМА 0: Чёрное море + Белое небо + Красная луна ===== */
+        body.theme-0 { background: #e8e4dc; }
+        body.theme-0 .sky-layer {
+            background: linear-gradient(180deg, #faf8f4 0%, #f0ece4 40%, #e8e4dc 70%, #ddd8ce 100%);
+        }
+        body.theme-0 .ocean-layer {
+            background: linear-gradient(180deg, #0d1b1e 0%, #0a1517 30%, #060e0f 100%);
+        }
+        body.theme-0 .moon-body {
+            background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%);
+            box-shadow: 0 0 50px rgba(255, 50, 20, 0.5), 0 0 100px rgba(200, 20, 0, 0.3), 0 0 150px rgba(139, 0, 0, 0.2);
+        }
+        body.theme-0 .wave-foam { background: rgba(255,255,255,0.15); }
+        body.theme-0 .spray-dot { background: rgba(255,255,255,0.5); }
+        body.theme-0 .glitter-line { background: rgba(255,255,255,0.35); }
+        body.theme-0 .title-text { color: #0d1b1e; text-shadow: 0 0 25px rgba(0,0,0,0.15); }
+        body.theme-0 .sub-text { color: rgba(13,27,30,0.7); }
+        body.theme-0 .back-btn { border-color: rgba(13,27,30,0.5); color: #0d1b1e; }
+        body.theme-0 .back-btn:hover, body.theme-0 .back-btn:active { background: rgba(13,27,30,0.08); border-color: #0d1b1e; }
+        body.theme-0 .theme-indicator { color: rgba(13,27,30,0.6); }
+        body.theme-0 .swipe-hint svg { stroke: rgba(13,27,30,0.5); }
 
-        /* слой неба */
-        .sky {
+        /* ===== ТЕМА 1: Белое море + Красное небо + Чёрная луна ===== */
+        body.theme-1 { background: #6b1010; }
+        body.theme-1 .sky-layer {
+            background: linear-gradient(180deg, #8b1a1a 0%, #6b1010 40%, #4a0808 70%, #2a0404 100%);
+        }
+        body.theme-1 .ocean-layer {
+            background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%);
+        }
+        body.theme-1 .moon-body {
+            background: radial-gradient(circle at 40% 35%, #1a1a1a, #0a0a0a 60%, #000000 90%);
+            box-shadow: 0 0 40px rgba(0,0,0,0.4), 0 0 80px rgba(0,0,0,0.2);
+        }
+        body.theme-1 .wave-foam { background: rgba(0,0,0,0.10); }
+        body.theme-1 .spray-dot { background: rgba(0,0,0,0.3); }
+        body.theme-1 .glitter-line { background: rgba(0,0,0,0.2); }
+        body.theme-1 .title-text { color: #ffffff; text-shadow: 0 0 30px rgba(255,255,255,0.3); }
+        body.theme-1 .sub-text { color: rgba(255,255,255,0.7); }
+        body.theme-1 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
+        body.theme-1 .back-btn:hover, body.theme-1 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+        body.theme-1 .theme-indicator { color: rgba(255,255,255,0.6); }
+        body.theme-1 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
+
+        /* ===== ТЕМА 2: Красное море + Чёрное небо + Белая луна ===== */
+        body.theme-2 { background: #0a0a0a; }
+        body.theme-2 .sky-layer {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
+        }
+        body.theme-2 .ocean-layer {
+            background: linear-gradient(180deg, #8b1a0a 0%, #6b0f05 30%, #4a0802 100%);
+        }
+        body.theme-2 .moon-body {
+            background: radial-gradient(circle at 40% 35%, #ffffff, #e8e8e8 50%, #cccccc 80%);
+            box-shadow: 0 0 60px rgba(255,255,255,0.6), 0 0 120px rgba(255,255,255,0.3), 0 0 180px rgba(200,200,200,0.15);
+        }
+        body.theme-2 .wave-foam { background: rgba(255,255,255,0.12); }
+        body.theme-2 .spray-dot { background: rgba(255,255,255,0.45); }
+        body.theme-2 .glitter-line { background: rgba(255,255,255,0.35); }
+        body.theme-2 .title-text { color: #ffffff; text-shadow: 0 0 35px rgba(255,255,255,0.4); }
+        body.theme-2 .sub-text { color: rgba(255,255,255,0.7); }
+        body.theme-2 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
+        body.theme-2 .back-btn:hover, body.theme-2 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+        body.theme-2 .theme-indicator { color: rgba(255,255,255,0.6); }
+        body.theme-2 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
+
+        /* ===== ТЕМА 3: Белое море + Чёрное небо + Красная луна ===== */
+        body.theme-3 { background: #0a0a0a; }
+        body.theme-3 .sky-layer {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
+        }
+        body.theme-3 .ocean-layer {
+            background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%);
+        }
+        body.theme-3 .moon-body {
+            background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%);
+            box-shadow: 0 0 50px rgba(255, 50, 20, 0.6), 0 0 100px rgba(200, 20, 0, 0.4), 0 0 150px rgba(139, 0, 0, 0.25);
+        }
+        body.theme-3 .wave-foam { background: rgba(0,0,0,0.10); }
+        body.theme-3 .spray-dot { background: rgba(0,0,0,0.3); }
+        body.theme-3 .glitter-line { background: rgba(255,255,255,0.2); }
+        body.theme-3 .title-text { color: #ffffff; text-shadow: 0 0 35px rgba(255,255,255,0.4); }
+        body.theme-3 .sub-text { color: rgba(255,255,255,0.7); }
+        body.theme-3 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
+        body.theme-3 .back-btn:hover, body.theme-3 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+        body.theme-3 .theme-indicator { color: rgba(255,255,255,0.6); }
+        body.theme-3 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
+
+        /* ===== СЛОИ ===== */
+        .sky-layer {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
-            height: 35%;
+            height: 40%;
             z-index: 1;
-            transition: background 0.8s ease;
-        }
-        body.theme-white .sky {
-            background: linear-gradient(180deg, #fffef9 0%, #faf7f0 50%, #f0ebe0 100%);
-        }
-        body.theme-black .sky {
-            background: linear-gradient(180deg, #1a1a1a 0%, #111111 50%, #0a0a0a 100%);
-        }
-        body.theme-red .sky {
-            background: linear-gradient(180deg, #6B0000 0%, #5a0000 50%, #4a0000 100%);
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* небесное тело */
-        .celestial-body {
+        .ocean-layer {
             position: absolute;
-            top: 18%;
-            right: 18%;
-            width: clamp(50px, 9vw, 80px);
-            height: clamp(50px, 9vw, 80px);
-            border-radius: 50%;
-            z-index: 2;
-            transition: all 0.8s ease;
-        }
-        body.theme-white .celestial-body {
-            background: radial-gradient(circle at 45% 45%, #ffffff, #e8e0d0 70%, #d0c8b8 100%);
-            box-shadow: 0 0 40px rgba(200, 190, 170, 0.5), 0 0 80px rgba(200, 190, 170, 0.2);
-        }
-        body.theme-black .celestial-body {
-            background: radial-gradient(circle at 45% 45%, #ffffff, #cccccc 70%, #999999 100%);
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.6), 0 0 100px rgba(255, 255, 255, 0.3);
-        }
-        body.theme-red .celestial-body {
-            background: radial-gradient(circle at 45% 45%, #ffcccc, #cc8888 70%, #aa6666 100%);
-            box-shadow: 0 0 40px rgba(255, 150, 150, 0.5), 0 0 80px rgba(255, 150, 150, 0.2);
-        }
-
-        /* атмосфера */
-        .atmosphere {
-            position: absolute;
-            top: 0;
-            left: 0;
+            bottom: 0; left: 0;
             width: 100%;
-            height: 35%;
+            height: 65%;
+            z-index: 3;
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        /* ===== ЛУНА ===== */
+        .moon-container {
+            position: absolute;
+            top: 12%;
+            right: 16%;
+            z-index: 2;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .moon-body {
+            width: clamp(55px, 10vw, 90px);
+            height: clamp(55px, 10vw, 90px);
+            border-radius: 50%;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        /* кратеры */
+        .moon-body::before {
+            content: '';
+            position: absolute;
+            width: 22%; height: 22%;
+            border-radius: 50%;
+            top: 25%; left: 30%;
+            background: rgba(0,0,0,0.15);
+        }
+        .moon-body::after {
+            content: '';
+            position: absolute;
+            width: 14%; height: 14%;
+            border-radius: 50%;
+            top: 55%; left: 55%;
+            background: rgba(0,0,0,0.1);
+        }
+        /* свечение */
+        .moon-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130%; height: 130%;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+        }
+
+        /* ===== ЗВЁЗДЫ / ОБЛАКА ===== */
+        .atmosphere-layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 40%;
             z-index: 2;
             pointer-events: none;
-            transition: opacity 0.8s ease;
+            transition: opacity 1.2s ease;
         }
-        .atmosphere-dot {
+        .atmo-particle {
             position: absolute;
             border-radius: 50%;
-            transition: all 0.8s ease;
-        }
-        body.theme-white .atmosphere-dot {
-            background: #c8c0b0;
-            opacity: 0.4;
-            animation: cloudDrift var(--duration) ease-in-out infinite;
-        }
-        body.theme-black .atmosphere-dot,
-        body.theme-red .atmosphere-dot {
-            background: #ffffff;
-            opacity: 0.7;
-            animation: starTwinkle var(--duration) ease-in-out infinite;
-        }
-        @keyframes cloudDrift {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(15px); }
-        }
-        @keyframes starTwinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
+            transition: all 1.2s ease;
         }
 
-        /* море */
-        .ocean {
+        /* ===== ВОЛНЫ ===== */
+        .wave-set {
             position: absolute;
             bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 70%;
-            z-index: 3;
-            overflow: hidden;
-            transition: background 0.8s ease;
-        }
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: -5%;
-            width: 200%;
+            left: -10%;
+            width: 130%;
             height: 100%;
-            background: transparent;
-            transition: opacity 0.8s ease;
         }
-        .wave-inner {
+        .wave-row {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            transition: background 0.8s ease;
+        }
+        .wave-row svg {
+            width: 100%;
+            display: block;
+        }
+        .wave-row path {
+            transition: fill 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* волна 1 */
-        body.theme-white .wave-1 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(240, 235, 225, 0.7) 40%, rgba(235, 228, 215, 0.85) 70%, rgba(225, 218, 205, 0.95) 100%);
-        }
-        body.theme-black .wave-1 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(20, 20, 20, 0.7) 40%, rgba(15, 15, 15, 0.85) 70%, rgba(5, 5, 5, 0.95) 100%);
-        }
-        body.theme-red .wave-1 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(100, 0, 0, 0.7) 40%, rgba(80, 0, 0, 0.85) 70%, rgba(60, 0, 0, 0.95) 100%);
-        }
-        .wave-1 .wave-inner { animation: waveMove1 8s ease-in-out infinite; }
-        .wave-1::before {
-            content: '';
-            position: absolute;
-            top: -25px;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            transition: all 0.8s ease;
-            animation: foamMove1 8s ease-in-out infinite;
-        }
-        body.theme-white .wave-1::before {
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(0,0,0,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(0,0,0,0.08) 0%, transparent 50%);
-        }
-        body.theme-black .wave-1::before {
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
-        }
-        body.theme-red .wave-1::before {
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(0,0,0,0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(0,0,0,0.3) 0%, transparent 50%);
-        }
-        @keyframes waveMove1 {
+        /* волна 1 — дальняя */
+        .wave-1 { height: 55%; bottom: 0; opacity: 0.85; }
+        .wave-1-anim { animation: waveDrift1 10s ease-in-out infinite; }
+
+        /* волна 2 — средняя */
+        .wave-2 { height: 50%; bottom: -5%; opacity: 0.75; }
+        .wave-2-anim { animation: waveDrift2 8s ease-in-out infinite; }
+
+        /* волна 3 — ближняя */
+        .wave-3 { height: 45%; bottom: -8%; opacity: 0.9; }
+        .wave-3-anim { animation: waveDrift3 7s ease-in-out infinite; }
+
+        /* волна 4 — передняя, пенистая */
+        .wave-4 { height: 35%; bottom: -10%; opacity: 0.95; }
+        .wave-4-anim { animation: waveDrift4 6s ease-in-out infinite; }
+
+        @keyframes waveDrift1 {
             0%, 100% { transform: translateX(0) translateY(0); }
-            25% { transform: translateX(1%) translateY(-4px); }
-            50% { transform: translateX(0) translateY(-2px); }
-            75% { transform: translateX(-1%) translateY(-5px); }
+            30% { transform: translateX(1.5%) translateY(-3px); }
+            60% { transform: translateX(-0.5%) translateY(-5px); }
+            85% { transform: translateX(1%) translateY(-2px); }
         }
-        @keyframes foamMove1 {
-            0%, 100% { transform: translateX(0); opacity: 0.7; }
-            50% { transform: translateX(-2%); opacity: 1; }
-        }
-
-        /* волна 2 */
-        .wave-2 { bottom: 5%; }
-        body.theme-white .wave-2 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(245,240,232,0.6) 30%, rgba(240,233,222,0.75) 60%, rgba(230,223,212,0.9) 100%);
-        }
-        body.theme-black .wave-2 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(30,30,30,0.6) 30%, rgba(20,20,20,0.75) 60%, rgba(10,10,10,0.9) 100%);
-        }
-        body.theme-red .wave-2 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(120,0,0,0.6) 30%, rgba(100,0,0,0.75) 60%, rgba(80,0,0,0.9) 100%);
-        }
-        .wave-2 .wave-inner { animation: waveMove2 6s ease-in-out infinite; }
-        .wave-2::before {
-            content: '';
-            position: absolute;
-            top: -18px;
-            left: 10%;
-            width: 100%;
-            height: 55px;
-            transition: all 0.8s ease;
-            animation: foamMove2 6s ease-in-out infinite;
-        }
-        body.theme-white .wave-2::before {
-            background: 
-                radial-gradient(ellipse at 15% 60%, rgba(0,0,0,0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 55% 45%, rgba(0,0,0,0.07) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 55%, rgba(0,0,0,0.1) 0%, transparent 50%);
-        }
-        body.theme-black .wave-2::before {
-            background: 
-                radial-gradient(ellipse at 15% 60%, rgba(255,255,255,0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 55% 45%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 55%, rgba(255,255,255,0.12) 0%, transparent 50%);
-        }
-        body.theme-red .wave-2::before {
-            background: 
-                radial-gradient(ellipse at 15% 60%, rgba(0,0,0,0.35) 0%, transparent 50%),
-                radial-gradient(ellipse at 55% 45%, rgba(0,0,0,0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 55%, rgba(0,0,0,0.35) 0%, transparent 50%);
-        }
-        @keyframes waveMove2 {
+        @keyframes waveDrift2 {
             0%, 100% { transform: translateX(0) translateY(0); }
-            50% { transform: translateX(-1.5%) translateY(-7px); }
+            25% { transform: translateX(-2%) translateY(-4px); }
+            55% { transform: translateX(1%) translateY(-7px); }
+            75% { transform: translateX(-1%) translateY(-3px); }
         }
-        @keyframes foamMove2 {
-            0%, 100% { transform: translateX(0); opacity: 0.6; }
-            50% { transform: translateX(1.5%); opacity: 0.9; }
-        }
-
-        /* волна 3 */
-        .wave-3 { bottom: 10%; }
-        body.theme-white .wave-3 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(248,244,238,0.5) 20%, rgba(243,237,228,0.65) 50%, rgba(235,228,218,0.85) 100%);
-        }
-        body.theme-black .wave-3 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(40,40,40,0.5) 20%, rgba(25,25,25,0.65) 50%, rgba(15,15,15,0.85) 100%);
-        }
-        body.theme-red .wave-3 .wave-inner {
-            background: linear-gradient(180deg, transparent 0%, rgba(140,0,0,0.5) 20%, rgba(120,0,0,0.65) 50%, rgba(100,0,0,0.85) 100%);
-        }
-        .wave-3 .wave-inner { animation: waveMove3 5s ease-in-out infinite; }
-        .wave-3::before {
-            content: '';
-            position: absolute;
-            top: -12px;
-            left: -5%;
-            width: 100%;
-            height: 45px;
-            transition: all 0.8s ease;
-            animation: foamMove3 5s ease-in-out infinite;
-        }
-        body.theme-white .wave-3::before {
-            background: 
-                radial-gradient(ellipse at 25% 50%, rgba(0,0,0,0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 40%, rgba(0,0,0,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 50%, rgba(0,0,0,0.12) 0%, transparent 50%);
-        }
-        body.theme-black .wave-3::before {
-            background: 
-                radial-gradient(ellipse at 25% 50%, rgba(255,255,255,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 50%, rgba(255,255,255,0.15) 0%, transparent 50%);
-        }
-        body.theme-red .wave-3::before {
-            background: 
-                radial-gradient(ellipse at 25% 50%, rgba(0,0,0,0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 40%, rgba(0,0,0,0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 50%, rgba(0,0,0,0.4) 0%, transparent 50%);
-        }
-        @keyframes waveMove3 {
+        @keyframes waveDrift3 {
             0%, 100% { transform: translateX(0) translateY(0); }
-            50% { transform: translateX(1%) translateY(-3px); }
+            40% { transform: translateX(1.8%) translateY(-5px); }
+            70% { transform: translateX(-1.2%) translateY(-3px); }
         }
-        @keyframes foamMove3 {
-            0%, 100% { transform: translateX(0); opacity: 0.8; }
-            50% { transform: translateX(-1%); opacity: 1; }
+        @keyframes waveDrift4 {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            35% { transform: translateX(-1.5%) translateY(-4px); }
+            65% { transform: translateX(0.8%) translateY(-6px); }
         }
 
-        /* брызги */
-        .spray {
+        /* ===== ПЕНА НА ГРЕБНЯХ ===== */
+        .foam-particles {
             position: absolute;
-            bottom: 18%;
-            left: 0;
+            bottom: 0; left: 0;
             width: 100%;
-            height: 25%;
+            height: 40%;
             z-index: 4;
+            pointer-events: none;
+        }
+        .foam-blob {
+            position: absolute;
+            border-radius: 50%;
+            animation: foamFloat var(--fd) ease-in-out infinite;
+            animation-delay: var(--fdel);
+            bottom: var(--fy);
+            left: var(--fx);
+            width: var(--fw);
+            height: var(--fh);
+            opacity: 0;
+            transition: background 1.2s ease;
+        }
+        @keyframes foamFloat {
+            0% { opacity: 0; transform: translateY(0) translateX(0) scale(0.6); }
+            15% { opacity: 0.7; }
+            40% { opacity: 0.3; transform: translateY(-18px) translateX(8px) scale(1); }
+            70% { opacity: 0.1; }
+            100% { opacity: 0; transform: translateY(-30px) translateX(-5px) scale(0.4); }
+        }
+
+        /* ===== БРЫЗГИ ===== */
+        .spray-layer {
+            position: absolute;
+            bottom: 20%;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            z-index: 5;
             pointer-events: none;
         }
         .spray-dot {
             position: absolute;
             border-radius: 50%;
-            animation: sprayFloat var(--spray-duration) ease-in infinite;
-            animation-delay: var(--spray-delay);
+            animation: sprayUp var(--sd) ease-out infinite;
+            animation-delay: var(--sdel);
             bottom: 0;
-            left: var(--spray-pos);
-            transition: background 0.8s ease;
+            left: var(--sx);
+            width: var(--sw);
+            height: var(--sh);
+            transition: background 1.2s ease;
         }
-        body.theme-white .spray-dot { background: rgba(0,0,0,0.3); }
-        body.theme-black .spray-dot,
-        body.theme-red .spray-dot { background: rgba(255,255,255,0.5); }
-        @keyframes sprayFloat {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            20% { opacity: 0.9; }
-            100% { transform: translateY(-70px) translateX(var(--spray-drift)); opacity: 0; }
+        @keyframes sprayUp {
+            0% { opacity: 0; transform: translateY(0) translateX(0); }
+            10% { opacity: 0.8; }
+            100% { opacity: 0; transform: translateY(-55px) translateX(var(--sdx)); }
         }
 
-        /* блики */
-        .glitter {
+        /* ===== БЛИКИ НА ВОДЕ ===== */
+        .glitter-layer {
             position: absolute;
-            bottom: 12%;
+            bottom: 10%;
             left: 0;
             width: 100%;
-            height: 35%;
-            z-index: 5;
+            height: 50%;
+            z-index: 6;
             pointer-events: none;
         }
         .glitter-line {
             position: absolute;
             height: 1px;
-            transition: background 0.8s ease;
-            animation: glitterShine var(--glitter-duration) ease-in-out infinite;
-            animation-delay: var(--glitter-delay);
-            bottom: var(--glitter-y);
-            left: var(--glitter-x);
-            width: var(--glitter-w);
-            transform: rotate(var(--glitter-r));
+            transition: background 1.2s ease;
+            animation: glitterShine var(--gd) ease-in-out infinite;
+            animation-delay: var(--gdel);
+            bottom: var(--gy);
+            left: var(--gx);
+            width: var(--gw);
+            transform: rotate(var(--gr));
         }
-        body.theme-white .glitter-line { background: rgba(0,0,0,0.25); }
-        body.theme-black .glitter-line,
-        body.theme-red .glitter-line { background: rgba(255,255,255,0.4); }
         @keyframes glitterShine {
             0%, 100% { opacity: 0; }
-            50% { opacity: 0.7; }
+            30% { opacity: 0.7; }
+            60% { opacity: 0.15; }
         }
 
-        /* контент */
-        .content {
+        /* ===== КОНТЕНТ ===== */
+        .content-layer {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
             height: 100%;
             z-index: 10;
@@ -371,51 +364,40 @@
             justify-content: center;
             pointer-events: none;
         }
-        .sea-message {
+        .message-block {
             text-align: center;
-            animation: messageAppear 1.5s ease-out 0.5s both;
+            animation: messageAppear 2s ease-out 0.6s both;
         }
         @keyframes messageAppear {
-            0% { opacity: 0; transform: translateY(30px); }
+            0% { opacity: 0; transform: translateY(40px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-        .sea-message h2 {
+        .title-text {
             font-size: clamp(1.8rem, 5vw, 3.5rem);
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
             margin-bottom: 0.8rem;
             font-weight: bold;
-            animation: textFloat 4s ease-in-out infinite;
-            transition: color 0.8s ease;
+            animation: titleFloat 5s ease-in-out infinite;
+            transition: color 1.2s ease, text-shadow 1.2s ease;
         }
-        body.theme-white .sea-message h2 {
-            color: #1a1a1a;
-            text-shadow: 0 0 20px rgba(0,0,0,0.15), 0 4px 15px rgba(0,0,0,0.1);
-        }
-        body.theme-black .sea-message h2,
-        body.theme-red .sea-message h2 {
-            color: #ffffff;
-            text-shadow: 0 0 30px rgba(255,255,255,0.4), 0 4px 20px rgba(0,0,0,0.5);
-        }
-        @keyframes textFloat {
+        @keyframes titleFloat {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            40% { transform: translateY(-7px); }
+            60% { transform: translateY(-3px); }
         }
-        .sea-message p {
+        .sub-text {
             font-size: clamp(0.8rem, 1.8vw, 1.1rem);
-            letter-spacing: 5px;
+            letter-spacing: 6px;
             text-transform: uppercase;
             font-style: italic;
-            transition: color 0.8s ease;
+            transition: color 1.2s ease;
         }
-        body.theme-white .sea-message p { color: rgba(0,0,0,0.6); }
-        body.theme-black .sea-message p,
-        body.theme-red .sea-message p { color: rgba(255,255,255,0.7); }
 
-        /* индикатор темы */
+        /* ===== ИНДИКАТОР ТЕМЫ ===== */
         .theme-indicator {
             position: absolute;
-            top: clamp(15px, 3vh, 25px);
+            top: clamp(15px, 3vh, 28px);
             left: 50%;
             transform: translateX(-50%);
             z-index: 20;
@@ -424,37 +406,31 @@
             text-transform: uppercase;
             pointer-events: none;
             transition: all 0.8s ease;
-            animation: messageAppear 1.5s ease-out 1.2s both;
+            animation: messageAppear 1.5s ease-out 1.4s both;
         }
-        body.theme-white .theme-indicator { color: rgba(0,0,0,0.5); }
-        body.theme-black .theme-indicator,
-        body.theme-red .theme-indicator { color: rgba(255,255,255,0.5); }
 
-        /* стрелка свайпа */
+        /* ===== СТРЕЛКА СВАЙПА ===== */
         .swipe-hint {
             position: absolute;
-            top: clamp(45px, 8vh, 70px);
+            top: clamp(48px, 9vh, 75px);
             left: 50%;
             transform: translateX(-50%);
             z-index: 20;
             pointer-events: none;
-            animation: swipeHintBounce 2s ease-in-out infinite, messageAppear 1.5s ease-out 1.8s both;
-            transition: color 0.8s ease;
+            animation: hintBounce 2.2s ease-in-out infinite, messageAppear 1.5s ease-out 2s both;
+            transition: opacity 0.6s ease;
         }
         .swipe-hint svg {
             width: clamp(20px, 4vw, 28px);
             height: clamp(20px, 4vw, 28px);
-            transition: stroke 0.8s ease;
+            transition: stroke 1.2s ease;
         }
-        body.theme-white .swipe-hint svg { stroke: rgba(0,0,0,0.4); }
-        body.theme-black .swipe-hint svg,
-        body.theme-red .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
-        @keyframes swipeHintBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
-            50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+        @keyframes hintBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+            50% { transform: translateX(-50%) translateY(10px); opacity: 0.9; }
         }
 
-        /* ===== КНОПКА — ЖЁСТКИЙ ЦЕНТР ===== */
+        /* ===== КНОПКА ===== */
         .back-btn-wrapper {
             position: absolute;
             bottom: clamp(30px, 7vh, 50px);
@@ -466,7 +442,6 @@
             align-items: center;
             pointer-events: none;
         }
-
         .back-btn {
             display: inline-flex;
             align-items: center;
@@ -478,298 +453,371 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.5s ease;
             pointer-events: auto;
             text-decoration: none;
             animation: messageAppear 1.5s ease-out 1s both;
-            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+            -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
             min-height: 44px;
             white-space: nowrap;
-            /* гарантированный центр */
-            margin: 0 auto;
-        }
-
-        body.theme-white .back-btn {
-            background: transparent;
-            border-color: rgba(0,0,0,0.4);
-            color: #1a1a1a;
-        }
-        body.theme-white .back-btn:hover,
-        body.theme-white .back-btn:active {
-            background: rgba(0,0,0,0.05);
-            border-color: #1a1a1a;
-            letter-spacing: 6px;
-        }
-        body.theme-black .back-btn,
-        body.theme-red .back-btn {
-            background: transparent;
-            border-color: rgba(255,255,255,0.4);
-            color: #ffffff;
-        }
-        body.theme-black .back-btn:hover,
-        body.theme-black .back-btn:active,
-        body.theme-red .back-btn:hover,
-        body.theme-red .back-btn:active {
-            background: rgba(255,255,255,0.1);
-            border-color: #ffffff;
-            letter-spacing: 6px;
-            box-shadow: 0 0 25px rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
         .back-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.94);
+            transition: transform 0.1s ease;
         }
 
-        /* адаптив */
+        /* ===== АДАПТИВ ===== */
         @media (max-width: 480px) {
-            .back-btn {
-                padding: 0.65rem 1.8rem;
-                letter-spacing: 2px;
-                font-size: 0.75rem;
-            }
-            .back-btn:hover,
-            .back-btn:active {
-                letter-spacing: 4px;
-            }
-            .celestial-body {
-                top: 14%;
-                right: 12%;
-            }
-            .swipe-hint {
-                top: clamp(50px, 9vh, 65px);
-            }
-            .theme-indicator {
-                top: clamp(12px, 2.5vh, 20px);
-            }
-            .back-btn-wrapper {
-                bottom: clamp(35px, 8vh, 45px);
-            }
+            .back-btn { padding: 0.65rem 1.8rem; letter-spacing: 2px; font-size: 0.75rem; }
+            .moon-container { top: 10%; right: 10%; }
+            .swipe-hint { top: clamp(52px, 10vh, 68px); }
+            .theme-indicator { top: clamp(12px, 2.5vh, 22px); }
         }
-
         @media (max-width: 360px) {
-            .back-btn {
-                padding: 0.6rem 1.5rem;
-                font-size: 0.7rem;
-                letter-spacing: 1.5px;
-            }
-            .sea-message h2 { font-size: 1.5rem; }
-            .sea-message p { font-size: 0.7rem; letter-spacing: 3px; }
-            .back-btn-wrapper { bottom: 30px; }
+            .back-btn { padding: 0.6rem 1.5rem; font-size: 0.7rem; letter-spacing: 1.5px; }
+            .title-text { font-size: 1.5rem; }
+            .sub-text { font-size: 0.7rem; letter-spacing: 3px; }
         }
-
         @media (max-height: 500px) and (orientation: landscape) {
-            .sky { height: 25%; }
-            .ocean { height: 80%; }
-            .celestial-body {
-                width: 35px;
-                height: 35px;
-                top: 10%;
-                right: 10%;
-            }
-            .sea-message h2 {
-                font-size: 1.4rem;
-                margin-bottom: 0.3rem;
-            }
-            .sea-message p {
-                font-size: 0.65rem;
-                letter-spacing: 3px;
-            }
-            .back-btn {
-                padding: 0.45rem 1.3rem;
-                font-size: 0.65rem;
-                min-height: 36px;
-            }
+            .sky-layer { height: 28%; }
+            .ocean-layer { height: 78%; }
+            .moon-body { width: 38px; height: 38px; }
+            .moon-container { top: 6%; right: 8%; }
+            .title-text { font-size: 1.3rem; margin-bottom: 0.2rem; }
+            .sub-text { font-size: 0.6rem; letter-spacing: 3px; }
+            .back-btn { padding: 0.4rem 1.3rem; font-size: 0.6rem; min-height: 36px; }
             .back-btn-wrapper { bottom: 10px; }
             .swipe-hint { display: none; }
-            .theme-indicator { top: 6px; font-size: 0.5rem; }
+            .theme-indicator { top: 5px; font-size: 0.5rem; }
         }
-
         @media (prefers-reduced-motion: reduce) {
-            .wave-1 .wave-inner, .wave-2 .wave-inner, .wave-3 .wave-inner,
-            .wave-1::before, .wave-2::before, .wave-3::before,
-            .spray-dot, .glitter-line, .sea-message h2, .swipe-hint {
+            .wave-1-anim, .wave-2-anim, .wave-3-anim, .wave-4-anim,
+            .foam-blob, .spray-dot, .glitter-line, .title-text, .swipe-hint, .moon-glow {
                 animation: none !important;
             }
         }
     </style>
 </head>
-<body class="theme-white">
-    <!-- Небо -->
-    <div class="sky"></div>
+<body class="theme-0">
 
-    <!-- Небесное тело -->
-    <div class="celestial-body"></div>
+    <!-- НЕБО -->
+    <div class="sky-layer"></div>
 
-    <!-- Атмосфера -->
-    <div class="atmosphere" id="atmosphere"></div>
-
-    <!-- Море -->
-    <div class="ocean">
-        <div class="wave wave-1"><div class="wave-inner"></div></div>
-        <div class="wave wave-2"><div class="wave-inner"></div></div>
-        <div class="wave wave-3"><div class="wave-inner"></div></div>
+    <!-- ЛУНА -->
+    <div class="moon-container" id="moonContainer">
+        <div class="moon-glow"></div>
+        <div class="moon-body"></div>
     </div>
 
-    <!-- Брызги -->
-    <div class="spray" id="spray"></div>
+    <!-- АТМОСФЕРА -->
+    <div class="atmosphere-layer" id="atmosphereLayer"></div>
 
-    <!-- Блики -->
-    <div class="glitter" id="glitter"></div>
+    <!-- МОРЕ С ВОЛНАМИ -->
+    <div class="ocean-layer" id="oceanLayer">
+        <!-- Волны рисуются через JS (SVG) -->
+    </div>
 
-    <!-- Индикатор темы -->
-    <div class="theme-indicator" id="themeIndicator">Белое море</div>
+    <!-- ПЕНА -->
+    <div class="foam-particles" id="foamLayer"></div>
 
-    <!-- Подсказка свайпа -->
+    <!-- БРЫЗГИ -->
+    <div class="spray-layer" id="sprayLayer"></div>
+
+    <!-- БЛИКИ -->
+    <div class="glitter-layer" id="glitterLayer"></div>
+
+    <!-- ИНДИКАТОР ТЕМЫ -->
+    <div class="theme-indicator" id="themeIndicator">Чёрное море · Белое небо</div>
+
+    <!-- ПОДСКАЗКА -->
     <div class="swipe-hint" id="swipeHint">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
             <path d="M12 5v14M12 5l-4 4M12 5l4 4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </div>
 
-    <!-- Контент -->
-    <div class="content">
-        <div class="sea-message">
-            <h2>Море ждёт</h2>
-            <p>Bucaneros del Mar de Sangre</p>
+    <!-- КОНТЕНТ -->
+    <div class="content-layer">
+        <div class="message-block">
+            <h2 class="title-text">Pride</h2>
+            <p class="sub-text">Bucaneros del Mar de Sangre</p>
         </div>
     </div>
 
-    <!-- Кнопка — обёртка для жёсткого центрирования -->
+    <!-- КНОПКА -->
     <div class="back-btn-wrapper">
         <a href="index.html" class="back-btn">← Вернуться в порт</a>
     </div>
 
     <script>
+        // ===== ПАРАМЕТРЫ ТЕМ =====
+        const themeData = [
+            {
+                name: 'Чёрное море · Белое небо',
+                skyColors: ['#faf8f4', '#f0ece4', '#e8e4dc', '#ddd8ce'],
+                oceanColors: ['#0d1b1e', '#0a1517', '#060e0f'],
+                isDarkSky: false,
+                waveColors: ['#0f2024', '#0a181c', '#081215'],
+                foamColors: ['#1a3038', '#14262d', '#0f1e24']
+            },
+            {
+                name: 'Белое море · Красное небо',
+                skyColors: ['#8b1a1a', '#6b1010', '#4a0808', '#2a0404'],
+                oceanColors: ['#f5f0e8', '#ede6da', '#e5dcd0'],
+                isDarkSky: true,
+                waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4'],
+                foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8']
+            },
+            {
+                name: 'Красное море · Чёрное небо',
+                skyColors: ['#1a1a1a', '#0f0f0f', '#050505', '#000000'],
+                oceanColors: ['#8b1a0a', '#6b0f05', '#4a0802'],
+                isDarkSky: true,
+                waveColors: ['#9b2a15', '#7a1808', '#5a0d03'],
+                foamColors: ['#a04030', '#803020', '#602010']
+            },
+            {
+                name: 'Белое море · Чёрное небо',
+                skyColors: ['#1a1a1a', '#0f0f0f', '#050505', '#000000'],
+                oceanColors: ['#f5f0e8', '#ede6da', '#e5dcd0'],
+                isDarkSky: true,
+                waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4'],
+                foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8']
+            }
+        ];
+
+        let currentTheme = 0;
+
+        // ===== ГЕНЕРАЦИЯ ВОЛН (SVG для реалистичности) =====
+        function generateWavePath(seed, complexity) {
+            let path = 'M0 60 ';
+            const points = 12 + complexity;
+            for (let i = 1; i <= points; i++) {
+                const x = (i / points) * 100;
+                const y = 40 + Math.sin(i * seed * 0.7 + seed) * 18 + Math.sin(i * seed * 1.3) * 10 + Math.cos(i * 0.5 + seed * 2) * 8;
+                path += `L${x} ${y} `;
+            }
+            path += 'L100 100 L0 100 Z';
+            return path;
+        }
+
+        function buildWaves() {
+            const ocean = document.getElementById('oceanLayer');
+            ocean.innerHTML = '';
+
+            const waveConfigs = [
+                { cls: 'wave-1 wave-1-anim', seed: 1.2, complexity: 6, opacity: 0.85 },
+                { cls: 'wave-2 wave-2-anim', seed: 2.5, complexity: 8, opacity: 0.7 },
+                { cls: 'wave-3 wave-3-anim', seed: 3.8, complexity: 10, opacity: 0.9 },
+                { cls: 'wave-4 wave-4-anim', seed: 5.1, complexity: 7, opacity: 0.95 }
+            ];
+
+            waveConfigs.forEach((cfg, idx) => {
+                const row = document.createElement('div');
+                row.className = 'wave-row ' + cfg.cls;
+                row.style.opacity = cfg.opacity;
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('viewBox', '0 0 100 100');
+                svg.setAttribute('preserveAspectRatio', 'none');
+                svg.style.width = '100%';
+                svg.style.height = '100%';
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', generateWavePath(cfg.seed, cfg.complexity));
+                path.setAttribute('fill', themeData[currentTheme].waveColors[idx] || themeData[currentTheme].oceanColors[0]);
+                path.setAttribute('stroke', 'none');
+                path.classList.add('wave-path');
+                svg.appendChild(path);
+                row.appendChild(svg);
+                ocean.appendChild(row);
+            });
+        }
+
+        function updateWaveColors() {
+            const paths = document.querySelectorAll('.wave-path');
+            const td = themeData[currentTheme];
+            paths.forEach((p, i) => {
+                p.setAttribute('fill', td.waveColors[i] || td.oceanColors[0]);
+            });
+            // обновляем пену
+            document.querySelectorAll('.foam-blob').forEach(b => {
+                b.style.background = td.foamColors[Math.floor(Math.random() * 3)];
+            });
+        }
+
         // ===== ГЕНЕРАЦИЯ АТМОСФЕРЫ =====
-        const atmosphereContainer = document.getElementById('atmosphere');
-        for (let i = 0; i < 50; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('atmosphere-dot');
-            dot.style.left = Math.random() * 95 + '%';
-            dot.style.top = Math.random() * 90 + '%';
-            dot.style.width = (2 + Math.random() * 4) + 'px';
-            dot.style.height = dot.style.width;
-            dot.style.setProperty('--duration', (3 + Math.random() * 6) + 's');
-            dot.style.animationDelay = Math.random() * 6 + 's';
-            atmosphereContainer.appendChild(dot);
+        function buildAtmosphere() {
+            const layer = document.getElementById('atmosphereLayer');
+            layer.innerHTML = '';
+            const td = themeData[currentTheme];
+            const count = td.isDarkSky ? 70 : 35;
+
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.classList.add('atmo-particle');
+                p.style.left = Math.random() * 96 + '%';
+                p.style.top = Math.random() * 92 + '%';
+                const size = td.isDarkSky ? (1 + Math.random() * 2.5) : (3 + Math.random() * 8);
+                p.style.width = size + 'px';
+                p.style.height = (td.isDarkSky ? size : size * 0.6) + 'px';
+                p.style.opacity = td.isDarkSky ? (0.4 + Math.random() * 0.6) : (0.2 + Math.random() * 0.3);
+                p.style.background = td.isDarkSky ? '#ffffff' : '#c8c0b0';
+                p.style.animation = td.isDarkSky
+                    ? `starTwinkle ${3 + Math.random() * 5}s ease-in-out ${Math.random() * 5}s infinite`
+                    : `cloudDrift ${5 + Math.random() * 8}s ease-in-out ${Math.random() * 6}s infinite`;
+                layer.appendChild(p);
+            }
+        }
+
+        // ===== ГЕНЕРАЦИЯ ПЕНЫ =====
+        function buildFoam() {
+            const layer = document.getElementById('foamLayer');
+            layer.innerHTML = '';
+            const td = themeData[currentTheme];
+            for (let i = 0; i < 25; i++) {
+                const blob = document.createElement('div');
+                blob.classList.add('foam-blob');
+                blob.style.setProperty('--fx', Math.random() * 90 + '%');
+                blob.style.setProperty('--fy', (5 + Math.random() * 30) + '%');
+                const s = 4 + Math.random() * 16;
+                blob.style.setProperty('--fw', s + 'px');
+                blob.style.setProperty('--fh', s * 0.5 + 'px');
+                blob.style.setProperty('--fd', (3 + Math.random() * 6) + 's');
+                blob.style.setProperty('--fdel', Math.random() * 5 + 's');
+                blob.style.background = td.foamColors[Math.floor(Math.random() * 3)];
+                layer.appendChild(blob);
+            }
         }
 
         // ===== ГЕНЕРАЦИЯ БРЫЗГ =====
-        const sprayContainer = document.getElementById('spray');
-        for (let i = 0; i < 35; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('spray-dot');
-            dot.style.setProperty('--spray-pos', (3 + Math.random() * 94) + '%');
-            dot.style.setProperty('--spray-duration', (1.2 + Math.random() * 2.5) + 's');
-            dot.style.setProperty('--spray-delay', Math.random() * 3.5 + 's');
-            dot.style.setProperty('--spray-drift', (-12 + Math.random() * 24) + 'px');
-            dot.style.width = (2 + Math.random() * 3) + 'px';
-            dot.style.height = dot.style.width;
-            sprayContainer.appendChild(dot);
+        function buildSpray() {
+            const layer = document.getElementById('sprayLayer');
+            layer.innerHTML = '';
+            for (let i = 0; i < 30; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('spray-dot');
+                dot.style.setProperty('--sx', (2 + Math.random() * 96) + '%');
+                dot.style.setProperty('--sw', (1.5 + Math.random() * 3.5) + 'px');
+                dot.style.setProperty('--sh', dot.style.getPropertyValue('--sw'));
+                dot.style.setProperty('--sd', (1 + Math.random() * 2.5) + 's');
+                dot.style.setProperty('--sdel', Math.random() * 3 + 's');
+                dot.style.setProperty('--sdx', (-10 + Math.random() * 20) + 'px');
+                layer.appendChild(dot);
+            }
         }
 
         // ===== ГЕНЕРАЦИЯ БЛИКОВ =====
-        const glitterContainer = document.getElementById('glitter');
-        for (let i = 0; i < 20; i++) {
-            const line = document.createElement('div');
-            line.classList.add('glitter-line');
-            line.style.setProperty('--glitter-x', Math.random() * 95 + '%');
-            line.style.setProperty('--glitter-y', (3 + Math.random() * 94) + '%');
-            line.style.setProperty('--glitter-w', (15 + Math.random() * 50) + 'px');
-            line.style.setProperty('--glitter-r', (-15 + Math.random() * 30) + 'deg');
-            line.style.setProperty('--glitter-duration', (1.5 + Math.random() * 3.5) + 's');
-            line.style.setProperty('--glitter-delay', Math.random() * 4 + 's');
-            glitterContainer.appendChild(line);
+        function buildGlitter() {
+            const layer = document.getElementById('glitterLayer');
+            layer.innerHTML = '';
+            for (let i = 0; i < 22; i++) {
+                const line = document.createElement('div');
+                line.classList.add('glitter-line');
+                line.style.setProperty('--gx', Math.random() * 95 + '%');
+                line.style.setProperty('--gy', (3 + Math.random() * 92) + '%');
+                line.style.setProperty('--gw', (15 + Math.random() * 55) + 'px');
+                line.style.setProperty('--gr', (-18 + Math.random() * 36) + 'deg');
+                line.style.setProperty('--gd', (1.8 + Math.random() * 4) + 's');
+                line.style.setProperty('--gdel', Math.random() * 4.5 + 's');
+                layer.appendChild(line);
+            }
         }
 
-        // ===== СВАЙП ДЛЯ СМЕНЫ ТЕМЫ =====
-        const themes = ['white', 'black', 'red', 'invert'];
-        const themeNames = ['Белое море', 'Чёрное море', 'Красное море', 'Инверсия'];
-        let currentThemeIndex = 0;
-        const body = document.body;
-        const themeIndicator = document.getElementById('themeIndicator');
-        const swipeHint = document.getElementById('swipeHint');
+        // ===== ПРИМЕНЕНИЕ ТЕМЫ =====
+        function applyTheme(idx) {
+            currentTheme = idx;
+            document.body.className = 'theme-' + idx;
+            document.getElementById('themeIndicator').textContent = themeData[idx].name;
+            document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1.35)';
+            setTimeout(() => {
+                document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1)';
+            }, 250);
 
-        let touchStartY = 0;
-        let touchEndY = 0;
-        let isSwiping = false;
-        const swipeThreshold = 60;
+            buildWaves();
+            buildAtmosphere();
+            buildFoam();
+            updateWaveColors();
 
-        document.addEventListener('touchstart', function(e) {
+            // скрываем подсказку
+            const hint = document.getElementById('swipeHint');
+            if (hint.style.opacity !== '0') {
+                hint.style.transition = 'opacity 0.5s ease';
+                hint.style.opacity = '0';
+                setTimeout(() => hint.style.display = 'none', 500);
+            }
+            if (navigator.vibrate) navigator.vibrate(12);
+        }
+
+        // ===== СВАЙП =====
+        let touchStartY = 0, touchEndY = 0, isSwiping = false;
+        document.addEventListener('touchstart', e => {
             touchStartY = e.touches[0].clientY;
             isSwiping = true;
         }, { passive: true });
-
-        document.addEventListener('touchmove', function(e) {
+        document.addEventListener('touchmove', e => {
             if (!isSwiping) return;
             touchEndY = e.touches[0].clientY;
         }, { passive: true });
-
-        document.addEventListener('touchend', function() {
+        document.addEventListener('touchend', () => {
             if (!isSwiping) return;
             isSwiping = false;
-            const swipeDistance = touchEndY - touchStartY;
-            if (swipeDistance > swipeThreshold) {
-                currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-                applyTheme();
-            } else if (swipeDistance < -swipeThreshold) {
-                currentThemeIndex = (currentThemeIndex - 1 + themes.length) % themes.length;
-                applyTheme();
-            }
-            touchStartY = 0;
-            touchEndY = 0;
+            const d = touchEndY - touchStartY;
+            if (d > 55) applyTheme((currentTheme + 1) % 4);
+            else if (d < -55) applyTheme((currentTheme - 1 + 4) % 4);
+            touchStartY = 0; touchEndY = 0;
         });
 
-        // колёсико мыши
-        let wheelAccumulator = 0;
-        document.addEventListener('wheel', function(e) {
-            wheelAccumulator += e.deltaY;
-            if (wheelAccumulator > 80) {
-                currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-                applyTheme();
-                wheelAccumulator = 0;
-            } else if (wheelAccumulator < -80) {
-                currentThemeIndex = (currentThemeIndex - 1 + themes.length) % themes.length;
-                applyTheme();
-                wheelAccumulator = 0;
-            }
+        // колёсико
+        let wheelAcc = 0;
+        document.addEventListener('wheel', e => {
+            wheelAcc += e.deltaY;
+            if (wheelAcc > 70) { applyTheme((currentTheme + 1) % 4); wheelAcc = 0; }
+            else if (wheelAcc < -70) { applyTheme((currentTheme - 1 + 4) % 4); wheelAcc = 0; }
         }, { passive: true });
 
-        function applyTheme() {
-            themes.forEach(t => body.classList.remove('theme-' + t));
-            body.classList.add('theme-' + themes[currentThemeIndex]);
-            themeIndicator.textContent = themeNames[currentThemeIndex];
-            themeIndicator.style.transform = 'translateX(-50%) scale(1.3)';
-            setTimeout(() => {
-                themeIndicator.style.transform = 'translateX(-50%) scale(1)';
-            }, 200);
-            if (swipeHint.style.opacity !== '0') {
-                swipeHint.style.transition = 'opacity 0.6s ease';
-                swipeHint.style.opacity = '0';
-                setTimeout(() => { swipeHint.style.display = 'none'; }, 600);
-            }
-            if (navigator.vibrate) { navigator.vibrate(15); }
-        }
-
+        // автоскрытие подсказки
         setTimeout(() => {
-            if (currentThemeIndex === 0) {
-                swipeHint.style.transition = 'opacity 0.6s ease';
-                swipeHint.style.opacity = '0';
-                setTimeout(() => { swipeHint.style.display = 'none'; }, 600);
+            const hint = document.getElementById('swipeHint');
+            if (currentTheme === 0 && hint.style.opacity !== '0') {
+                hint.style.transition = 'opacity 0.5s ease';
+                hint.style.opacity = '0';
+                setTimeout(() => hint.style.display = 'none', 500);
             }
-        }, 8000);
+        }, 10000);
 
-        // ===== ДВИЖЕНИЕ НЕБЕСНОГО ТЕЛА =====
-        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-        const celestialBody = document.querySelector('.celestial-body');
-        if (!isTouchDevice) {
-            document.addEventListener('mousemove', function(e) {
-                const x = (e.clientX / window.innerWidth - 0.5) * 25;
-                const y = (e.clientY / window.innerHeight - 0.5) * 25;
-                celestialBody.style.transform = `translate(${x}px, ${y}px)`;
-                celestialBody.style.transition = 'transform 1.2s ease-out';
+        // ===== ДВИЖЕНИЕ ЛУНЫ =====
+        const moonContainer = document.getElementById('moonContainer');
+        if (!('ontouchstart' in window)) {
+            document.addEventListener('mousemove', e => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 30;
+                const y = (e.clientY / window.innerHeight - 0.5) * 30;
+                moonContainer.style.transform = `translate(${x}px, ${y}px)`;
+                moonContainer.style.transition = 'transform 1.5s ease-out';
             });
         }
+
+        // ===== СТАРТ =====
+        buildWaves();
+        buildAtmosphere();
+        buildFoam();
+        buildSpray();
+        buildGlitter();
+
+        // анимация звёзд и облаков (ключевые кадры в стилях не работают для динамики, добавим)
+        const styleAdd = document.createElement('style');
+        styleAdd.textContent = `
+            @keyframes starTwinkle {
+                0%, 100% { opacity: 0.3; transform: scale(1); }
+                50% { opacity: 1; transform: scale(1.6); }
+            }
+            @keyframes cloudDrift {
+                0%, 100% { transform: translateX(0); opacity: 0.3; }
+                50% { transform: translateX(18px); opacity: 0.5; }
+            }
+        `;
+        document.head.appendChild(styleAdd);
     </script>
 </body>
 </html>
