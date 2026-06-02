@@ -627,7 +627,8 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
     width: 100%;
     /* Фикс для iOS — вместо aspect-ratio используем padding-hack */
     max-height: 55vh;
-    height: 0;
+    height: auto;  /* ← Измени с 0 на auto */
+    aspect-ratio: 16 / 10;  /* ← Добавь соотношение сторон */
     padding-bottom: 62.5%; /* 16:10 = 10/16 = 62.5% */
     border-radius: 6px;
     overflow: hidden;
@@ -640,45 +641,36 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     touch-action: pan-y pinch-zoom; /* Разрешаем вертикальный скролл, горизонтальный — карусели */
+    .carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: 55vh;
+    height: auto;  /* ← Измени с 0 на auto */
+    aspect-ratio: 16 / 10;  /* ← Добавь соотношение сторон */
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
-
 .carousel-track {
-    position: absolute;
-    top: 0; left: 0;
+    position: relative;  /* ← Измени с absolute */
     display: flex;
     width: 100%;
     height: 100%;
     transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
 }
-
 .carousel-slide {
     min-width: 100%;
-    height: 100%;
+    height: auto;  /* ← Измени с 100% на auto */
     flex-shrink: 0;
-    /* Фикс для iOS — чтобы слайд не вылезал */
-    overflow: hidden;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
 }
-
 .carousel-slide img {
     width: 100%;
-    height: 100%;
+    height: auto;  /* ← Измени с 100% на auto */
+    aspect-ratio: 16 / 10;  /* ← Добавь */
     object-fit: cover;
     display: block;
-    /* Фиксы для iOS Safari */
-    -webkit-object-fit: cover;
-    object-position: center;
-    -webkit-object-position: center;
-    /* Убираем возможные отступы */
-    max-width: 100%;
-    max-height: 100%;
-    /* Предотвращаем выход за границы */
-    -webkit-clip-path: inset(0);
-    clip-path: inset(0);
 }
 
 /* Точки — адаптивные под тему */
@@ -993,40 +985,40 @@ body.theme-3 .carousel-wrapper {
 
     <script>
         // ===== ПАРАМЕТРЫ ТЕМ =====
-        const themeData = [
-            {
-                name: 'Чёрное море · Белое небо',
-                skyColors: ['#faf8f4', '#f0ece4', '#e8e4dc', '#ddd8ce'],
-                oceanColors: ['#0d1b1e', '#0a1517', '#060e0f'],
-                isDarkSky: false,
-                waveColors: ['#0f2024', '#0a181c', '#081215'],
-                foamColors: ['#1a3038', '#14262d', '#0f1e24']
-            },
-            {
-                name: 'Белое море · Красное небо',
-                skyColors: ['#8b1a1a', '#6b1010', '#4a0808', '#2a0404'],
-                oceanColors: ['#f5f0e8', '#ede6da', '#e5dcd0'],
-                isDarkSky: true,
-                waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4'],
-                foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8']
-            },
-            {
-                name: 'Красное море · Чёрное небо',
-                skyColors: ['#1a1a1a', '#0f0f0f', '#050505', '#000000'],
-                oceanColors: ['#8b1a0a', '#6b0f05', '#4a0802'],
-                isDarkSky: true,
-                waveColors: ['#9b2a15', '#7a1808', '#5a0d03'],
-                foamColors: ['#a04030', '#803020', '#602010']
-            },
-            {
-                name: 'Белое море · Чёрное небо',
-                skyColors: ['#1a1a1a', '#0f0f0f', '#050505', '#000000'],
-                oceanColors: ['#f5f0e8', '#ede6da', '#e5dcd0'],
-                isDarkSky: true,
-                waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4'],
-                foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8']
-            }
-        ];
+        cconst themeData = [
+    {
+        name: 'Чёрное море · Белое небо',
+        skyColors: ['#faf8f4', '#f0ece4', '#e8e4dc', '#ddd8ce'],
+        oceanColors: ['#0d1b1e', '#0a1517', '#060e0f'],
+        waveColors: ['#0f2024', '#0a181c', '#081215', '#061014'],
+        foamColors: ['#1a3038', '#14262d', '#0f1e24'],
+        isDarkSky: false
+    },
+    {
+        name: 'Белое море · Красное небо',
+        skyColors: ['#8b1a1a', '#6b1010', '#4a0808', '#2a0404'],
+        oceanColors: ['#f5f0e8', '#ede6da', '#e5dcd0'],
+        waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4', '#e0d8cc'],
+        foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8'],
+        isDarkSky: true
+    },
+    {
+        name: 'Красное море · Чёрное небо',
+        skyColors: ['#1a1a1a', '#0f0f0f', '#050505', '#000000'],
+        oceanColors: ['#8b1a0a', '#6b0f05', '#4a0802'],
+        waveColors: ['#9b2a15', '#7a1808', '#5a0d03', '#3a0500'],
+        foamColors: ['#a04030', '#803020', '#602010'],
+        isDarkSky: true
+    },
+    {
+        name: 'Белое море · Чёрное небо',
+        skyColors: ['#1a1a1a', '#0f0f0f', '#050505', '#000000'],
+        oceanColors: ['#f5f0e8', '#ede6da', '#e5dcd0'],
+        waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4', '#e0d8cc'],
+        foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8'],
+        isDarkSky: true
+    }
+];
 
         let currentTheme = 0;
 
@@ -1074,17 +1066,25 @@ body.theme-3 .carousel-wrapper {
             });
         }
 
-        function updateWaveColors() {
-            const paths = document.querySelectorAll('.wave-path');
-            const td = themeData[currentTheme];
-            paths.forEach((p, i) => {
-                p.setAttribute('fill', td.waveColors[i] || td.oceanColors[0]);
-            });
-            // обновляем пену
-            document.querySelectorAll('.foam-blob').forEach(b => {
-                b.style.background = td.foamColors[Math.floor(Math.random() * 3)];
-            });
+    function updateWaveColors() {
+    const paths = document.querySelectorAll('.wave-path');
+    const td = themeData[currentTheme];
+    paths.forEach((p, i) => {
+        if (td.waveColors && td.waveColors[i]) {
+            p.setAttribute('fill', td.waveColors[i]);
+        } else if (td.oceanColors) {
+            p.setAttribute('fill', td.oceanColors[0]);
         }
+    });
+    
+    // Обновляем пену
+    const foamBlobs = document.querySelectorAll('.foam-blob');
+    foamBlobs.forEach(blob => {
+        if (td.foamColors) {
+            blob.style.background = td.foamColors[Math.floor(Math.random() * td.foamColors.length)];
+        }
+    });
+}
 
         // ===== ГЕНЕРАЦИЯ АТМОСФЕРЫ =====
         function buildAtmosphere() {
@@ -1165,36 +1165,43 @@ body.theme-3 .carousel-wrapper {
         }
 
         // ===== ПРИМЕНЕНИЕ ТЕМЫ =====
-        function applyTheme(idx) {
+    function applyTheme(idx) {
     currentTheme = idx;
     document.body.className = 'theme-' + idx;
-    document.getElementById('themeIndicator').textContent = themeData[idx].name;
     
-    // Анимация индикатора
     const indicator = document.getElementById('themeIndicator');
-    indicator.style.transform = 'translateX(-50%) scale(1.35)';
-    setTimeout(() => indicator.style.transform = 'translateX(-50%) scale(1)', 250);
+    if (indicator) {
+        indicator.textContent = themeData[idx].name;
+        indicator.style.transform = 'translateX(-50%) scale(1.35)';
+        setTimeout(() => {
+            if (indicator) indicator.style.transform = 'translateX(-50%) scale(1)';
+        }, 250);
+    }
     
-    // Определяем цвет навбара
+    // Обновляем цвет theme-color для навбара
     const themeColorMeta = document.getElementById('themeColorMeta');
     const oceanColorsMap = ['#0a1517', '#ede6da', '#6b0f05', '#ede6da'];
-    let navbarColor = oceanColorsMap[idx];
-    themeColorMeta.setAttribute('content', navbarColor);
+    if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', oceanColorsMap[idx]);
+    }
     
-    // Обновляем всё
+    // Перестраиваем волны с новыми цветами
     buildWaves();
     buildAtmosphere();
     buildFoam();
     updateWaveColors();
     
-    // Скрываем подсказку при первом взаимодействии
+    // Скрываем подсказку при первом свайпе
     const hint = document.getElementById('swipeHint');
-    if (hint && hint.style.opacity !== '0') {
+    if (hint && hint.style.opacity !== '0' && idx !== 0) {
         hint.style.transition = 'opacity 0.5s ease';
         hint.style.opacity = '0';
-        setTimeout(() => hint.style.display = 'none', 500);
+        setTimeout(() => {
+            if (hint) hint.style.display = 'none';
+        }, 500);
     }
     
+    // Вибрация на мобильных
     if (navigator.vibrate) navigator.vibrate(12);
 }
 
