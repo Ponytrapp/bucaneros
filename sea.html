@@ -356,47 +356,140 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
         }
 
         /* ===== КОНТЕНТ ===== */
-        .content-layer {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-        .message-block {
-            text-align: center;
-            animation: messageAppear 2s ease-out 0.6s both;
-        }
-        @keyframes messageAppear {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        .title-text {
-            font-size: clamp(1.8rem, 5vw, 3.5rem);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 0.8rem;
-            font-weight: bold;
-            animation: titleFloat 5s ease-in-out infinite;
-            transition: color 1.2s ease, text-shadow 1.2s ease;
-        }
-        @keyframes titleFloat {
-            0%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-7px); }
-            60% { transform: translateY(-3px); }
-        }
-        .sub-text {
-            font-size: clamp(0.8rem, 1.8vw, 1.1rem);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            font-style: italic;
-            transition: color 1.2s ease;
-        }
+.content-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+.message-block {
+    text-align: center;
+    animation: messageAppear 2s ease-out 0.6s both;
+    pointer-events: auto;
+    width: 90%;
+    max-width: 500px;
+}
+@keyframes messageAppear {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== КАРУСЕЛЬ ===== */
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    max-height: 55vh;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transition: box-shadow 1.2s ease;
+}
+.carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+.carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+}
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Точки — адаптивные под тему */
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+}
+.carousel-dot.active {
+    background: #ffffff;
+    transform: scale(1.4);
+    box-shadow: 0 0 8px rgba(255,255,255,0.6);
+}
+
+/* Для светлого моря (темы 1 и 3) — точки тёмные */
+body.theme-1 .carousel-dot,
+body.theme-3 .carousel-dot {
+    background: rgba(0,0,0,0.4);
+}
+body.theme-1 .carousel-dot.active,
+body.theme-3 .carousel-dot.active {
+    background: #1a1a1a;
+    box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+
+/* Стрелки — адаптивные */
+body.theme-1 .carousel-arrow,
+body.theme-3 .carousel-arrow {
+    background: rgba(255,255,255,0.3);
+    color: #1a1a1a;
+}
+body.theme-1 .carousel-arrow:hover,
+body.theme-3 .carousel-arrow:hover {
+    background: rgba(255,255,255,0.6);
+}
+
+/* Свечение карусели под цвет луны */
+body.theme-0 .carousel-wrapper {
+    box-shadow: 0 8px 32px rgba(255, 50, 20, 0.3), 0 0 60px rgba(200, 20, 0, 0.15);
+}
+body.theme-1 .carousel-wrapper {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 0, 0, 0.2);
+}
+body.theme-2 .carousel-wrapper {
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.3), 0 0 60px rgba(200, 200, 200, 0.15);
+}
+body.theme-3 .carousel-wrapper {
+    box-shadow: 0 8px 32px rgba(255, 50, 20, 0.3), 0 0 60px rgba(200, 20, 0, 0.15);
+}
+/* Адаптив карусели */
+@media (max-width: 480px) {
+    .carousel-wrapper {
+        aspect-ratio: 4 / 3;
+        max-height: 45vh;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+    .carousel-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+    }
+    .carousel-prev { left: 4px; }
+    .carousel-next { right: 4px; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+    .carousel-wrapper {
+        aspect-ratio: 16 / 9;
+        max-height: 40vh;
+        margin-bottom: 0.4rem;
+    }
+    .sub-text {
+        font-size: 0.6rem;
+        letter-spacing: 3px;
+    }
+}
 
         /* ===== ИНДИКАТОР ТЕМЫ ===== */
         .theme-indicator {
@@ -542,15 +635,33 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
             <path d="M12 5v14M12 5l-4 4M12 5l4 4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </div>
-
     <!-- КОНТЕНТ -->
-    <div class="content-layer">
-        <div class="message-block">
-            <h2 class="title-text">Pride</h2>
-            <p class="sub-text">Bucaneros del Mar de Sangre</p>
+<div class="content-layer">
+    <div class="message-block">
+        <!-- Карусель -->
+        <div class="carousel-wrapper">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Слайды -->
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800" alt="Море 1" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800" alt="Море 2" onerror="this.style.display='none'">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1454418747937-bd95b1a2f29c?w=800" alt="Море 3" onerror="this.style.display='none'">
+                </div>
+            </div>
+            <!-- Точки-индикаторы -->
+            <div class="carousel-dots" id="carouselDots"></div>
+            <!-- Стрелки -->
+            <button class="carousel-arrow carousel-prev" id="carouselPrev">‹</button>
+            <button class="carousel-arrow carousel-next" id="carouselNext">›</button>
         </div>
+        <!-- Подпись под каруселью -->
+        <p class="sub-text">Bucaneros del Mar de Sangre</p>
     </div>
-
+</div>
     <!-- КНОПКА -->
     <div class="back-btn-wrapper">
         <a href="index.html" class="back-btn">← Вернуться в порт</a>
@@ -754,24 +865,41 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
             if (navigator.vibrate) navigator.vibrate(12);
         }
 
-        // ===== СВАЙП =====
-        let touchStartY = 0, touchEndY = 0, isSwiping = false;
-        document.addEventListener('touchstart', e => {
-            touchStartY = e.touches[0].clientY;
-            isSwiping = true;
-        }, { passive: true });
-        document.addEventListener('touchmove', e => {
-            if (!isSwiping) return;
-            touchEndY = e.touches[0].clientY;
-        }, { passive: true });
-        document.addEventListener('touchend', () => {
-            if (!isSwiping) return;
-            isSwiping = false;
-            const d = touchEndY - touchStartY;
-            if (d > 55) applyTheme((currentTheme + 1) % 4);
-            else if (d < -55) applyTheme((currentTheme - 1 + 4) % 4);
-            touchStartY = 0; touchEndY = 0;
-        });
+        // ===== СВАЙП ДЛЯ СМЕНЫ ТЕМЫ =====
+let touchStartY = 0, touchEndY = 0, isSwiping = false;
+let swipeTarget = null; // отслеживаем, где начался свайп
+
+document.addEventListener('touchstart', e => {
+    touchStartY = e.touches[0].clientY;
+    isSwiping = true;
+    swipeTarget = e.target; // запоминаем элемент, на котором начался свайп
+}, { passive: true });
+
+document.addEventListener('touchmove', e => {
+    if (!isSwiping) return;
+    touchEndY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchend', () => {
+    if (!isSwiping) return;
+    isSwiping = false;
+    
+    // Если свайп начался внутри карусели — не меняем тему
+    if (swipeTarget && swipeTarget.closest('.carousel-wrapper')) {
+        touchStartY = 0;
+        touchEndY = 0;
+        swipeTarget = null;
+        return;
+    }
+    
+    const d = touchEndY - touchStartY;
+    if (d > 55) applyTheme((currentTheme + 1) % 4);
+    else if (d < -55) applyTheme((currentTheme - 1 + 4) % 4);
+    
+    touchStartY = 0;
+    touchEndY = 0;
+    swipeTarget = null;
+});
 
         // колёсико
         let wheelAcc = 0;
@@ -822,6 +950,72 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
             }
         `;
         document.head.appendChild(styleAdd);
+        // ===== КАРУСЕЛЬ =====
+const track = document.getElementById('carouselTrack');
+const dotsContainer = document.getElementById('carouselDots');
+const prevBtn = document.getElementById('carouselPrev');
+const nextBtn = document.getElementById('carouselNext');
+const slides = track.querySelectorAll('.carousel-slide');
+let currentSlide = 0;
+let autoplayInterval;
+let touchStartX = 0;
+let touchEndX = 0;
+
+// Создаём точки
+slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.classList.add('carousel-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.setAttribute('aria-label', `Слайд ${i + 1}`);
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+});
+const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+function goToSlide(index) {
+    currentSlide = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+}
+
+function nextSlide() {
+    goToSlide((currentSlide + 1) % slides.length);
+}
+function prevSlide() {
+    goToSlide((currentSlide - 1 + slides.length) % slides.length);
+}
+
+nextBtn.addEventListener('click', () => { nextSlide(); resetAutoplay(); });
+prevBtn.addEventListener('click', () => { prevSlide(); resetAutoplay(); });
+
+// Свайп для карусели (только внутри карусели)
+const carouselWrapper = document.querySelector('.carousel-wrapper');
+carouselWrapper.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+}, { passive: true });
+carouselWrapper.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+        if (diff > 0) nextSlide();
+        else prevSlide();
+        resetAutoplay();
+    }
+});
+
+// Автопрокрутка
+function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 4000);
+}
+function resetAutoplay() {
+    clearInterval(autoplayInterval);
+    startAutoplay();
+}
+startAutoplay();
+
+// Пауза при наведении (десктоп)
+carouselWrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+carouselWrapper.addEventListener('mouseleave', startAutoplay);
     </script>
 </body>
 </html>
