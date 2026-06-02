@@ -1333,14 +1333,14 @@ const slides = track.querySelectorAll('.carousel-slide');
 const totalSlides = slides.length;
 
 // Клонируем первый и последний слайды для эффекта бесконечности
-const firstClone = slides[0].cloneNode(true);
-const lastClone = slides[totalSlides - 1].cloneNode(true);
+//const firstClone = slides[0].cloneNode(true);
+//const lastClone = slides[totalSlides - 1].cloneNode(true);
 
-firstClone.classList.add('clone');
-lastClone.classList.add('clone');
+//firstClone.classList.add('clone');
+//lastClone.classList.add('clone');
 
-track.appendChild(firstClone);  // Добавляем клон первого в конец
-track.insertBefore(lastClone, slides[0]); // Добавляем клон последнего в начало
+//track.appendChild(firstClone);  // Добавляем клон первого в конец
+//track.insertBefore(lastClone, slides[0]); // Добавляем клон последнего в начало
 
 // Обновлённое количество слайдов (с клонами)
 const allSlides = track.querySelectorAll('.carousel-slide');
@@ -1355,7 +1355,7 @@ let touchEndX = 0;
 
 // Устанавливаем начальную позицию без анимации
 track.style.transition = 'none';
-track.style.transform = `translateX(-${currentIndex * 100}%)`;
+track.style.transform = `translateX(-${currentIndex * 0}%)`;
 
 // Создаём точки только для реальных слайдов
 dotsContainer.innerHTML = '';
