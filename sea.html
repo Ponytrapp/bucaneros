@@ -5,1052 +5,206 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <meta name="theme-color" content="#0a0a0a" id="themeColorMeta">
-    <title>Море зовёт — Bucaneros del Mar de Sangre</title>
-    
-    <!-- МГНОВЕННЫЙ ФИКС НАВБАРА -->
-    <script>
-        // Сразу делаем навбар тёмным, ещё до загрузки CSS
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0a0a0a');
-        
-        // Слушаем момент, когда DOM готов — применяем тему
-        document.addEventListener('DOMContentLoaded', function() {
-            // Принудительно обновляем через 50ms после загрузки
-            setTimeout(function() {
-                var meta = document.getElementById('themeColorMeta');
-                if (meta && document.body.classList.contains('theme-0')) {
-                    meta.setAttribute('content', '#0a1517');
-                }
-            }, 50);
-        });
-    </script>
+    <title>Bucaneros</title>
     
     <style>
-        * 
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-        /* Фиксы для iOS */
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        
-        :root {
-        --ocean-color: #0a1517;
-              }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
-        /* ... существующие стили ... */
-        background: var(--ocean-color);
-        transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        -webkit-overflow-scrolling: touch;
-        position: relative;
-        /* Предотвращаем "резиновый" скролл */
-        overscroll-behavior: none;
-        -webkit-overscroll-behavior: none;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        overflow: hidden;
-        font-family: 'Georgia', 'Times New Roman', serif;
-        cursor: default;
-        user-select: none;
-        -webkit-user-select: none;
-        animation: fadeInBody 1.8s ease-out;
-        transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overscroll-behavior: none;
-        -webkit-overscroll-behavior: none;
-        margin: 0;
-        padding: 0;
-            }
+            background: #0a1517;
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            user-select: none;
+            -webkit-user-select: none;
+            animation: fadeInBody 1.8s ease-out;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
 
         @keyframes fadeInBody {
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
 
-       /* ===== ТЕМА 0: Чёрное море + Белое небо + Красная луна ===== */
-/* Море тёмное → текст и кнопка белые */
-body.theme-0 .sky-layer {
-    background: linear-gradient(180deg, #faf8f4 0%, #f0ece4 40%, #e8e4dc 70%, #ddd8ce 100%);
-}
-body.theme-0 .ocean-layer {
-    background: linear-gradient(180deg, #0d1b1e 0%, #0a1517 30%, #060e0f 100%);
-}
-body.theme-0 .moon-body {
-    background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%);
-    box-shadow: 0 0 50px rgba(255, 50, 20, 0.5), 0 0 100px rgba(200, 20, 0, 0.3), 0 0 150px rgba(139, 0, 0, 0.2);
-}
-body.theme-0 .wave-foam { background: rgba(255,255,255,0.15); }
-body.theme-0 .spray-dot { background: rgba(255,255,255,0.5); }
-body.theme-0 .glitter-line { background: rgba(255,255,255,0.35); }
-body.theme-0 .title-text { color: #ffffff; text-shadow: 0 0 30px rgba(255,255,255,0.3), 0 0 15px rgba(255,100,100,0.2); }
-body.theme-0 .sub-text { color: rgba(255,255,255,0.75); }
-body.theme-0 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
-body.theme-0 .back-btn:hover, body.theme-0 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
-body.theme-0 .theme-indicator { color: rgba(255,255,255,0.6); }
-body.theme-0 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
+        /* ===== ТЕМЫ ===== */
+        body.theme-0 .sky-layer { background: linear-gradient(180deg, #faf8f4 0%, #f0ece4 40%, #e8e4dc 70%, #ddd8ce 100%); }
+        body.theme-0 .ocean-layer { background: linear-gradient(180deg, #0d1b1e 0%, #0a1517 30%, #060e0f 100%); }
+        body.theme-0 .moon-body { background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%); box-shadow: 0 0 50px rgba(255,50,20,0.5); }
+        body.theme-0 .sub-text { color: rgba(255,255,255,0.75); }
+        body.theme-0 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
+        body.theme-0 .theme-indicator { color: rgba(255,255,255,0.6); }
 
-/* ===== ТЕМА 1: Белое море + Красное небо + Чёрная луна ===== */
-/* Море светлое → текст и кнопка тёмные */
-body.theme-1 .sky-layer {
-    background: linear-gradient(180deg, #8b1a1a 0%, #6b1010 40%, #4a0808 70%, #2a0404 100%);
-}
-body.theme-1 .ocean-layer {
-    background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%);
-}
-body.theme-1 .moon-body {
-    background: radial-gradient(circle at 40% 35%, #1a1a1a, #0a0a0a 60%, #000000 90%);
-    box-shadow: 0 0 40px rgba(0,0,0,0.4), 0 0 80px rgba(0,0,0,0.2);
-}
-body.theme-1 .wave-foam { background: rgba(0,0,0,0.10); }
-body.theme-1 .spray-dot { background: rgba(0,0,0,0.3); }
-body.theme-1 .glitter-line { background: rgba(0,0,0,0.2); }
-body.theme-1 .title-text { color: #1a1a1a; text-shadow: 0 0 20px rgba(0,0,0,0.1); }
-body.theme-1 .sub-text { color: rgba(26,26,26,0.7); }
-body.theme-1 .back-btn { border-color: rgba(26,26,26,0.5); color: #1a1a1a; }
-body.theme-1 .back-btn:hover, body.theme-1 .back-btn:active { background: rgba(26,26,26,0.08); border-color: #1a1a1a; }
-body.theme-1 .theme-indicator { color: rgba(26,26,26,0.6); }
-body.theme-1 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
+        body.theme-1 .sky-layer { background: linear-gradient(180deg, #8b1a1a 0%, #6b1010 40%, #4a0808 70%, #2a0404 100%); }
+        body.theme-1 .ocean-layer { background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%); }
+        body.theme-1 .moon-body { background: radial-gradient(circle at 40% 35%, #1a1a1a, #0a0a0a 60%, #000000 90%); box-shadow: 0 0 40px rgba(0,0,0,0.4); }
+        body.theme-1 .sub-text { color: rgba(26,26,26,0.7); }
+        body.theme-1 .back-btn { border-color: rgba(26,26,26,0.5); color: #1a1a1a; }
+        body.theme-1 .theme-indicator { color: rgba(26,26,26,0.6); }
 
-/* ===== ТЕМА 2: Красное море + Чёрное небо + Белая луна ===== */
-/* Море тёмное (красное — тёмный оттенок) → текст и кнопка белые */
-body.theme-2 .sky-layer {
-    background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
-}
-body.theme-2 .ocean-layer {
-    background: linear-gradient(180deg, #8b1a0a 0%, #6b0f05 30%, #4a0802 100%);
-}
-body.theme-2 .moon-body {
-    background: radial-gradient(circle at 40% 35%, #ffffff, #e8e8e8 50%, #cccccc 80%);
-    box-shadow: 0 0 60px rgba(255,255,255,0.6), 0 0 120px rgba(255,255,255,0.3), 0 0 180px rgba(200,200,200,0.15);
-}
-body.theme-2 .wave-foam { background: rgba(255,255,255,0.12); }
-body.theme-2 .spray-dot { background: rgba(255,255,255,0.45); }
-body.theme-2 .glitter-line { background: rgba(255,255,255,0.35); }
-body.theme-2 .title-text { color: #ffffff; text-shadow: 0 0 35px rgba(255,255,255,0.4), 0 0 20px rgba(255,100,100,0.15); }
-body.theme-2 .sub-text { color: rgba(255,255,255,0.75); }
-body.theme-2 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
-body.theme-2 .back-btn:hover, body.theme-2 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
-body.theme-2 .theme-indicator { color: rgba(255,255,255,0.6); }
-body.theme-2 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
+        body.theme-2 .sky-layer { background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%); }
+        body.theme-2 .ocean-layer { background: linear-gradient(180deg, #8b1a0a 0%, #6b0f05 30%, #4a0802 100%); }
+        body.theme-2 .moon-body { background: radial-gradient(circle at 40% 35%, #ffffff, #e8e8e8 50%, #cccccc 80%); box-shadow: 0 0 60px rgba(255,255,255,0.6); }
+        body.theme-2 .sub-text { color: rgba(255,255,255,0.75); }
+        body.theme-2 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
 
-/* ===== ТЕМА 3: Белое море + Чёрное небо + Красная луна ===== */
-/* Море светлое → текст и кнопка тёмные */
-body.theme-3 .sky-layer {
-    background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
-}
-body.theme-3 .ocean-layer {
-    background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%);
-}
-body.theme-3 .moon-body {
-    background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%);
-    box-shadow: 0 0 50px rgba(255, 50, 20, 0.6), 0 0 100px rgba(200, 20, 0, 0.4), 0 0 150px rgba(139, 0, 0, 0.25);
-}
-body.theme-3 .wave-foam { background: rgba(0,0,0,0.10); }
-body.theme-3 .spray-dot { background: rgba(0,0,0,0.3); }
-body.theme-3 .glitter-line { background: rgba(255,255,255,0.2); }
-body.theme-3 .title-text { color: #1a1a1a; text-shadow: 0 0 20px rgba(0,0,0,0.1); }
-body.theme-3 .sub-text { color: rgba(26,26,26,0.7); }
-body.theme-3 .back-btn { border-color: rgba(26,26,26,0.5); color: #1a1a1a; }
-body.theme-3 .back-btn:hover, body.theme-3 .back-btn:active { background: rgba(26,26,26,0.08); border-color: #1a1a1a; }
-body.theme-3 .theme-indicator { color: rgba(26,26,26,0.6); }
-body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
-        
+        body.theme-3 .sky-layer { background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%); }
+        body.theme-3 .ocean-layer { background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%); }
+        body.theme-3 .moon-body { background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%); box-shadow: 0 0 50px rgba(255,50,20,0.6); }
+        body.theme-3 .sub-text { color: rgba(26,26,26,0.7); }
+        body.theme-3 .back-btn { border-color: rgba(26,26,26,0.5); color: #1a1a1a; }
+
         /* ===== СЛОИ ===== */
-        .sky-layer {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 40%;
-            z-index: 1;
-            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .sky-layer { position: absolute; top: 0; left: 0; width: 100%; height: 40%; z-index: 1; transition: background 1.2s ease; }
+        .ocean-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 65%; z-index: 3; transition: background 1.2s ease; overflow: hidden; }
 
-        .ocean-layer {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%;
-            height: 65%;
-            z-index: 3;
-            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-        }
+        /* ЛУНА */
+        .moon-container { position: absolute; top: 12%; right: 16%; z-index: 2; }
+        .moon-body { width: clamp(55px, 10vw, 90px); height: clamp(55px, 10vw, 90px); border-radius: 50%; transition: all 1.2s ease; position: relative; }
+        .moon-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 130%; height: 130%; border-radius: 50%; pointer-events: none; animation: glowPulse 3s ease-in-out infinite; }
+        @keyframes glowPulse { 0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); } }
 
-        /* ===== ЛУНА ===== */
-        .moon-container {
-            position: absolute;
-            top: 12%;
-            right: 16%;
-            z-index: 2;
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .moon-body {
-            width: clamp(55px, 10vw, 90px);
-            height: clamp(55px, 10vw, 90px);
-            border-radius: 50%;
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-        /* кратеры */
-        .moon-body::before {
-            content: '';
-            position: absolute;
-            width: 22%; height: 22%;
-            border-radius: 50%;
-            top: 25%; left: 30%;
-            background: rgba(0,0,0,0.15);
-        }
-        .moon-body::after {
-            content: '';
-            position: absolute;
-            width: 14%; height: 14%;
-            border-radius: 50%;
-            top: 55%; left: 55%;
-            background: rgba(0,0,0,0.1);
-        }
-        /* свечение */
-        .moon-glow {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 130%; height: 130%;
-            border-radius: 50%;
-            pointer-events: none;
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: glowPulse 3s ease-in-out infinite;
-        }
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
-        }
+        /* АТМОСФЕРА */
+        .atmosphere-layer { position: absolute; top: 0; left: 0; width: 100%; height: 40%; z-index: 2; pointer-events: none; }
+        .atmo-particle { position: absolute; border-radius: 50%; }
 
-        /* ===== ЗВЁЗДЫ / ОБЛАКА ===== */
-        .atmosphere-layer {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 40%;
-            z-index: 2;
-            pointer-events: none;
-            transition: opacity 1.2s ease;
-        }
-        .atmo-particle {
-            position: absolute;
-            border-radius: 50%;
-            transition: all 1.2s ease;
-        }
+        /* ВОЛНЫ */
+        .wave-row { position: absolute; bottom: 0; left: 0; width: 100%; }
+        .wave-row svg { width: 100%; display: block; }
+        .wave-1 { height: 55%; bottom: 0; opacity: 0.85; animation: waveDrift1 10s ease-in-out infinite; }
+        .wave-2 { height: 50%; bottom: -5%; opacity: 0.75; animation: waveDrift2 8s ease-in-out infinite; }
+        .wave-3 { height: 45%; bottom: -8%; opacity: 0.9; animation: waveDrift3 7s ease-in-out infinite; }
+        .wave-4 { height: 35%; bottom: -10%; opacity: 0.95; animation: waveDrift4 6s ease-in-out infinite; }
 
-        /* ===== ВОЛНЫ ===== */
-        .wave-set {
-            position: absolute;
-            bottom: 0;
-            left: -10%;
-            width: 130%;
-            height: 100%;
-        }
-        .wave-row {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-        }
-        .wave-row svg {
-            width: 100%;
-            display: block;
-        }
-        .wave-row path {
-            transition: fill 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        @keyframes waveDrift1 { 0%,100% { transform: translateX(0); } 30% { transform: translateX(1.5%); } 60% { transform: translateX(-0.5%); } }
+        @keyframes waveDrift2 { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-2%); } 55% { transform: translateX(1%); } }
+        @keyframes waveDrift3 { 0%,100% { transform: translateX(0); } 40% { transform: translateX(1.8%); } 70% { transform: translateX(-1.2%); } }
+        @keyframes waveDrift4 { 0%,100% { transform: translateX(0); } 35% { transform: translateX(-1.5%); } 65% { transform: translateX(0.8%); } }
 
-        /* волна 1 — дальняя */
-        .wave-1 { height: 55%; bottom: 0; opacity: 0.85; }
-        .wave-1-anim { animation: waveDrift1 10s ease-in-out infinite; }
+        /* ПЕНА, БРЫЗГИ, БЛИКИ */
+        .foam-particles, .spray-layer, .glitter-layer { position: absolute; bottom: 0; left: 0; width: 100%; pointer-events: none; z-index: 4; }
+        .foam-blob { position: absolute; border-radius: 50%; animation: foamFloat var(--fd) ease-in-out infinite; }
+        @keyframes foamFloat { 0% { opacity: 0; } 15% { opacity: 0.7; } 100% { opacity: 0; transform: translateY(-30px); } }
 
-        /* волна 2 — средняя */
-        .wave-2 { height: 50%; bottom: -5%; opacity: 0.75; }
-        .wave-2-anim { animation: waveDrift2 8s ease-in-out infinite; }
+        /* КОНТЕНТ */
+        .content-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .message-block { text-align: center; width: 90%; max-width: 500px; pointer-events: auto; }
+        .sub-text { font-size: clamp(0.8rem, 2vw, 1rem); letter-spacing: 4px; text-transform: uppercase; margin-top: 1rem; }
 
-        /* волна 3 — ближняя */
-        .wave-3 { height: 45%; bottom: -8%; opacity: 0.9; }
-        .wave-3-anim { animation: waveDrift3 7s ease-in-out infinite; }
+        /* КАРУСЕЛЬ */
+        .carousel-wrapper { position: relative; width: 100%; aspect-ratio: 16 / 10; border-radius: 6px; overflow: hidden; margin-bottom: 1.2rem; box-shadow: 0 8px 32px rgba(0,0,0,0.3); touch-action: pan-y pinch-zoom; }
+        .carousel-track { position: relative; display: flex; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+        .carousel-slide { min-width: 100%; flex-shrink: 0; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 15; display: flex; align-items: center; justify-content: center; }
+        .carousel-prev { left: 12px; }
+        .carousel-next { right: 12px; }
+        
+        .carousel-dots { position: absolute; bottom: 12px; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; z-index: 15; }
+        .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; border: none; transition: all 0.3s; }
+        .carousel-dot.active { background: #ffffff; transform: scale(1.4); }
 
-        /* волна 4 — передняя, пенистая */
-        .wave-4 { height: 35%; bottom: -10%; opacity: 0.95; }
-        .wave-4-anim { animation: waveDrift4 6s ease-in-out infinite; }
+        /* ИНДИКАТОР ТЕМЫ */
+        .theme-indicator { position: absolute; top: clamp(15px, 3vh, 28px); left: 50%; transform: translateX(-50%); z-index: 20; font-size: clamp(0.55rem, 1.2vw, 0.7rem); letter-spacing: 4px; text-transform: uppercase; pointer-events: none; }
 
-        @keyframes waveDrift1 {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            30% { transform: translateX(1.5%) translateY(-3px); }
-            60% { transform: translateX(-0.5%) translateY(-5px); }
-            85% { transform: translateX(1%) translateY(-2px); }
-        }
-        @keyframes waveDrift2 {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            25% { transform: translateX(-2%) translateY(-4px); }
-            55% { transform: translateX(1%) translateY(-7px); }
-            75% { transform: translateX(-1%) translateY(-3px); }
-        }
-        @keyframes waveDrift3 {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            40% { transform: translateX(1.8%) translateY(-5px); }
-            70% { transform: translateX(-1.2%) translateY(-3px); }
-        }
-        @keyframes waveDrift4 {
-            0%, 100% { transform: translateX(0) translateY(0); }
-            35% { transform: translateX(-1.5%) translateY(-4px); }
-            65% { transform: translateX(0.8%) translateY(-6px); }
-        }
+        /* КНОПКА НАЗАД */
+        .back-btn-wrapper { position: absolute; bottom: clamp(30px, 7vh, 50px); left: 0; width: 100%; z-index: 20; display: flex; justify-content: center; }
+        .back-btn { display: inline-flex; align-items: center; justify-content: center; border: 1px solid; padding: 0.7rem 2rem; font-family: inherit; font-size: clamp(0.7rem, 1.8vw, 0.85rem); letter-spacing: 3px; text-transform: uppercase; cursor: pointer; text-decoration: none; backdrop-filter: blur(4px); }
 
-        /* ===== ПЕНА НА ГРЕБНЯХ ===== */
-        .foam-particles {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%;
-            height: 40%;
-            z-index: 4;
-            pointer-events: none;
-        }
-        .foam-blob {
-            position: absolute;
-            border-radius: 50%;
-            animation: foamFloat var(--fd) ease-in-out infinite;
-            animation-delay: var(--fdel);
-            bottom: var(--fy);
-            left: var(--fx);
-            width: var(--fw);
-            height: var(--fh);
-            opacity: 0;
-            transition: background 1.2s ease;
-        }
-        @keyframes foamFloat {
-            0% { opacity: 0; transform: translateY(0) translateX(0) scale(0.6); }
-            15% { opacity: 0.7; }
-            40% { opacity: 0.3; transform: translateY(-18px) translateX(8px) scale(1); }
-            70% { opacity: 0.1; }
-            100% { opacity: 0; transform: translateY(-30px) translateX(-5px) scale(0.4); }
-        }
-
-        /* ===== БРЫЗГИ ===== */
-        .spray-layer {
-            position: absolute;
-            bottom: 20%;
-            left: 0;
-            width: 100%;
-            height: 30%;
-            z-index: 5;
-            pointer-events: none;
-        }
-        .spray-dot {
-            position: absolute;
-            border-radius: 50%;
-            animation: sprayUp var(--sd) ease-out infinite;
-            animation-delay: var(--sdel);
-            bottom: 0;
-            left: var(--sx);
-            width: var(--sw);
-            height: var(--sh);
-            transition: background 1.2s ease;
-        }
-        @keyframes sprayUp {
-            0% { opacity: 0; transform: translateY(0) translateX(0); }
-            10% { opacity: 0.8; }
-            100% { opacity: 0; transform: translateY(-55px) translateX(var(--sdx)); }
-        }
-
-        /* ===== БЛИКИ НА ВОДЕ ===== */
-        .glitter-layer {
-            position: absolute;
-            bottom: 10%;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            z-index: 6;
-            pointer-events: none;
-        }
-        .glitter-line {
-            position: absolute;
-            height: 1px;
-            transition: background 1.2s ease;
-            animation: glitterShine var(--gd) ease-in-out infinite;
-            animation-delay: var(--gdel);
-            bottom: var(--gy);
-            left: var(--gx);
-            width: var(--gw);
-            transform: rotate(var(--gr));
-        }
-        @keyframes glitterShine {
-            0%, 100% { opacity: 0; }
-            30% { opacity: 0.7; }
-            60% { opacity: 0.15; }
-        }
-
-        /* ===== КОНТЕНТ ===== */
-.content-layer {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-}
-.message-block {
-    text-align: center;
-    animation: messageAppear 2s ease-out 0.6s both;
-    pointer-events: auto;
-    width: 90%;
-    max-width: 500px;
-}
-@keyframes messageAppear {
-    0% { opacity: 0; transform: translateY(40px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-        /* ===== ОВЕРЛЕЙ (РАЗВОРОТ ИЗОБРАЖЕНИЯ) ===== */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    height: 100dvh;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.overlay.active {
-    pointer-events: auto;
-    opacity: 1;
-}
-
-.overlay-bg {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 0;
-}
-
-.overlay-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 90vw;
-    max-height: 85vh;
-    max-height: 85dvh;
-    animation: overlayIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes overlayIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.9) translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.overlay-image {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 55vh;
-    max-height: 55dvh;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease;
-}
-
-.overlay-info {
-    text-align: center;
-    margin-top: 1.5rem;
-    animation: overlayInfoIn 0.6s ease 0.2s both;
-}
-
-@keyframes overlayInfoIn {
-    0% {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.overlay-title {
-    font-size: clamp(1.3rem, 3vw, 2rem);
-    color: #ffffff;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-    font-weight: bold;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-.overlay-desc {
-    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
-    color: rgba(255, 255, 255, 0.8);
-    line-height: 1.6;
-    max-width: 450px;
-    margin: 0 auto 1.5rem;
-    font-style: italic;
-    letter-spacing: 0.5px;
-}
-
-.overlay-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    color: #ffffff;
-    padding: 0.7rem 2rem;
-    font-family: 'Georgia', 'Times New Roman', serif;
-    font-size: clamp(0.7rem, 1.5vw, 0.8rem);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    min-height: 44px;
-}
-
-.overlay-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #ffffff;
-    letter-spacing: 5px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-}
-
-.overlay-btn:active {
-    transform: scale(0.95);
-    transition: transform 0.1s ease;
-}
-
-/* Кнопка закрытия (крестик) */
-.overlay-close {
-    position: absolute;
-    top: clamp(15px, 3vh, 25px);
-    right: clamp(15px, 3vw, 25px);
-    z-index: 3;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #ffffff;
-    width: clamp(36px, 8vw, 44px);
-    height: clamp(36px, 8vw, 44px);
-    border-radius: 50%;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    animation: overlayInfoIn 0.6s ease 0.4s both;
-}
-
-.overlay-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: #ffffff;
-}
-
-.overlay-close:active {
-    transform: scale(0.9);
-}
-
-/* Адаптив оверлея */
-@media (max-width: 480px) {
-    .overlay-content {
-        max-width: 95vw;
-    }
-    .overlay-image {
-        max-height: 45vh;
-        border-radius: 6px;
-    }
-    .overlay-info {
-        margin-top: 1rem;
-    }
-    .overlay-desc {
-        max-width: 90%;
-    }
-    .overlay-btn {
-        padding: 0.6rem 1.5rem;
-    }
-}
-
-@media (orientation: landscape) {
-    .overlay-content {
-        flex-direction: row;
-        gap: 2rem;
-        max-width: 85vw;
-    }
-    .overlay-image {
-        max-height: 60vh;
-        max-width: 55%;
-    }
-    .overlay-info {
-        text-align: left;
-        margin-top: 0;
-        max-width: 40%;
-    }
-    .overlay-desc {
-        margin: 0 0 1.5rem 0;
-        font-size: 0.8rem;
-    }
-}
-
-/* ===== КАРУСЕЛЬ ===== */
-.carousel-wrapper {
-    position: relative;
-    width: 100%;
-    max-height: 55vh;
-    aspect-ratio: 16 / 10;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    transition: box-shadow 1.2s ease;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    touch-action: pan-y pinch-zoom;
-}
-
-.carousel-track {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-}
-
-.carousel-slide {
-    min-width: 100%;
-    flex-shrink: 0;
-}
-
-.carousel-slide img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
-    display: block;
-}
-
-/* Стрелки карусели */
-.carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 36px;
-    height: 36px;
-    background: rgba(0,0,0,0.5);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 15;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.carousel-prev {
-    left: 12px;
-}
-
-.carousel-next {
-    right: 12px;
-}
-
-/* Точки */
-.carousel-dots {
-    position: absolute;
-    bottom: 12px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    z-index: 15;
-}
-
-.carousel-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-    padding: 0;
-}
-
-/* Для светлого моря (темы 1 и 3) — точки тёмные */
-body.theme-1 .carousel-dot,
-body.theme-3 .carousel-dot {
-    background: rgba(0,0,0,0.4);
-}
-body.theme-1 .carousel-dot.active,
-body.theme-3 .carousel-dot.active {
-    background: #1a1a1a;
-    box-shadow: 0 0 8px rgba(0,0,0,0.4);
-}
-
-/* Стрелки — адаптивные */
-body.theme-1 .carousel-arrow,
-body.theme-3 .carousel-arrow {
-    background: rgba(255,255,255,0.3);
-    color: #1a1a1a;
-}
-body.theme-1 .carousel-arrow:hover,
-body.theme-3 .carousel-arrow:hover {
-    background: rgba(255,255,255,0.6);
-}
-
-/* Свечение карусели под цвет луны */
-body.theme-0 .carousel-wrapper {
-    box-shadow: 0 8px 32px rgba(255, 50, 20, 0.3), 0 0 60px rgba(200, 20, 0, 0.15);
-}
-body.theme-1 .carousel-wrapper {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 0, 0, 0.2);
-}
-body.theme-2 .carousel-wrapper {
-    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.3), 0 0 60px rgba(200, 200, 200, 0.15);
-}
-body.theme-3 .carousel-wrapper {
-    box-shadow: 0 8px 32px rgba(255, 50, 20, 0.3), 0 0 60px rgba(200, 20, 0, 0.15);
-}
-/* Адаптив карусели */
-@media (max-width: 480px) {
-    .carousel-wrapper {
-        aspect-ratio: 4 / 3;
-        max-height: 45vh;
-        border-radius: 4px;
-        margin-bottom: 1rem;
-    }
-    .carousel-arrow {
-        width: 30px;
-        height: 30px;
-        font-size: 1.2rem;
-    }
-    .carousel-prev { left: 4px; }
-    .carousel-next { right: 4px; }
-}
-@media (max-height: 500px) and (orientation: landscape) {
-    .carousel-wrapper {
-        aspect-ratio: 16 / 9;
-        max-height: 40vh;
-        margin-bottom: 0.4rem;
-    }
-    .sub-text {
-        font-size: 0.6rem;
-        letter-spacing: 3px;
-    }
-}
-
-        /* ===== ИНДИКАТОР ТЕМЫ ===== */
-        .theme-indicator {
-            position: absolute;
-            top: clamp(15px, 3vh, 28px);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            font-size: clamp(0.55rem, 1.2vw, 0.7rem);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            pointer-events: none;
-            transition: all 0.8s ease;
-            animation: messageAppear 1.5s ease-out 1.4s both;
-        }
-
-        /* ===== СТРЕЛКА СВАЙПА ===== */
-        .swipe-hint {
-            position: absolute;
-            top: clamp(48px, 9vh, 75px);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            pointer-events: none;
-            animation: hintBounce 2.2s ease-in-out infinite, messageAppear 1.5s ease-out 2s both;
-            transition: opacity 0.6s ease;
-        }
-        .swipe-hint svg {
-            width: clamp(20px, 4vw, 28px);
-            height: clamp(20px, 4vw, 28px);
-            transition: stroke 1.2s ease;
-        }
-        @keyframes hintBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
-            50% { transform: translateX(-50%) translateY(10px); opacity: 0.9; }
-        }
-
-        /* ===== КНОПКА ===== */
-        .back-btn-wrapper {
-            position: absolute;
-            bottom: clamp(30px, 7vh, 50px);
-            left: 0;
-            width: 100%;
-            z-index: 20;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-        }
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid;
-            padding: 0.7rem 2rem;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: clamp(0.7rem, 1.8vw, 0.85rem);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.5s ease;
-            pointer-events: auto;
-            text-decoration: none;
-            animation: messageAppear 1.5s ease-out 1s both;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            min-height: 44px;
-            white-space: nowrap;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-        .back-btn:active {
-            transform: scale(0.94);
-            transition: transform 0.1s ease;
-        }
-
-        /* ===== АДАПТИВ ===== */
-        @media (max-width: 480px) {
-            .back-btn { padding: 0.65rem 1.8rem; letter-spacing: 2px; font-size: 0.75rem; }
-            .moon-container { top: 10%; right: 10%; }
-            .swipe-hint { top: clamp(52px, 10vh, 68px); }
-            .theme-indicator { top: clamp(12px, 2.5vh, 22px); }
-        }
-        @media (max-width: 360px) {
-            .back-btn { padding: 0.6rem 1.5rem; font-size: 0.7rem; letter-spacing: 1.5px; }
-            .title-text { font-size: 1.5rem; }
-            .sub-text { font-size: 0.7rem; letter-spacing: 3px; }
-        }
-        @media (max-height: 500px) and (orientation: landscape) {
-            .sky-layer { height: 28%; }
-            .ocean-layer { height: 78%; }
-            .moon-body { width: 38px; height: 38px; }
-            .moon-container { top: 6%; right: 8%; }
-            .title-text { font-size: 1.3rem; margin-bottom: 0.2rem; }
-            .sub-text { font-size: 0.6rem; letter-spacing: 3px; }
-            .back-btn { padding: 0.4rem 1.3rem; font-size: 0.6rem; min-height: 36px; }
-            .back-btn-wrapper { bottom: 10px; }
-            .swipe-hint { display: none; }
-            .theme-indicator { top: 5px; font-size: 0.5rem; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .wave-1-anim, .wave-2-anim, .wave-3-anim, .wave-4-anim,
-            .foam-blob, .spray-dot, .glitter-line, .title-text, .swipe-hint, .moon-glow {
-                animation: none !important;
-            }
-        }
-        /* ===== СПЕЦИАЛЬНЫЕ ФИКСЫ ДЛЯ iOS ===== */
-@supports (-webkit-touch-callout: none) {
-    /* Только для iOS Safari */
-    
-    .carousel-slide img {
-        /* Аппаратное ускорение */
-        -webkit-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-    }
-    
-    .carousel-wrapper {
-        /* Дополнительная изоляция */
-        -webkit-mask-image: -webkit-radial-gradient(white, black);
-        mask-image: radial-gradient(white, black);
-        /* Фикс скругления углов */
-        -webkit-border-radius: 6px;
-    }
-    
-    /* Фикс высоты экрана (учитывает нижнюю панель) */
-    body {
-        min-height: -webkit-fill-available;
-    }
-    
-    /* Убираем мерцание при скролле/свайпе */
-    .wave-row,
-    .carousel-track {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        -webkit-perspective: 1000;
-        perspective: 1000;
-    }
-}
-
-/* Фикс для iOS 15+ с "динамическим островом" */
-@supports (padding-top: env(safe-area-inset-top)) {
-    body {
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-    }
-    
-    .back-btn-wrapper {
-        bottom: calc(clamp(30px, 7vh, 50px) + env(safe-area-inset-bottom));
-    }
-}
+        /* ОВЕРЛЕЙ */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.5s; }
+        .overlay.active { pointer-events: auto; opacity: 1; }
+        .overlay-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(20px); }
+        .overlay-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 90vw; }
+        .overlay-image { max-width: 100%; max-height: 55vh; object-fit: contain; border-radius: 8px; }
+        .overlay-info { text-align: center; margin-top: 1.5rem; }
+        .overlay-title { color: white; font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .overlay-desc { color: rgba(255,255,255,0.8); margin-bottom: 1rem; }
+        .overlay-btn, .overlay-close { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; cursor: pointer; padding: 0.5rem 1rem; border-radius: 4px; }
+        .overlay-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; }
     </style>
 </head>
 <body class="theme-0">
 
-    <!-- НЕБО -->
     <div class="sky-layer"></div>
-
-    <!-- ЛУНА -->
     <div class="moon-container" id="moonContainer">
         <div class="moon-glow"></div>
         <div class="moon-body"></div>
     </div>
-
-    <!-- АТМОСФЕРА -->
     <div class="atmosphere-layer" id="atmosphereLayer"></div>
-
-    <!-- МОРЕ С ВОЛНАМИ -->
-    <div class="ocean-layer" id="oceanLayer">
-        <!-- Волны рисуются через JS (SVG) -->
-    </div>
-
-    <!-- ПЕНА -->
+    <div class="ocean-layer" id="oceanLayer"></div>
     <div class="foam-particles" id="foamLayer"></div>
-
-    <!-- БРЫЗГИ -->
     <div class="spray-layer" id="sprayLayer"></div>
-
-    <!-- БЛИКИ -->
     <div class="glitter-layer" id="glitterLayer"></div>
-
-    <!-- ИНДИКАТОР ТЕМЫ -->
+    
     <div class="theme-indicator" id="themeIndicator">Чёрное море · Белое небо</div>
 
-    <!-- ПОДСКАЗКА -->
-    <div class="swipe-hint" id="swipeHint">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-            <path d="M12 5v14M12 5l-4 4M12 5l4 4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </div>
-    <!-- КОНТЕНТ -->
-<div class="content-layer">
-    <div class="message-block">
-        <!-- Карусель -->
-        <div class="carousel-wrapper" id="carouselWrapper">
-            <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-slide" data-title="logo.v1" data-desc="Настоящий буканьер не пукают по ветру">
-                    <img src="IMG_1.webp" alt="v1" onerror="this.src='error.png'">
+    <div class="content-layer">
+        <div class="message-block">
+            <div class="carousel-wrapper" id="carouselWrapper">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide" data-title="v1" data-desc="Настоящий буканьер не пукает по ветру">
+                        <img src="IMG_1.webp" alt="slide1" onerror="this.style.display='none'">
+                    </div>
+                    <div class="carousel-slide" data-title="v2" data-desc="Под этим флагом нет места трусости, только тревога">
+                        <img src="IMG_2.webp" alt="slide2" onerror="this.style.display='none'">
+                    </div>
+                    <div class="carousel-slide" data-title="v3" data-desc="Золото - это металл, а мы работаем с деревом">
+                        <img src="IMG_3.webp" alt="slide3" onerror="this.style.display='none'">
+                    </div>
                 </div>
-                <div class="carousel-slide" data-title="logo.v2" data-desc="Под этим флагом нет места трусости. Его место занимает паника">
-                    <img src="IMG_2.webp" alt="v2" onerror="this.src='error.png'">
-                </div>
-                <div class="carousel-slide" data-title="logo.v3" data-desc="X отмечает место, но настоящее сокровище — не золото. Золото - это металл, а мы работаем с деревом">
-                    <img src="IMG_3.webp" alt="v3" onerror="this.src='error.png'">
-                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+                <button class="carousel-arrow carousel-prev" id="carouselPrev">‹</button>
+                <button class="carousel-arrow carousel-next" id="carouselNext">›</button>
             </div>
-            <div class="carousel-dots" id="carouselDots"></div>
-            <button class="carousel-arrow carousel-prev" id="carouselPrev">‹</button>
-            <button class="carousel-arrow carousel-next" id="carouselNext">›</button>
+            <p class="sub-text">Bucaneros</p>
         </div>
-        <p class="sub-text">Bucaneros</p>
     </div>
-</div>
 
-<!-- ОВЕРЛЕЙ (разворот изображения) -->
-<div class="overlay" id="overlay">
-    <div class="overlay-bg" id="overlayBg"></div>
-    <div class="overlay-content" id="overlayContent">
-        <img src="" alt="" class="overlay-image" id="overlayImage">
-        <div class="overlay-info">
-            <h3 class="overlay-title" id="overlayTitle"></h3>
-            <p class="overlay-desc" id="overlayDesc"></p>
-            <button class="overlay-btn" id="overlayBtn">А что дальше</button>
+    <div class="overlay" id="overlay">
+        <div class="overlay-bg" id="overlayBg"></div>
+        <div class="overlay-content">
+            <img src="" alt="" class="overlay-image" id="overlayImage">
+            <div class="overlay-info">
+                <h3 class="overlay-title" id="overlayTitle"></h3>
+                <p class="overlay-desc" id="overlayDesc"></p>
+                <button class="overlay-btn" id="overlayBtn">Закрыть</button>
+            </div>
         </div>
+        <button class="overlay-close" id="overlayClose">✕</button>
     </div>
-    <button class="overlay-close" id="overlayClose">✕</button>
-</div>
-    <!-- КНОПКА -->
+
     <div class="back-btn-wrapper">
-        <a href="index.html" class="back-btn">← Да чёт нет</a>
+        <a href="index.html" class="back-btn">← На главную</a>
     </div>
 
     <script>
-        // ===== ПАРАМЕТРЫ ТЕМ =====
         const themeData = [
-    {
-        name: 'Чёрное море · Белое небо',
-        skyColors: ['#faf8f4', '#f0ece4', '#e8e4dc', '#ddd8ce'],
-        oceanColors: ['#0d1b1e', '#0a1517', '#060e0f'],
-        waveColors: ['#0f2024', '#0a181c', '#081215', '#061014'],
-        foamColors: ['#1a3038', '#14262d', '#0f1e24'],
-        isDarkSky: false
-    },
-    {
-        name: 'Белое море · Красное небо',
-        skyColors: ['#8b1a1a', '#6b1010', '#4a0808', '#2a0404'],
-        oceanColors: ['#f5f0e8', '#ede6da', '#e5dcd0'],
-        waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4', '#e0d8cc'],
-        foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8'],
-        isDarkSky: true
-    },
-    {
-        name: 'Красное море · Чёрное небо',
-        skyColors: ['#1a1a1a', '#0f0f0f', '#050505', '#000000'],
-        oceanColors: ['#8b1a0a', '#6b0f05', '#4a0802'],
-        waveColors: ['#9b2a15', '#7a1808', '#5a0d03', '#3a0500'],
-        foamColors: ['#a04030', '#803020', '#602010'],
-        isDarkSky: true
-    },
-    {
-        name: 'Белое море · Чёрное небо',
-        skyColors: ['#1a1a1a', '#0f0f0f', '#050505', '#000000'],
-        oceanColors: ['#f5f0e8', '#ede6da', '#e5dcd0'],
-        waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4', '#e0d8cc'],
-        foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8'],
-        isDarkSky: true
-    }
-];
+            { name: 'Чёрное море · Белое небо', waveColors: ['#0f2024', '#0a181c', '#081215', '#061014'], foamColors: ['#1a3038', '#14262d', '#0f1e24'], isDarkSky: false },
+            { name: 'Белое море · Красное небо', waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4', '#e0d8cc'], foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8'], isDarkSky: true },
+            { name: 'Красное море · Чёрное небо', waveColors: ['#9b2a15', '#7a1808', '#5a0d03', '#3a0500'], foamColors: ['#a04030', '#803020', '#602010'], isDarkSky: true },
+            { name: 'Белое море · Чёрное небо', waveColors: ['#faf6f0', '#f0eae0', '#e8e0d4', '#e0d8cc'], foamColors: ['#e0d8cc', '#d8cec0', '#d0c8b8'], isDarkSky: true }
+        ];
 
         let currentTheme = 0;
 
-        // ===== ГЕНЕРАЦИЯ ВОЛН (SVG для реалистичности) =====
         function generateWavePath(seed, complexity) {
             let path = 'M0 60 ';
             const points = 12 + complexity;
             for (let i = 1; i <= points; i++) {
                 const x = (i / points) * 100;
-                const y = 40 + Math.sin(i * seed * 0.7 + seed) * 18 + Math.sin(i * seed * 1.3) * 10 + Math.cos(i * 0.5 + seed * 2) * 8;
+                const y = 40 + Math.sin(i * seed * 0.7 + seed) * 18;
                 path += `L${x} ${y} `;
             }
             path += 'L100 100 L0 100 Z';
@@ -1060,18 +214,15 @@ body.theme-3 .carousel-wrapper {
         function buildWaves() {
             const ocean = document.getElementById('oceanLayer');
             ocean.innerHTML = '';
-
-            const waveConfigs = [
-                { cls: 'wave-1 wave-1-anim', seed: 1.2, complexity: 6, opacity: 0.85 },
-                { cls: 'wave-2 wave-2-anim', seed: 2.5, complexity: 8, opacity: 0.7 },
-                { cls: 'wave-3 wave-3-anim', seed: 3.8, complexity: 10, opacity: 0.9 },
-                { cls: 'wave-4 wave-4-anim', seed: 5.1, complexity: 7, opacity: 0.95 }
+            const configs = [
+                { cls: 'wave-1', seed: 1.2, complexity: 6 },
+                { cls: 'wave-2', seed: 2.5, complexity: 8 },
+                { cls: 'wave-3', seed: 3.8, complexity: 10 },
+                { cls: 'wave-4', seed: 5.1, complexity: 7 }
             ];
-
-            waveConfigs.forEach((cfg, idx) => {
+            configs.forEach((cfg, idx) => {
                 const row = document.createElement('div');
                 row.className = 'wave-row ' + cfg.cls;
-                row.style.opacity = cfg.opacity;
                 const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                 svg.setAttribute('viewBox', '0 0 100 100');
                 svg.setAttribute('preserveAspectRatio', 'none');
@@ -1079,8 +230,7 @@ body.theme-3 .carousel-wrapper {
                 svg.style.height = '100%';
                 const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
                 path.setAttribute('d', generateWavePath(cfg.seed, cfg.complexity));
-                path.setAttribute('fill', themeData[currentTheme].waveColors[idx] || themeData[currentTheme].oceanColors[0]);
-                path.setAttribute('stroke', 'none');
+                path.setAttribute('fill', themeData[currentTheme].waveColors[idx]);
                 path.classList.add('wave-path');
                 svg.appendChild(path);
                 row.appendChild(svg);
@@ -1088,516 +238,144 @@ body.theme-3 .carousel-wrapper {
             });
         }
 
-    function updateWaveColors() {
-    const paths = document.querySelectorAll('.wave-path');
-    const td = themeData[currentTheme];
-    paths.forEach((p, i) => {
-        if (td.waveColors && td.waveColors[i]) {
-            p.setAttribute('fill', td.waveColors[i]);
-        } else if (td.oceanColors) {
-            p.setAttribute('fill', td.oceanColors[0]);
+        function applyTheme(idx) {
+            currentTheme = idx;
+            document.body.className = 'theme-' + idx;
+            document.getElementById('themeIndicator').textContent = themeData[idx].name;
+            buildWaves();
         }
-    });
-    
-    // Обновляем пену
-    const foamBlobs = document.querySelectorAll('.foam-blob');
-    foamBlobs.forEach(blob => {
-        if (td.foamColors) {
-            blob.style.background = td.foamColors[Math.floor(Math.random() * td.foamColors.length)];
-        }
-    });
-}
 
-        // ===== ГЕНЕРАЦИЯ АТМОСФЕРЫ =====
-        function buildAtmosphere() {
-            const layer = document.getElementById('atmosphereLayer');
-            layer.innerHTML = '';
-            const td = themeData[currentTheme];
-            const count = td.isDarkSky ? 70 : 35;
-
-            for (let i = 0; i < count; i++) {
-                const p = document.createElement('div');
-                p.classList.add('atmo-particle');
-                p.style.left = Math.random() * 96 + '%';
-                p.style.top = Math.random() * 92 + '%';
-                const size = td.isDarkSky ? (1 + Math.random() * 2.5) : (3 + Math.random() * 8);
-                p.style.width = size + 'px';
-                p.style.height = (td.isDarkSky ? size : size * 0.6) + 'px';
-                p.style.opacity = td.isDarkSky ? (0.4 + Math.random() * 0.6) : (0.2 + Math.random() * 0.3);
-                p.style.background = td.isDarkSky ? '#ffffff' : '#c8c0b0';
-                p.style.animation = td.isDarkSky
-                    ? `starTwinkle ${3 + Math.random() * 5}s ease-in-out ${Math.random() * 5}s infinite`
-                    : `cloudDrift ${5 + Math.random() * 8}s ease-in-out ${Math.random() * 6}s infinite`;
-                layer.appendChild(p);
+        // Свайп для смены темы
+        let touchStartY = 0;
+        document.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; });
+        document.addEventListener('touchend', e => {
+            const diff = e.changedTouches[0].clientY - touchStartY;
+            if (Math.abs(diff) > 55) {
+                if (diff > 0) applyTheme((currentTheme + 1) % 4);
+                else applyTheme((currentTheme - 1 + 4) % 4);
             }
-        }
+        });
 
-        // ===== ГЕНЕРАЦИЯ ПЕНЫ =====
-        function buildFoam() {
-            const layer = document.getElementById('foamLayer');
-            layer.innerHTML = '';
-            const td = themeData[currentTheme];
-            for (let i = 0; i < 25; i++) {
-                const blob = document.createElement('div');
-                blob.classList.add('foam-blob');
-                blob.style.setProperty('--fx', Math.random() * 90 + '%');
-                blob.style.setProperty('--fy', (5 + Math.random() * 30) + '%');
-                const s = 4 + Math.random() * 16;
-                blob.style.setProperty('--fw', s + 'px');
-                blob.style.setProperty('--fh', s * 0.5 + 'px');
-                blob.style.setProperty('--fd', (3 + Math.random() * 6) + 's');
-                blob.style.setProperty('--fdel', Math.random() * 5 + 's');
-                blob.style.background = td.foamColors[Math.floor(Math.random() * 3)];
-                layer.appendChild(blob);
-            }
-        }
+        // КАРУСЕЛЬ
+        const track = document.getElementById('carouselTrack');
+        const dotsContainer = document.getElementById('carouselDots');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+        const totalSlides = slides.length;
 
-        // ===== ГЕНЕРАЦИЯ БРЫЗГ =====
-        function buildSpray() {
-            const layer = document.getElementById('sprayLayer');
-            layer.innerHTML = '';
-            for (let i = 0; i < 30; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('spray-dot');
-                dot.style.setProperty('--sx', (2 + Math.random() * 96) + '%');
-                dot.style.setProperty('--sw', (1.5 + Math.random() * 3.5) + 'px');
-                dot.style.setProperty('--sh', dot.style.getPropertyValue('--sw'));
-                dot.style.setProperty('--sd', (1 + Math.random() * 2.5) + 's');
-                dot.style.setProperty('--sdel', Math.random() * 3 + 's');
-                dot.style.setProperty('--sdx', (-10 + Math.random() * 20) + 'px');
-                layer.appendChild(dot);
-            }
-        }
+        // Клонирование для бесконечности
+        const firstClone = slides[0].cloneNode(true);
+        const lastClone = slides[totalSlides - 1].cloneNode(true);
+        firstClone.classList.add('clone');
+        lastClone.classList.add('clone');
+        track.appendChild(firstClone);
+        track.insertBefore(lastClone, slides[0]);
 
-        // ===== ГЕНЕРАЦИЯ БЛИКОВ =====
-        function buildGlitter() {
-            const layer = document.getElementById('glitterLayer');
-            layer.innerHTML = '';
-            for (let i = 0; i < 22; i++) {
-                const line = document.createElement('div');
-                line.classList.add('glitter-line');
-                line.style.setProperty('--gx', Math.random() * 95 + '%');
-                line.style.setProperty('--gy', (3 + Math.random() * 92) + '%');
-                line.style.setProperty('--gw', (15 + Math.random() * 55) + 'px');
-                line.style.setProperty('--gr', (-18 + Math.random() * 36) + 'deg');
-                line.style.setProperty('--gd', (1.8 + Math.random() * 4) + 's');
-                line.style.setProperty('--gdel', Math.random() * 4.5 + 's');
-                layer.appendChild(line);
-            }
-        }
+        const allSlides = track.querySelectorAll('.carousel-slide');
+        const extendedTotal = allSlides.length;
+        let currentIndex = 1;
+        let isTransitioning = false;
+        let autoplayInterval;
 
-        // ===== ПРИМЕНЕНИЕ ТЕМЫ =====
-    function applyTheme(idx) {
-    currentTheme = idx;
-    document.body.className = 'theme-' + idx;
-    
-    const indicator = document.getElementById('themeIndicator');
-    if (indicator) {
-        indicator.textContent = themeData[idx].name;
-        indicator.style.transform = 'translateX(-50%) scale(1.35)';
-        setTimeout(() => {
-            if (indicator) indicator.style.transform = 'translateX(-50%) scale(1)';
-        }, 250);
-    }
-    
-    // Обновляем цвет theme-color для навбара
-    const themeColorMeta = document.getElementById('themeColorMeta');
-    const oceanColorsMap = ['#0a1517', '#ede6da', '#6b0f05', '#ede6da'];
-    if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', oceanColorsMap[idx]);
-    }
-    
-    // Перестраиваем волны с новыми цветами
-    buildWaves();
-    buildAtmosphere();
-    buildFoam();
-    updateWaveColors();
-    
-    // Скрываем подсказку при первом свайпе
-    const hint = document.getElementById('swipeHint');
-    if (hint && hint.style.opacity !== '0' && idx !== 0) {
-        hint.style.transition = 'opacity 0.5s ease';
-        hint.style.opacity = '0';
-        setTimeout(() => {
-            if (hint) hint.style.display = 'none';
-        }, 500);
-    }
-    
-    // Вибрация на мобильных
-    if (navigator.vibrate) navigator.vibrate(12);
-}
-
-// Слушаем смену ориентации — обновляем навбар
-window.matchMedia('(orientation: landscape)').addEventListener('change', () => {
-    applyTheme(currentTheme);
-});
-    
-    // Плавно меняем CSS-переменную (влияет на body background)
-    document.documentElement.style.setProperty('--ocean-color', oceanColors[idx]);
-    
-    // Обновляем theme-color для системной строки
-    const themeColorMeta = document.getElementById('themeColorMeta');
-    themeColorMeta.setAttribute('content', oceanColors[idx]);
-
-    buildWaves();
-    buildAtmosphere();
-    buildFoam();
-    updateWaveColors();
-
-    // скрываем подсказку
-    const hint = document.getElementById('swipeHint');
-    if (hint.style.opacity !== '0') {
-        hint.style.transition = 'opacity 0.5s ease';
-        hint.style.opacity = '0';
-        setTimeout(() => hint.style.display = 'none', 500);
-    }
-    if (navigator.vibrate) navigator.vibrate(12);
-}
-
-        // ===== СВАЙП ДЛЯ СМЕНЫ ТЕМЫ =====
-let touchStartY = 0, touchEndY = 0, isSwiping = false;
-let swipeTarget = null; // отслеживаем, где начался свайп
-
-document.addEventListener('touchstart', e => {
-    touchStartY = e.touches[0].clientY;
-    isSwiping = true;
-    swipeTarget = e.target; // запоминаем элемент, на котором начался свайп
-}, { passive: true });
-
-document.addEventListener('touchmove', e => {
-    if (!isSwiping) return;
-    touchEndY = e.touches[0].clientY;
-}, { passive: true });
-
-document.addEventListener('touchend', () => {
-    if (!isSwiping) return;
-    isSwiping = false;
-    
-    // Если свайп начался внутри карусели — не меняем тему
-    if (swipeTarget && swipeTarget.closest('.carousel-wrapper')) {
-        touchStartY = 0;
-        touchEndY = 0;
-        swipeTarget = null;
-        return;
-    }
-    
-    const d = touchEndY - touchStartY;
-    if (d > 55) applyTheme((currentTheme + 1) % 4);
-    else if (d < -55) applyTheme((currentTheme - 1 + 4) % 4);
-    
-    touchStartY = 0;
-    touchEndY = 0;
-    swipeTarget = null;
-});
-
-        // колёсико
-        let wheelAcc = 0;
-        document.addEventListener('wheel', e => {
-            wheelAcc += e.deltaY;
-            if (wheelAcc > 70) { applyTheme((currentTheme + 1) % 4); wheelAcc = 0; }
-            else if (wheelAcc < -70) { applyTheme((currentTheme - 1 + 4) % 4); wheelAcc = 0; }
-        }, { passive: true });
-
-        // автоскрытие подсказки
-        setTimeout(() => {
-            const hint = document.getElementById('swipeHint');
-            if (currentTheme === 0 && hint.style.opacity !== '0') {
-                hint.style.transition = 'opacity 0.5s ease';
-                hint.style.opacity = '0';
-                setTimeout(() => hint.style.display = 'none', 500);
-            }
-        }, 10000);
-
-        // ===== ДВИЖЕНИЕ ЛУНЫ =====
-        const moonContainer = document.getElementById('moonContainer');
-        if (!('ontouchstart' in window)) {
-            document.addEventListener('mousemove', e => {
-                const x = (e.clientX / window.innerWidth - 0.5) * 30;
-                const y = (e.clientY / window.innerHeight - 0.5) * 30;
-                moonContainer.style.transform = `translate(${x}px, ${y}px)`;
-                moonContainer.style.transition = 'transform 1.5s ease-out';
-            });
-        }
-
-        // ===== СТАРТ =====
-        buildWaves();
-        buildAtmosphere();
-        buildFoam();
-        buildSpray();
-        buildGlitter();
-
-        // анимация звёзд и облаков (ключевые кадры в стилях не работают для динамики, добавим)
-        const styleAdd = document.createElement('style');
-        styleAdd.textContent = `
-            @keyframes starTwinkle {
-                0%, 100% { opacity: 0.3; transform: scale(1); }
-                50% { opacity: 1; transform: scale(1.6); }
-            }
-            @keyframes cloudDrift {
-                0%, 100% { transform: translateX(0); opacity: 0.3; }
-                50% { transform: translateX(18px); opacity: 0.5; }
-            }
-        `;
-        document.head.appendChild(styleAdd);
-        // ===== КАРУСЕЛЬ =====
-const track = document.getElementById('carouselTrack');
-const dotsContainer = document.getElementById('carouselDots');
-const prevBtn = document.getElementById('carouselPrev');
-const nextBtn = document.getElementById('carouselNext');
-const slides = track.querySelectorAll('.carousel-slide');
-const totalSlides = slides.length;
-
-// Клонируем первый и последний слайды для эффекта бесконечности
-const firstClone = slides[0].cloneNode(true);
-const lastClone = slides[totalSlides - 1].cloneNode(true);
-
-firstClone.classList.add('clone');
-lastClone.classList.add('clone');
-
-track.appendChild(firstClone);  // Добавляем клон первого в конец
-track.insertBefore(lastClone, slides[0]); // Добавляем клон последнего в начало
-
-// Обновлённое количество слайдов (с клонами)
-const allSlides = track.querySelectorAll('.carousel-slide');
-const extendedTotal = allSlides.length; // = totalSlides + 2
-
-// Начинаем с первого реального слайда (индекс 1, т.к. 0 — клон)
-let currentIndex = 1;
-let isTransitioning = false;
-let autoplayInterval;
-let touchStartX = 0;
-let touchEndX = 0;
-
-// Устанавливаем начальную позицию без анимации
-track.style.transition = 'none';
-track.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-// Создаём точки только для реальных слайдов
-dotsContainer.innerHTML = '';
-for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('button');
-    dot.classList.add('carousel-dot');
-    if (i === 0) dot.classList.add('active');
-    dot.setAttribute('aria-label', `Слайд ${i + 1}`);
-    dot.addEventListener('click', () => {
-        if (isTransitioning) return;
-        goToRealSlide(i);
-        resetAutoplay();
-    });
-    dotsContainer.appendChild(dot);
-}
-const dots = dotsContainer.querySelectorAll('.carousel-dot');
-
-function getRealIndex() {
-    // Преобразуем extended-индекс в реальный (0..totalSlides-1)
-    if (currentIndex === 0) return totalSlides - 1;
-    if (currentIndex === extendedTotal - 1) return 0;
-    return currentIndex - 1;
-}
-
-function updateDots(realIndex) {
-    dots.forEach((d, i) => d.classList.toggle('active', i === realIndex));
-}
-
-function goToSlide(index, animate = true) {
-    if (isTransitioning && animate) return;
-    
-    isTransitioning = true;
-    currentIndex = index;
-    
-    if (animate) {
-        track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
-    } else {
-        track.style.transition = 'none';
-    }
-    
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    updateDots(getRealIndex());
-    
-    if (!animate) {
-        // Форсируем перерисовку
-        track.offsetHeight;
-        isTransitioning = false;
-    }
-}
-
-function goToRealSlide(realIndex) {
-    // realIndex: 0..totalSlides-1 → extendedIndex: realIndex + 1
-    goToSlide(realIndex + 1);
-}
-
-track.addEventListener('transitionend', () => {
-    isTransitioning = false;
-    
-    // Если мы на клоне — телепортируемся на реальный слайд без анимации
-    if (currentIndex === 0) {
-        // На клоне последнего — прыгаем на реальный последний
-        goToSlide(extendedTotal - 2, false);
-    } else if (currentIndex === extendedTotal - 1) {
-        // На клоне первого — прыгаем на реальный первый
-        goToSlide(1, false);
-    }
-});
-
-function nextSlide() {
-    if (isTransitioning) return;
-    goToSlide(currentIndex + 1);
-}
-
-function prevSlide() {
-    if (isTransitioning) return;
-    goToSlide(currentIndex - 1);
-}
-
-// Кнопки
-nextBtn.addEventListener('click', () => { nextSlide(); resetAutoplay(); });
-prevBtn.addEventListener('click', () => { prevSlide(); resetAutoplay(); });
-
-// Свайп внутри карусели
-const carouselWrapper = document.querySelector('.carousel-wrapper');
-
-carouselWrapper.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-    clearInterval(autoplayInterval);
-}, { passive: true });
-
-carouselWrapper.addEventListener('touchmove', e => {
-    if (!isTransitioning) {
-        touchEndX = e.touches[0].clientX;
-        const diff = touchStartX - touchEndX;
-        // Лёгкий визуальный отклик при свайпе
-        const offset = -currentIndex * 100 - (diff / carouselWrapper.offsetWidth) * 100;
-        track.style.transition = 'none';
-        track.style.transform = `translateX(${offset}%)`;
-    }
-}, { passive: true });
-
-carouselWrapper.addEventListener('touchend', () => {
-    const diff = touchStartX - touchEndX;
-    
-    if (Math.abs(diff) > 30) {
-        track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
-        if (diff > 0) {
-            nextSlide();
-        } else {
-            prevSlide();
-        }
-    } else {
-        // Возвращаем на текущий слайд
-        track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-    
-    resetAutoplay();
-});
 
-// Автопрокрутка
-function startAutoplay() {
-    autoplayInterval = setInterval(nextSlide, 4000);
-}
-function resetAutoplay() {
-    clearInterval(autoplayInterval);
-    startAutoplay();
-}
-startAutoplay();
+        // Создание точек
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.classList.add('carousel-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => { if (!isTransitioning) goToRealSlide(i); resetAutoplay(); });
+            dotsContainer.appendChild(dot);
+        }
+        const dots = document.querySelectorAll('.carousel-dot');
 
-// Пауза при наведении (десктоп)
-carouselWrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
-carouselWrapper.addEventListener('mouseleave', startAutoplay);
+        function updateDots() {
+            let realIndex = currentIndex - 1;
+            if (currentIndex === 0) realIndex = totalSlides - 1;
+            if (currentIndex === extendedTotal - 1) realIndex = 0;
+            dots.forEach((d, i) => d.classList.toggle('active', i === realIndex));
+        }
 
-// Пауза при касании (мобильные)
-carouselWrapper.addEventListener('touchstart', () => clearInterval(autoplayInterval), { passive: true });
-carouselWrapper.addEventListener('touchend', () => startAutoplay);
-        
-        window.addEventListener('beforeunload', function() {
-    const meta = document.getElementById('themeColorMeta');
-    if (meta) {
-        meta.setAttribute('content', '#0a0a0a');
-    }
-});
+        function goToSlide(index, animate = true) {
+            if (isTransitioning && animate) return;
+            isTransitioning = true;
+            currentIndex = index;
+            track.style.transition = animate ? 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            updateDots();
+            if (!animate) { track.offsetHeight; isTransitioning = false; }
+        }
 
-    // ===== ОВЕРЛЕЙ (РАЗВОРОТ ПО ТАПУ) =====
-const overlay = document.getElementById('overlay');
-const overlayBg = document.getElementById('overlayBg');
-const overlayImage = document.getElementById('overlayImage');
-const overlayTitle = document.getElementById('overlayTitle');
-const overlayDesc = document.getElementById('overlayDesc');
-const overlayBtn = document.getElementById('overlayBtn');
-const overlayClose = document.getElementById('overlayClose');
-const overlayContent = document.getElementById('overlayContent');
+        function goToRealSlide(realIndex) { goToSlide(realIndex + 1); }
 
-function openOverlay(slideElement) {
-    const img = slideElement.querySelector('img');
-    const title = slideElement.getAttribute('data-title') || 'Без названия';
-    const desc = slideElement.getAttribute('data-desc') || '';
-    
-    overlayImage.src = img.src;
-    overlayImage.alt = img.alt;
-    overlayTitle.textContent = title;
-    overlayDesc.textContent = desc;
-    
-    // Останавливаем автопрокрутку карусели
-    clearInterval(autoplayInterval);
-    
-    // Блокируем скролл body
-    document.body.style.overflow = 'hidden';
-    
-    overlay.classList.add('active');
-}
+        track.addEventListener('transitionend', () => {
+            isTransitioning = false;
+            if (currentIndex === 0) goToSlide(extendedTotal - 2, false);
+            else if (currentIndex === extendedTotal - 1) goToSlide(1, false);
+        });
 
-function closeOverlay() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-    
-    // Возобновляем автопрокрутку
-    startAutoplay();
-}
+        function nextSlide() { if (!isTransitioning) goToSlide(currentIndex + 1); }
+        function prevSlide() { if (!isTransitioning) goToSlide(currentIndex - 1); }
 
-// Тап по слайду в карусели
-carouselWrapper.addEventListener('click', function(e) {
-    // Игнорируем клики по стрелкам и точкам
-    if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
-    
-    const slide = e.target.closest('.carousel-slide');
-    if (!slide) return;
-    
-    // Игнорируем клонов (у них нет data-атрибутов)
-    if (slide.classList.contains('clone')) return;
-    
-    // Не открываем оверлей во время перелистывания
-    if (isTransitioning) return;
-    
-    openOverlay(slide);
-});
+        prevBtn.addEventListener('click', () => { prevSlide(); resetAutoplay(); });
+        nextBtn.addEventListener('click', () => { nextSlide(); resetAutoplay(); });
 
-// Кнопка закрытия
-overlayClose.addEventListener('click', closeOverlay);
+        function startAutoplay() { autoplayInterval = setInterval(nextSlide, 4000); }
+        function resetAutoplay() { clearInterval(autoplayInterval); startAutoplay(); }
+        startAutoplay();
 
-// Кнопка "Плывём дальше"
-overlayBtn.addEventListener('click', closeOverlay);
+        // Свайп в карусели
+        let touchStartX = 0, touchEndX = 0;
+        const wrapper = document.querySelector('.carousel-wrapper');
+        wrapper.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; clearInterval(autoplayInterval); });
+        wrapper.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 30) diff > 0 ? nextSlide() : prevSlide();
+            resetAutoplay();
+        });
 
-// Клик по фону оверлея — закрыть
-overlayBg.addEventListener('click', closeOverlay);
+        // Оверлей по тапу
+        const overlay = document.getElementById('overlay');
+        const overlayImg = document.getElementById('overlayImage');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlayDesc = document.getElementById('overlayDesc');
+        const overlayBtnClose = document.getElementById('overlayBtn');
+        const overlayCloseBtn = document.getElementById('overlayClose');
+        const overlayBg = document.getElementById('overlayBg');
 
-// Свайп вниз на оверлее — закрыть
-let overlayTouchStartY = 0;
-overlay.addEventListener('touchstart', function(e) {
-    overlayTouchStartY = e.touches[0].clientY;
-}, { passive: true });
+        function closeOverlay() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            startAutoplay();
+        }
 
-overlay.addEventListener('touchend', function(e) {
-    const diff = e.changedTouches[0].clientY - overlayTouchStartY;
-    if (diff > 60) {
-        closeOverlay();
-    }
-});
+        wrapper.addEventListener('click', (e) => {
+            if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
+            const slide = e.target.closest('.carousel-slide');
+            if (!slide || slide.classList.contains('clone')) return;
+            const img = slide.querySelector('img');
+            const title = slide.getAttribute('data-title') || 'Без названия';
+            const desc = slide.getAttribute('data-desc') || '';
+            overlayImg.src = img.src;
+            overlayTitle.textContent = title;
+            overlayDesc.textContent = desc;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            clearInterval(autoplayInterval);
+        });
 
-// Escape на клавиатуре — закрыть
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && overlay.classList.contains('active')) {
-        closeOverlay();
-    }
-});
+        overlayCloseBtn.addEventListener('click', closeOverlay);
+        overlayBtnClose.addEventListener('click', closeOverlay);
+        overlayBg.addEventListener('click', closeOverlay);
+
+        // Инициализация
+        buildWaves();
+        for (let i = 0; i < 30; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('spray-dot');
+            document.getElementById('sprayLayer').appendChild(dot);
+        }
     </script>
 </body>
 </html>
