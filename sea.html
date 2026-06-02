@@ -1324,184 +1324,95 @@ document.addEventListener('touchend', () => {
             }
         `;
         document.head.appendChild(styleAdd);
-        // ===== КАРУСЕЛЬ =====
+    // ===== КАРУСЕЛЬ (ПРОСТАЯ РАБОЧАЯ ВЕРСИЯ) =====
 const track = document.getElementById('carouselTrack');
 const dotsContainer = document.getElementById('carouselDots');
 const prevBtn = document.getElementById('carouselPrev');
 const nextBtn = document.getElementById('carouselNext');
-const slides = track.querySelectorAll('.carousel-slide');
+const slides = document.querySelectorAll('.carousel-slide');
 const totalSlides = slides.length;
 
-// Клонируем первый и последний слайды для эффекта бесконечности
-//const firstClone = slides[0].cloneNode(true);
-//const lastClone = slides[totalSlides - 1].cloneNode(true);
-
-//firstClone.classList.add('clone');
-//lastClone.classList.add('clone');
-
-//track.appendChild(firstClone);  // Добавляем клон первого в конец
-//track.insertBefore(lastClone, slides[0]); // Добавляем клон последнего в начало
-
-// Обновлённое количество слайдов (с клонами)
-const allSlides = track.querySelectorAll('.carousel-slide');
-const extendedTotal = allSlides.length; // = totalSlides + 2
-
-// Начинаем с первого реального слайда (индекс 1, т.к. 0 — клон)
-let currentIndex = 1;
+let currentIndex = 0;
 let isTransitioning = false;
 let autoplayInterval;
 let touchStartX = 0;
 let touchEndX = 0;
 
-// Устанавливаем начальную позицию без анимации
-track.style.transition = 'none';
-track.style.transform = `translateX(-${currentIndex * 0}%)`;
+// Устанавливаем начальную позицию
+track.style.transition = 'transform 0.5s ease-in-out';
+track.style.transform = 'translateX(0%)';
 
-// Создаём точки только для реальных слайдов
+// Создаём точки
 dotsContainer.innerHTML = '';
 for (let i = 0; i < totalSlides; i++) {
     const dot = document.createElement('button');
     dot.classList.add('carousel-dot');
     if (i === 0) dot.classList.add('active');
-    dot.setAttribute('aria-label', `Слайд ${i + 1}`);
     dot.addEventListener('click', () => {
         if (isTransitioning) return;
-        goToRealSlide(i);
+        goToSlide(i);
         resetAutoplay();
     });
     dotsContainer.appendChild(dot);
 }
-const dots = dotsContainer.querySelectorAll('.carousel-dot');
 
-function getRealIndex() {
-    // Преобразуем extended-индекс в реальный (0..totalSlides-1)
-    if (currentIndex === 0) return totalSlides - 1;
-    if (currentIndex === extendedTotal - 1) return 0;
-    return currentIndex - 1;
+function updateDots() {
+    const dots = document.querySelectorAll('.carousel-dot');
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+    });
 }
 
-function updateDots(realIndex) {
-    dots.forEach((d, i) => d.classList.toggle('active', i === realIndex));
-}
-
-function goToSlide(index, animate = true) {
-    if (isTransitioning && animate) return;
-    
+function goToSlide(index) {
+    if (isTransitioning || index === currentIndex) return;
     isTransitioning = true;
     currentIndex = index;
-    
-    if (animate) {
-        track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
-    } else {
-        track.style.transition = 'none';
-    }
-    
     track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    updateDots(getRealIndex());
-    
-    if (!animate) {
-        // Форсируем перерисовку
-        track.offsetHeight;
-        isTransitioning = false;
-    }
+    updateDots();
+    setTimeout(() => { isTransitioning = false; }, 500);
 }
-
-function goToRealSlide(realIndex) {
-    // realIndex: 0..totalSlides-1 → extendedIndex: realIndex + 1
-    goToSlide(realIndex + 1);
-}
-
-track.addEventListener('transitionend', () => {
-    isTransitioning = false;
-    
-    // Если мы на клоне — телепортируемся на реальный слайд без анимации
-    if (currentIndex === 0) {
-        // На клоне последнего — прыгаем на реальный последний
-        goToSlide(extendedTotal - 2, false);
-    } else if (currentIndex === extendedTotal - 1) {
-        // На клоне первого — прыгаем на реальный первый
-        goToSlide(1, false);
-    }
-});
 
 function nextSlide() {
     if (isTransitioning) return;
-    goToSlide(currentIndex + 1);
+    const next = (currentIndex + 1) % totalSlides;
+    goToSlide(next);
 }
 
 function prevSlide() {
     if (isTransitioning) return;
-    goToSlide(currentIndex - 1);
+    const prev = (currentIndex - 1 + totalSlides) % totalSlides;
+    goToSlide(prev);
 }
 
 // Кнопки
 nextBtn.addEventListener('click', () => { nextSlide(); resetAutoplay(); });
 prevBtn.addEventListener('click', () => { prevSlide(); resetAutoplay(); });
 
-// Свайп внутри карусели
+// Свайп
 const carouselWrapper = document.querySelector('.carousel-wrapper');
-
-carouselWrapper.addEventListener('touchstart', e => {
+carouselWrapper.addEventListener('touchstart', (e) => {
     touchStartX = e.touches[0].clientX;
     clearInterval(autoplayInterval);
 }, { passive: true });
 
-carouselWrapper.addEventListener('touchmove', e => {
-    if (!isTransitioning) {
-        touchEndX = e.touches[0].clientX;
-        const diff = touchStartX - touchEndX;
-        // Лёгкий визуальный отклик при свайпе
-        const offset = -currentIndex * 100 - (diff / carouselWrapper.offsetWidth) * 100;
-        track.style.transition = 'none';
-        track.style.transform = `translateX(${offset}%)`;
+carouselWrapper.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+        if (diff > 0) nextSlide();
+        else prevSlide();
     }
-}, { passive: true });
-
-carouselWrapper.addEventListener('touchend', () => {
-    const diff = touchStartX - touchEndX;
-    
-    if (Math.abs(diff) > 30) {
-        track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
-        if (diff > 0) {
-            nextSlide();
-        } else {
-            prevSlide();
-        }
-    } else {
-        // Возвращаем на текущий слайд
-        track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-    
     resetAutoplay();
 });
 
 // Автопрокрутка
-function startAutoplay() {
-    autoplayInterval = setInterval(nextSlide, 4000);
-}
-function resetAutoplay() {
-    clearInterval(autoplayInterval);
-    startAutoplay();
-}
+function startAutoplay() { autoplayInterval = setInterval(nextSlide, 4000); }
+function resetAutoplay() { clearInterval(autoplayInterval); startAutoplay(); }
 startAutoplay();
 
-// Пауза при наведении (десктоп)
+// Пауза при наведении
 carouselWrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
 carouselWrapper.addEventListener('mouseleave', startAutoplay);
-
-// Пауза при касании (мобильные)
-carouselWrapper.addEventListener('touchstart', () => clearInterval(autoplayInterval), { passive: true });
-carouselWrapper.addEventListener('touchend', () => startAutoplay);
         
-        window.addEventListener('beforeunload', function() {
-    const meta = document.getElementById('themeColorMeta');
-    if (meta) {
-        meta.setAttribute('content', '#0a0a0a');
-    }
-});
-
-
 // ===== ОВЕРЛЕЙ (РАЗВОРОТ ПО ТАПУ) v2 =====
 const overlay = document.getElementById('overlay');
 const overlayBg = document.getElementById('overlayBg');
@@ -1571,14 +1482,7 @@ overlay.addEventListener('touchend', function(e) {
         closeOverlay();
     }
 });
-
-// Escape на клавиатуре
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && overlay.classList.contains('active')) {
-        closeOverlay();
-    }
-});
-
+        
 // Escape на клавиатуре — закрыть
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && overlay.classList.contains('active')) {
