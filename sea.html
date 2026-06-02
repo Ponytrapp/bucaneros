@@ -884,11 +884,18 @@ body.theme-3 .carousel-wrapper {
 @supports (-webkit-touch-callout: none) {
     /* Только для iOS Safari */
     
-    .carousel-slide img {
-        /* Аппаратное ускорение */
-        -webkit-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-    }
+       .carousel-slide {
+        min-width: 100%;
+        flex-shrink: 0;
+        height: 100%;  /* ← ДОБАВИТЬ */
+        }
+
+        .carousel-slide img {
+        width: 100%;
+        height: 100%;  /* ← ИЗМЕНИТЬ с auto на 100% */
+        object-fit: cover;  /* ← Это фиксит растянутость */
+        display: block;
+        }
     
     .carousel-wrapper {
         /* Дополнительная изоляция */
@@ -906,11 +913,13 @@ body.theme-3 .carousel-wrapper {
     /* Убираем мерцание при скролле/свайпе */
     .wave-row,
     .carousel-track {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        -webkit-perspective: 1000;
-        perspective: 1000;
-    }
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;  /* ← Убедись, что 100% */
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
 }
 
 /* Фикс для iOS 15+ с "динамическим островом" */
