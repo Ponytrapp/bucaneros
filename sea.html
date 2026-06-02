@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0d1b1e" id="themeColorMeta">
+    <meta name="theme-color" content="#0a1517" id="themeColorMeta">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>fish — Bucaneros del Mar de Sangre</title>
     <style>
-        * {
+        *
+        :root {
+        --ocean-color: #0a1517;
+              }
+
+        body {
+        /* ... существующие стили ... */
+        background: var(--ocean-color);
+        transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -38,7 +48,6 @@
 
        /* ===== ТЕМА 0: Чёрное море + Белое небо + Красная луна ===== */
 /* Море тёмное → текст и кнопка белые */
-body.theme-0 { background: #e8e4dc; }
 body.theme-0 .sky-layer {
     background: linear-gradient(180deg, #faf8f4 0%, #f0ece4 40%, #e8e4dc 70%, #ddd8ce 100%);
 }
@@ -61,7 +70,6 @@ body.theme-0 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
 
 /* ===== ТЕМА 1: Белое море + Красное небо + Чёрная луна ===== */
 /* Море светлое → текст и кнопка тёмные */
-body.theme-1 { background: #6b1010; }
 body.theme-1 .sky-layer {
     background: linear-gradient(180deg, #8b1a1a 0%, #6b1010 40%, #4a0808 70%, #2a0404 100%);
 }
@@ -84,7 +92,6 @@ body.theme-1 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
 
 /* ===== ТЕМА 2: Красное море + Чёрное небо + Белая луна ===== */
 /* Море тёмное (красное — тёмный оттенок) → текст и кнопка белые */
-body.theme-2 { background: #0a0a0a; }
 body.theme-2 .sky-layer {
     background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
 }
@@ -107,7 +114,6 @@ body.theme-2 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
 
 /* ===== ТЕМА 3: Белое море + Чёрное небо + Красная луна ===== */
 /* Море светлое → текст и кнопка тёмные */
-body.theme-3 { background: #0a0a0a; }
 body.theme-3 .sky-layer {
     background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
 }
@@ -912,22 +918,27 @@ body.theme-3 .carousel-wrapper {
 
         // ===== ПРИМЕНЕНИЕ ТЕМЫ =====
         function applyTheme(idx) {
-    currentTheme = idx;
-    document.body.className = 'theme-' + idx;
-    document.getElementById('themeIndicator').textContent = themeData[idx].name;
-    document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1.35)';
-    setTimeout(() => {
-        document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1)';
-    }, 250);
+        currentTheme = idx;
+        document.body.className = 'theme-' + idx;
+        document.getElementById('themeIndicator').textContent = themeData[idx].name;
+        document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1.35)';
+        setTimeout(() => {
+           document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1)';
+       }, 250);
 
-    // Обновляем цвет системной строки под цвет моря
-    const themeColorMeta = document.getElementById('themeColorMeta');
+    // Массив цветов моря для каждой темы (основной тон)
     const oceanColors = [
-        '#0a1517', // Тема 0: Чёрное море → тёмно-синий
-        '#ede6da', // Тема 1: Белое море → светло-бежевый
-        '#6b0f05', // Тема 2: Красное море → тёмно-красный
-        '#ede6da'  // Тема 3: Белое море → светло-бежевый
+        '#0a1517', // Тема 0: Чёрное море
+        '#ede6da', // Тема 1: Белое море
+        '#6b0f05', // Тема 2: Красное море
+        '#ede6da'  // Тема 3: Белое море
     ];
+    
+    // Плавно меняем CSS-переменную (влияет на body background)
+    document.documentElement.style.setProperty('--ocean-color', oceanColors[idx]);
+    
+    // Обновляем theme-color для системной строки
+    const themeColorMeta = document.getElementById('themeColorMeta');
     themeColorMeta.setAttribute('content', oceanColors[idx]);
 
     buildWaves();
