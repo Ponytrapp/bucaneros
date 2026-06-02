@@ -1432,10 +1432,8 @@ function openOverlay(slideElement) {
     overlayTitle.textContent = title;
     overlayDesc.textContent = desc;
     
-    // Останавливаем автопрокрутку (для новой карусели)
-    if (typeof resetAuto === 'function') {
-        clearInterval(autoInterval);
-    }
+    // Останавливаем автопрокрутку карусели
+    clearInterval(autoplayInterval);
     
     document.body.style.overflow = 'hidden';
     overlay.classList.add('active');
@@ -1446,9 +1444,7 @@ function closeOverlay() {
     document.body.style.overflow = '';
     
     // Возобновляем автопрокрутку
-    if (typeof startAuto === 'function') {
-        startAuto();
-    }
+    startAutoplay();
 }
 
 // Тап по слайду в карусели
