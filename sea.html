@@ -29,9 +29,6 @@
     </script>
     
     <style>
-    /* ... остальные стили ... */
-    <title>fish — Bucaneros del Mar de Sangre</title>
-    <style>
         * 
         margin: 0;
         padding: 0;
@@ -54,31 +51,22 @@
         /* Предотвращаем "резиновый" скролл */
         overscroll-behavior: none;
         -webkit-overscroll-behavior: none;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        font-family: 'Georgia', 'Times New Roman', serif;
+        cursor: default;
+        user-select: none;
+        -webkit-user-select: none;
+        animation: fadeInBody 1.8s ease-out;
+        transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overscroll-behavior: none;
+        -webkit-overscroll-behavior: none;
+        margin: 0;
+        padding: 0;
             }
-        {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-    font-family: 'Georgia', 'Times New Roman', serif;
-    cursor: default;
-    user-select: none;
-    -webkit-user-select: none;
-    animation: fadeInBody 1.8s ease-out;
-    transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overscroll-behavior: none;
-    -webkit-overscroll-behavior: none;
-    margin: 0;
-    padding: 0;
-}
 
         @keyframes fadeInBody {
             0% { opacity: 0; }
@@ -651,6 +639,7 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    touch-action: pan-y pinch-zoom; /* Разрешаем вертикальный скролл, горизонтальный — карусели */
 }
 
 .carousel-track {
@@ -961,7 +950,7 @@ body.theme-3 .carousel-wrapper {
         </svg>
     </div>
     <!-- КОНТЕНТ -->
-div class="content-layer">
+<div class="content-layer">
     <div class="message-block">
         <!-- Карусель -->
         <div class="carousel-wrapper" id="carouselWrapper">
@@ -1180,37 +1169,32 @@ div class="content-layer">
     currentTheme = idx;
     document.body.className = 'theme-' + idx;
     document.getElementById('themeIndicator').textContent = themeData[idx].name;
-    document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1.35)';
-    setTimeout(() => {
-        document.getElementById('themeIndicator').style.transform = 'translateX(-50%) scale(1)';
-    }, 250);
-
+    
+    // Анимация индикатора
+    const indicator = document.getElementById('themeIndicator');
+    indicator.style.transform = 'translateX(-50%) scale(1.35)';
+    setTimeout(() => indicator.style.transform = 'translateX(-50%) scale(1)', 250);
+    
     // Определяем цвет навбара
     const themeColorMeta = document.getElementById('themeColorMeta');
-    const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-    let navbarColor;
-
-    if (isLandscape) {
-        navbarColor = '#0a0a0a'; // Всегда тёмный в ландшафте
-    } else {
-        const oceanColors = ['#0a1517', '#ede6da', '#6b0f05', '#ede6da'];
-        navbarColor = oceanColors[idx];
-    }
-
+    const oceanColorsMap = ['#0a1517', '#ede6da', '#6b0f05', '#ede6da'];
+    let navbarColor = oceanColorsMap[idx];
     themeColorMeta.setAttribute('content', navbarColor);
-    document.documentElement.style.setProperty('--ocean-color', navbarColor);
-
+    
+    // Обновляем всё
     buildWaves();
     buildAtmosphere();
     buildFoam();
     updateWaveColors();
-
+    
+    // Скрываем подсказку при первом взаимодействии
     const hint = document.getElementById('swipeHint');
-    if (hint.style.opacity !== '0') {
+    if (hint && hint.style.opacity !== '0') {
         hint.style.transition = 'opacity 0.5s ease';
         hint.style.opacity = '0';
         setTimeout(() => hint.style.display = 'none', 500);
     }
+    
     if (navigator.vibrate) navigator.vibrate(12);
 }
 
@@ -1327,7 +1311,6 @@ document.addEventListener('touchend', () => {
         `;
         document.head.appendChild(styleAdd);
         // ===== КАРУСЕЛЬ =====
-// ===== БЕСКОНЕЧНАЯ КАРУСЕЛЬ =====
 const track = document.getElementById('carouselTrack');
 const dotsContainer = document.getElementById('carouselDots');
 const prevBtn = document.getElementById('carouselPrev');
