@@ -625,55 +625,82 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
 .carousel-wrapper {
     position: relative;
     width: 100%;
-    /* Фикс для iOS — вместо aspect-ratio используем padding-hack */
     max-height: 55vh;
-    height: auto;  /* ← Измени с 0 на auto */
-    aspect-ratio: 16 / 10;  /* ← Добавь соотношение сторон */
-    padding-bottom: 62.5%; /* 16:10 = 10/16 = 62.5% */
+    aspect-ratio: 16 / 10;
     border-radius: 6px;
     overflow: hidden;
     margin-bottom: 1.2rem;
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     transition: box-shadow 1.2s ease;
-    /* Фикс для iOS — создаём контекст наложения */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    touch-action: pan-y pinch-zoom; /* Разрешаем вертикальный скролл, горизонтальный — карусели */
-    .carousel-wrapper {
-    position: relative;
-    width: 100%;
-    max-height: 55vh;
-    height: auto;  /* ← Измени с 0 на auto */
-    aspect-ratio: 16 / 10;  /* ← Добавь соотношение сторон */
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    touch-action: pan-y pinch-zoom;
 }
+
 .carousel-track {
-    position: relative;  /* ← Измени с absolute */
+    position: relative;
     display: flex;
     width: 100%;
     height: 100%;
     transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
 }
+
 .carousel-slide {
     min-width: 100%;
-    height: auto;  /* ← Измени с 100% на auto */
     flex-shrink: 0;
 }
+
 .carousel-slide img {
     width: 100%;
-    height: auto;  /* ← Измени с 100% на auto */
-    aspect-ratio: 16 / 10;  /* ← Добавь */
+    height: auto;
+    aspect-ratio: 16 / 10;
     object-fit: cover;
     display: block;
 }
 
-/* Точки — адаптивные под тему */
+/* Стрелки карусели */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.carousel-prev {
+    left: 12px;
+}
+
+.carousel-next {
+    right: 12px;
+}
+
+/* Точки */
+.carousel-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 15;
+}
+
 .carousel-dot {
     width: 8px;
     height: 8px;
@@ -683,11 +710,6 @@ body.theme-3 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
     transition: all 0.3s ease;
     border: none;
     padding: 0;
-}
-.carousel-dot.active {
-    background: #ffffff;
-    transform: scale(1.4);
-    box-shadow: 0 0 8px rgba(255,255,255,0.6);
 }
 
 /* Для светлого моря (темы 1 и 3) — точки тёмные */
@@ -985,7 +1007,7 @@ body.theme-3 .carousel-wrapper {
 
     <script>
         // ===== ПАРАМЕТРЫ ТЕМ =====
-        cconst themeData = [
+        const themeData = [
     {
         name: 'Чёрное море · Белое небо',
         skyColors: ['#faf8f4', '#f0ece4', '#e8e4dc', '#ddd8ce'],
