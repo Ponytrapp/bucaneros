@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Море зовёт — Bucaneros del Mar de Sangre</title>
+    <title>fish — Bucaneros del Mar de Sangre</title>
     <style>
         * {
             margin: 0;
@@ -36,93 +36,96 @@
         }
 
         /* ===== ТЕМА 0: Чёрное море + Белое небо + Красная луна ===== */
-        body.theme-0 { background: #e8e4dc; }
-        body.theme-0 .sky-layer {
-            background: linear-gradient(180deg, #faf8f4 0%, #f0ece4 40%, #e8e4dc 70%, #ddd8ce 100%);
-        }
-        body.theme-0 .ocean-layer {
-            background: linear-gradient(180deg, #0d1b1e 0%, #0a1517 30%, #060e0f 100%);
-        }
-        body.theme-0 .moon-body {
-            background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%);
-            box-shadow: 0 0 50px rgba(255, 50, 20, 0.5), 0 0 100px rgba(200, 20, 0, 0.3), 0 0 150px rgba(139, 0, 0, 0.2);
-        }
-        body.theme-0 .wave-foam { background: rgba(255,255,255,0.15); }
-        body.theme-0 .spray-dot { background: rgba(255,255,255,0.5); }
-        body.theme-0 .glitter-line { background: rgba(255,255,255,0.35); }
-        body.theme-0 .title-text { color: #0d1b1e; text-shadow: 0 0 25px rgba(0,0,0,0.15); }
-        body.theme-0 .sub-text { color: rgba(13,27,30,0.7); }
-        body.theme-0 .back-btn { border-color: rgba(13,27,30,0.5); color: #0d1b1e; }
-        body.theme-0 .back-btn:hover, body.theme-0 .back-btn:active { background: rgba(13,27,30,0.08); border-color: #0d1b1e; }
-        body.theme-0 .theme-indicator { color: rgba(13,27,30,0.6); }
-        body.theme-0 .swipe-hint svg { stroke: rgba(13,27,30,0.5); }
+body.theme-0 { background: #e8e4dc; }
+body.theme-0 .sky-layer {
+    background: linear-gradient(180deg, #faf8f4 0%, #f0ece4 40%, #e8e4dc 70%, #ddd8ce 100%);
+}
+body.theme-0 .ocean-layer {
+    background: linear-gradient(180deg, #0d1b1e 0%, #0a1517 30%, #060e0f 100%);
+}
+body.theme-0 .moon-body {
+    background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%);
+    box-shadow: 0 0 50px rgba(255, 50, 20, 0.5), 0 0 100px rgba(200, 20, 0, 0.3), 0 0 150px rgba(139, 0, 0, 0.2);
+}
+body.theme-0 .wave-foam { background: rgba(255,255,255,0.15); }
+body.theme-0 .spray-dot { background: rgba(255,255,255,0.5); }
+body.theme-0 .glitter-line { background: rgba(255,255,255,0.35); }
+/* Небо светлое → текст тёмный */
+body.theme-0 .title-text { color: #1a1a1a; text-shadow: 0 0 20px rgba(0,0,0,0.1); }
+body.theme-0 .sub-text { color: rgba(26,26,26,0.7); }
+body.theme-0 .back-btn { border-color: rgba(26,26,26,0.5); color: #1a1a1a; }
+body.theme-0 .back-btn:hover, body.theme-0 .back-btn:active { background: rgba(26,26,26,0.08); border-color: #1a1a1a; }
+body.theme-0 .theme-indicator { color: rgba(26,26,26,0.6); }
+body.theme-0 .swipe-hint svg { stroke: rgba(26,26,26,0.5); }
 
-        /* ===== ТЕМА 1: Белое море + Красное небо + Чёрная луна ===== */
-        body.theme-1 { background: #6b1010; }
-        body.theme-1 .sky-layer {
-            background: linear-gradient(180deg, #8b1a1a 0%, #6b1010 40%, #4a0808 70%, #2a0404 100%);
-        }
-        body.theme-1 .ocean-layer {
-            background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%);
-        }
-        body.theme-1 .moon-body {
-            background: radial-gradient(circle at 40% 35%, #1a1a1a, #0a0a0a 60%, #000000 90%);
-            box-shadow: 0 0 40px rgba(0,0,0,0.4), 0 0 80px rgba(0,0,0,0.2);
-        }
-        body.theme-1 .wave-foam { background: rgba(0,0,0,0.10); }
-        body.theme-1 .spray-dot { background: rgba(0,0,0,0.3); }
-        body.theme-1 .glitter-line { background: rgba(0,0,0,0.2); }
-        body.theme-1 .title-text { color: #ffffff; text-shadow: 0 0 30px rgba(255,255,255,0.3); }
-        body.theme-1 .sub-text { color: rgba(255,255,255,0.7); }
-        body.theme-1 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
-        body.theme-1 .back-btn:hover, body.theme-1 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
-        body.theme-1 .theme-indicator { color: rgba(255,255,255,0.6); }
-        body.theme-1 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
+/* ===== ТЕМА 1: Белое море + Красное небо + Чёрная луна ===== */
+body.theme-1 { background: #6b1010; }
+body.theme-1 .sky-layer {
+    background: linear-gradient(180deg, #8b1a1a 0%, #6b1010 40%, #4a0808 70%, #2a0404 100%);
+}
+body.theme-1 .ocean-layer {
+    background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%);
+}
+body.theme-1 .moon-body {
+    background: radial-gradient(circle at 40% 35%, #1a1a1a, #0a0a0a 60%, #000000 90%);
+    box-shadow: 0 0 40px rgba(0,0,0,0.4), 0 0 80px rgba(0,0,0,0.2);
+}
+body.theme-1 .wave-foam { background: rgba(0,0,0,0.10); }
+body.theme-1 .spray-dot { background: rgba(0,0,0,0.3); }
+body.theme-1 .glitter-line { background: rgba(0,0,0,0.2); }
+/* Небо тёмное → текст белый */
+body.theme-1 .title-text { color: #ffffff; text-shadow: 0 0 30px rgba(255,255,255,0.3), 0 0 15px rgba(255,200,200,0.2); }
+body.theme-1 .sub-text { color: rgba(255,255,255,0.75); }
+body.theme-1 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
+body.theme-1 .back-btn:hover, body.theme-1 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+body.theme-1 .theme-indicator { color: rgba(255,255,255,0.6); }
+body.theme-1 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
 
-        /* ===== ТЕМА 2: Красное море + Чёрное небо + Белая луна ===== */
-        body.theme-2 { background: #0a0a0a; }
-        body.theme-2 .sky-layer {
-            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
-        }
-        body.theme-2 .ocean-layer {
-            background: linear-gradient(180deg, #8b1a0a 0%, #6b0f05 30%, #4a0802 100%);
-        }
-        body.theme-2 .moon-body {
-            background: radial-gradient(circle at 40% 35%, #ffffff, #e8e8e8 50%, #cccccc 80%);
-            box-shadow: 0 0 60px rgba(255,255,255,0.6), 0 0 120px rgba(255,255,255,0.3), 0 0 180px rgba(200,200,200,0.15);
-        }
-        body.theme-2 .wave-foam { background: rgba(255,255,255,0.12); }
-        body.theme-2 .spray-dot { background: rgba(255,255,255,0.45); }
-        body.theme-2 .glitter-line { background: rgba(255,255,255,0.35); }
-        body.theme-2 .title-text { color: #ffffff; text-shadow: 0 0 35px rgba(255,255,255,0.4); }
-        body.theme-2 .sub-text { color: rgba(255,255,255,0.7); }
-        body.theme-2 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
-        body.theme-2 .back-btn:hover, body.theme-2 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
-        body.theme-2 .theme-indicator { color: rgba(255,255,255,0.6); }
-        body.theme-2 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
+/* ===== ТЕМА 2: Красное море + Чёрное небо + Белая луна ===== */
+body.theme-2 { background: #0a0a0a; }
+body.theme-2 .sky-layer {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
+}
+body.theme-2 .ocean-layer {
+    background: linear-gradient(180deg, #8b1a0a 0%, #6b0f05 30%, #4a0802 100%);
+}
+body.theme-2 .moon-body {
+    background: radial-gradient(circle at 40% 35%, #ffffff, #e8e8e8 50%, #cccccc 80%);
+    box-shadow: 0 0 60px rgba(255,255,255,0.6), 0 0 120px rgba(255,255,255,0.3), 0 0 180px rgba(200,200,200,0.15);
+}
+body.theme-2 .wave-foam { background: rgba(255,255,255,0.12); }
+body.theme-2 .spray-dot { background: rgba(255,255,255,0.45); }
+body.theme-2 .glitter-line { background: rgba(255,255,255,0.35); }
+/* Небо тёмное → текст белый */
+body.theme-2 .title-text { color: #ffffff; text-shadow: 0 0 35px rgba(255,255,255,0.4), 0 0 20px rgba(255,100,100,0.15); }
+body.theme-2 .sub-text { color: rgba(255,255,255,0.75); }
+body.theme-2 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
+body.theme-2 .back-btn:hover, body.theme-2 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+body.theme-2 .theme-indicator { color: rgba(255,255,255,0.6); }
+body.theme-2 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
 
-        /* ===== ТЕМА 3: Белое море + Чёрное небо + Красная луна ===== */
-        body.theme-3 { background: #0a0a0a; }
-        body.theme-3 .sky-layer {
-            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
-        }
-        body.theme-3 .ocean-layer {
-            background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%);
-        }
-        body.theme-3 .moon-body {
-            background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%);
-            box-shadow: 0 0 50px rgba(255, 50, 20, 0.6), 0 0 100px rgba(200, 20, 0, 0.4), 0 0 150px rgba(139, 0, 0, 0.25);
-        }
-        body.theme-3 .wave-foam { background: rgba(0,0,0,0.10); }
-        body.theme-3 .spray-dot { background: rgba(0,0,0,0.3); }
-        body.theme-3 .glitter-line { background: rgba(255,255,255,0.2); }
-        body.theme-3 .title-text { color: #ffffff; text-shadow: 0 0 35px rgba(255,255,255,0.4); }
-        body.theme-3 .sub-text { color: rgba(255,255,255,0.7); }
-        body.theme-3 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
-        body.theme-3 .back-btn:hover, body.theme-3 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
-        body.theme-3 .theme-indicator { color: rgba(255,255,255,0.6); }
-        body.theme-3 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
-
+/* ===== ТЕМА 3: Белое море + Чёрное небо + Красная луна ===== */
+body.theme-3 { background: #0a0a0a; }
+body.theme-3 .sky-layer {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 40%, #050505 70%, #000000 100%);
+}
+body.theme-3 .ocean-layer {
+    background: linear-gradient(180deg, #f5f0e8 0%, #ede6da 30%, #e5dcd0 100%);
+}
+body.theme-3 .moon-body {
+    background: radial-gradient(circle at 40% 35%, #ff3b1f, #c4200a 50%, #8b0000 80%);
+    box-shadow: 0 0 50px rgba(255, 50, 20, 0.6), 0 0 100px rgba(200, 20, 0, 0.4), 0 0 150px rgba(139, 0, 0, 0.25);
+}
+body.theme-3 .wave-foam { background: rgba(0,0,0,0.10); }
+body.theme-3 .spray-dot { background: rgba(0,0,0,0.3); }
+body.theme-3 .glitter-line { background: rgba(255,255,255,0.2); }
+/* Небо тёмное → текст белый */
+body.theme-3 .title-text { color: #ffffff; text-shadow: 0 0 35px rgba(255,255,255,0.4), 0 0 20px rgba(255,50,20,0.2); }
+body.theme-3 .sub-text { color: rgba(255,255,255,0.75); }
+body.theme-3 .back-btn { border-color: rgba(255,255,255,0.5); color: #ffffff; }
+body.theme-3 .back-btn:hover, body.theme-3 .back-btn:active { background: rgba(255,255,255,0.1); border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+body.theme-3 .theme-indicator { color: rgba(255,255,255,0.6); }
+body.theme-3 .swipe-hint svg { stroke: rgba(255,255,255,0.5); }
         /* ===== СЛОИ ===== */
         .sky-layer {
             position: absolute;
