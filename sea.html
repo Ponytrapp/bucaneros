@@ -1413,7 +1413,7 @@ startAutoplay();
 carouselWrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
 carouselWrapper.addEventListener('mouseleave', startAutoplay);
         
-// ===== ОВЕРЛЕЙ (РАЗВОРОТ ПО ТАПУ) v2 =====
+// ===== ОВЕРЛЕЙ (РАЗВОРОТ ПО ТАПУ) =====
 const overlay = document.getElementById('overlay');
 const overlayBg = document.getElementById('overlayBg');
 const overlayImage = document.getElementById('overlayImage');
@@ -1432,9 +1432,7 @@ function openOverlay(slideElement) {
     overlayTitle.textContent = title;
     overlayDesc.textContent = desc;
     
-    // Останавливаем автопрокрутку карусели
     clearInterval(autoplayInterval);
-    
     document.body.style.overflow = 'hidden';
     overlay.classList.add('active');
 }
@@ -1442,21 +1440,15 @@ function openOverlay(slideElement) {
 function closeOverlay() {
     overlay.classList.remove('active');
     document.body.style.overflow = '';
-    
-    // Возобновляем автопрокрутку
     startAutoplay();
 }
 
-// Тап по слайду в карусели
-const carouselWrapper = document.querySelector('.carousel-wrapper');
+// Тап по слайду в карусели (используем существующий carouselWrapper из кода карусели)
 if (carouselWrapper) {
     carouselWrapper.addEventListener('click', function(e) {
         if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
-        
         const slide = e.target.closest('.carousel-slide');
         if (!slide) return;
-        
-        // Для новой карусели нет клонов, так что эта проверка не нужна
         openOverlay(slide);
     });
 }
@@ -1478,8 +1470,8 @@ overlay.addEventListener('touchend', function(e) {
         closeOverlay();
     }
 });
-        
-// Escape на клавиатуре — закрыть
+
+// Escape на клавиатуре
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && overlay.classList.contains('active')) {
         closeOverlay();
