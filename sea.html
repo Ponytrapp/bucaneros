@@ -1501,7 +1501,8 @@ carouselWrapper.addEventListener('touchend', () => startAutoplay);
     }
 });
 
-    // ===== ОВЕРЛЕЙ (РАЗВОРОТ ПО ТАПУ) =====
+
+// ===== ОВЕРЛЕЙ (РАЗВОРОТ ПО ТАПУ) v2 =====
 const overlay = document.getElementById('overlay');
 const overlayBg = document.getElementById('overlayBg');
 const overlayImage = document.getElementById('overlayImage');
@@ -1509,7 +1510,6 @@ const overlayTitle = document.getElementById('overlayTitle');
 const overlayDesc = document.getElementById('overlayDesc');
 const overlayBtn = document.getElementById('overlayBtn');
 const overlayClose = document.getElementById('overlayClose');
-const overlayContent = document.getElementById('overlayContent');
 
 function openOverlay(slideElement) {
     const img = slideElement.querySelector('img');
@@ -1521,12 +1521,12 @@ function openOverlay(slideElement) {
     overlayTitle.textContent = title;
     overlayDesc.textContent = desc;
     
-    // Останавливаем автопрокрутку карусели
-    clearInterval(autoplayInterval);
+    // Останавливаем автопрокрутку (для новой карусели)
+    if (typeof resetAuto === 'function') {
+        clearInterval(autoInterval);
+    }
     
-    // Блокируем скролл body
     document.body.style.overflow = 'hidden';
-    
     overlay.classList.add('active');
 }
 
@@ -1535,33 +1535,28 @@ function closeOverlay() {
     document.body.style.overflow = '';
     
     // Возобновляем автопрокрутку
-    startAutoplay();
+    if (typeof startAuto === 'function') {
+        startAuto();
+    }
 }
 
 // Тап по слайду в карусели
-carouselWrapper.addEventListener('click', function(e) {
-    // Игнорируем клики по стрелкам и точкам
-    if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
-    
-    const slide = e.target.closest('.carousel-slide');
-    if (!slide) return;
-    
-    // Игнорируем клонов (у них нет data-атрибутов)
-    if (slide.classList.contains('clone')) return;
-    
-    // Не открываем оверлей во время перелистывания
-    if (isTransitioning) return;
-    
-    openOverlay(slide);
-});
+const carouselWrapper = document.querySelector('.carousel-wrapper');
+if (carouselWrapper) {
+    carouselWrapper.addEventListener('click', function(e) {
+        if (e.target.closest('.carousel-arrow') || e.target.closest('.carousel-dot')) return;
+        
+        const slide = e.target.closest('.carousel-slide');
+        if (!slide) return;
+        
+        // Для новой карусели нет клонов, так что эта проверка не нужна
+        openOverlay(slide);
+    });
+}
 
 // Кнопка закрытия
 overlayClose.addEventListener('click', closeOverlay);
-
-// Кнопка "Плывём дальше"
 overlayBtn.addEventListener('click', closeOverlay);
-
-// Клик по фону оверлея — закрыть
 overlayBg.addEventListener('click', closeOverlay);
 
 // Свайп вниз на оверлее — закрыть
@@ -1573,6 +1568,13 @@ overlay.addEventListener('touchstart', function(e) {
 overlay.addEventListener('touchend', function(e) {
     const diff = e.changedTouches[0].clientY - overlayTouchStartY;
     if (diff > 60) {
+        closeOverlay();
+    }
+});
+
+// Escape на клавиатуре
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
         closeOverlay();
     }
 });
